@@ -649,7 +649,7 @@
   <div class="header-right">
     <div class="status-pill">
       <div class="dot"></div>
-      <span>Ready to help</span>
+      <span>Available</span>
     </div>
     <button class="clear-btn" onclick="clearConversation()">New Chat</button>
   </div>
@@ -669,7 +669,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.1</span>
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.2</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1519,10 +1519,10 @@ function getCardLabel(type, url) {
 }
 
 const SUGGESTIONS = [
-  "How does Legendary Stakes work?",
-  "What does it cost to enroll my stallion?",
-  "How do I enter an event?",
-  "What were the 2025 season results?"
+  "What is Legendary Stakes?",
+  "How do I create an account?",
+  "How do I enroll a horse?",
+  "How do I enter an event?"
 ];
 
 
@@ -1552,7 +1552,7 @@ SUGGESTIONS.forEach(s => {
 });
 
 // ─── GREETING ─────────────────────────────────────────────────────────────────
-const GREETING = `Welcome to the Legendary Stakes AI. I'm here to answer your questions about the program — how it works, what it costs, how to get started, or anything else on your mind.\n\nWhether you're a stallion owner, a competitor, a breeder, or just hearing about this for the first time, ask away. I'll keep it plain and simple.\n\nWhat can I help you with today?`;
+const GREETING = `Welcome to Legendary Stakes! Legendary Stakes offers a new way for western performance horse competitors, breeders, and sire owners to benefit from the sport.\n\nWhether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away — how can I help?`;
 
 setTimeout(() => {
   addMessage('agent', GREETING);
