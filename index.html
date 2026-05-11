@@ -550,7 +550,6 @@
     color: rgba(232,224,208,0.75);
     cursor: pointer;
     transition: all 0.15s;
-    white-space: nowrap;
     touch-action: manipulation;
   }
 
@@ -613,10 +612,8 @@
     .send-btn { width: 34px; height: 34px; min-width: 34px; }
     .send-btn svg { width: 14px; height: 14px; }
 
-    /* Suggestions — 2 buttons on mobile, side by side */
-    .suggestions { gap: 6px; margin-bottom: 8px; display: flex; flex-wrap: wrap; }
-    .sug-btn { font-size: 0.75rem; padding: 8px 10px; white-space: normal; text-align: center; line-height: 1.3; flex: 1 1 45%; }
-    .sug-btn:nth-child(2) { display: none; }
+    /* Suggestions — handled by JS inline styles below */
+    .sug-btn { font-size: 0.75rem; padding: 8px 10px; text-align: center; line-height: 1.3; }
   }
 
   @media (max-width: 380px) {
@@ -656,7 +653,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.2.2</span>
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.2.3</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1526,18 +1523,46 @@ const errorNote     = document.getElementById('errorNote');
 const charCount     = document.getElementById('charCount');
 
 // ─── BUILD SUGGESTIONS ────────────────────────────────────────────────────────
-SUGGESTIONS.forEach((s, i) => {
-  const btn = document.createElement('button');
-  btn.className = 'sug-btn';
-  btn.textContent = s;
-  btn.onclick = () => {
-    inputEl.value = s;
-    autoResize();
-    suggestionsEl.style.display = 'none';
-    sendMessage();
-  };
-  suggestionsEl.appendChild(btn);
-});
+function buildSuggestions() {
+  suggestionsEl.innerHTML = '';
+  const isMobile = window.innerWidth <= 640;
+  // On mobile only show index 0 and 2; on desktop show all
+  const toShow = isMobile
+    ? [SUGGESTIONS[0], SUGGESTIONS[2]]
+    : SUGGESTIONS;
+
+  toShow.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'sug-btn';
+    if (isMobile) {
+      btn.style.flex = '1';
+      btn.style.textAlign = 'center';
+      btn.style.whiteSpace = 'normal';
+    }
+    btn.textContent = s;
+    btn.onclick = () => {
+      inputEl.value = s;
+      autoResize();
+      suggestionsEl.style.display = 'none';
+      sendMessage();
+    };
+    suggestionsEl.appendChild(btn);
+  });
+
+  // On mobile make the container a flex row
+  if (isMobile) {
+    suggestionsEl.style.display = 'flex';
+    suggestionsEl.style.flexDirection = 'row';
+    suggestionsEl.style.gap = '8px';
+  } else {
+    suggestionsEl.style.display = '';
+    suggestionsEl.style.flexDirection = '';
+    suggestionsEl.style.gap = '';
+  }
+}
+
+buildSuggestions();
+window.addEventListener('resize', buildSuggestions);
 
 
 
@@ -1699,7 +1724,7 @@ function removeTyping() {
 function clearConversation() {
   conversation = [];
   messagesEl.innerHTML = '';
-  suggestionsEl.style.display = '';
+  buildSuggestions();
   errorNote.style.display = 'none';
   setTimeout(() => {
     addMessage('agent', GREETING);
