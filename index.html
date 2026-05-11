@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
-<title>Legendary Stakes — Ask Anything v0.0.2</title>
+<title>Legendary Stakes — Ask Anything</title>
+<link rel="icon" type="image/webp" href="data:image/webp;base64,UklGRsoBAABXRUJQVlA4TL0BAAAvH8AHEAYGbdsIev5sjHH3d4PQDve4wAEAgJByyrZt27Ztu6YmjK69nzIn27Zt27bOE5AkFrOr3eza2sPeSezjwOkwhzvSxh/ArSXc5F9/t830/zRak64xeBNLusmU6WdvOsD65ryIhVxp4qnG/eoOq13EPGYYfWrrGiMXMbvz/LvgI0seDI2Yxen+fPOr9YdZHWXRESNO8cuTf2x98IDbLTViyGG+ffG/HYdZPGjaw1YdMWgvn23VizYcie28t1Xv2v4QG3tlq76wn8ERa3pyq350vJERK7jvyczuPdQfTjPLiCXcZOrFPaf61wXmHLGQq0ws1ZiLzD9iHjOMLtWk6yw+Yg7n+3epda8VR8ziDH9u1TPWHTHiFL9s1Zu2GjHkcN/9GHHHQ31iT4MfQBKD9vK5UTsd3PZS3znS8Acwbe91Ow9DrnuqX51q5hHrW3HExW/1t7PMPn6duVCjLjTvjQOMLdSEay1yYUEPbtSUOyz7Fyu51Nt+fms9bo2/GLaAffy+UK/Z/C+xmDu86OXE696It7xT7/qg9XHiU195yDoXhsxtPgu0FrJwLWqxWNxSiWUtFytYyaoW+gACAA==">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -67,34 +68,21 @@
     gap: 14px;
   }
 
-  .logo-lockup {
-    display: flex;
-    flex-direction: column;
-  }
-
   .logo-wordmark {
     font-family: 'Oswald', sans-serif;
     font-size: 1.35rem;
     font-weight: 700;
-    color: #ffffff;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
   }
 
-  .logo-wordmark span {
-    color: var(--gold-light);
-  }
-
-  .logo-sub {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.6rem;
-    color: var(--gold);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-top: 3px;
-    font-weight: 400;
-  }
+  .logo-w1 { color: #ffffff; }
+  .logo-w2 { color: var(--gold-light); }
 
   .header-right {
     display: flex;
@@ -614,7 +602,7 @@
   @media (max-width: 640px) {
     /* Header — auto height, no fixed constraint */
     header { padding: 0 14px; height: auto; min-height: 52px; }
-    .logo-wordmark { font-size: 0.88rem; letter-spacing: 0.08em; white-space: nowrap; }
+    .logo-wordmark { font-size: 0.85rem; letter-spacing: 0.06em; }
     .status-pill span { display: none; }
     .clear-btn { font-size: 0.66rem; padding: 6px 12px; white-space: nowrap; line-height: 1.2; }
 
@@ -633,11 +621,12 @@
     .send-btn { width: 34px; height: 34px; min-width: 34px; }
     .send-btn svg { width: 14px; height: 14px; }
 
-    /* Suggestions — 2 col grid: buttons 1+2 on row 1, button 3 hidden, button 4 full width */
-    .suggestions { gap: 6px; margin-bottom: 8px; display: grid !important; grid-template-columns: 1fr 1fr; }
+    /* Suggestions — JS handles layout via isMobile class */
+    .suggestions { gap: 6px; margin-bottom: 8px; }
+    .suggestions.mobile-grid { display: grid !important; grid-template-columns: 1fr 1fr; }
     .sug-btn { font-size: 0.75rem; padding: 8px 10px; white-space: normal; text-align: center; line-height: 1.3; }
-    .sug-btn:nth-child(3) { display: none !important; }
-    .sug-btn:nth-child(4) { grid-column: 1 / -1; }
+    .sug-btn.mobile-hidden { display: none !important; }
+    .sug-btn.mobile-full { grid-column: 1 / -1; }
   }
 
   @media (max-width: 380px) {
@@ -652,9 +641,7 @@
 
 <header>
   <div class="header-left">
-    <div class="logo-lockup">
-      <div class="logo-wordmark">Legendary <span>Stakes</span></div>
-    </div>
+    <div class="logo-wordmark"><span class="logo-w1">Legendary</span>&nbsp;<span class="logo-w2">Stakes</span></div>
   </div>
   <div class="header-right">
     <div class="status-pill">
@@ -679,7 +666,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.7</span>
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.8</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1563,6 +1550,27 @@ SUGGESTIONS.forEach((s, i) => {
   suggestionsEl.appendChild(btn);
 });
 
+// Apply mobile layout: hide 3rd button, make 4th full-width, switch to grid
+function applyMobileSuggestions() {
+  const isMobile = window.innerWidth <= 640;
+  const btns = suggestionsEl.querySelectorAll('.sug-btn');
+  if (isMobile) {
+    suggestionsEl.classList.add('mobile-grid');
+    btns.forEach((btn, i) => {
+      if (i === 2) btn.classList.add('mobile-hidden');
+      if (i === 3) btn.classList.add('mobile-full');
+    });
+  } else {
+    suggestionsEl.classList.remove('mobile-grid');
+    btns.forEach(btn => {
+      btn.classList.remove('mobile-hidden', 'mobile-full');
+    });
+  }
+}
+
+applyMobileSuggestions();
+window.addEventListener('resize', applyMobileSuggestions);
+
 // ─── GREETING ─────────────────────────────────────────────────────────────────
 const GREETING = `Welcome to Legendary Stakes! We offer a new way to earn in Western Performance horse competitions, nationwide.\n\nWhether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away — how can I help you today?`;
 
@@ -1722,6 +1730,7 @@ function clearConversation() {
   conversation = [];
   messagesEl.innerHTML = '';
   suggestionsEl.style.display = '';
+  applyMobileSuggestions();
   errorNote.style.display = 'none';
   setTimeout(() => {
     addMessage('agent', GREETING);
