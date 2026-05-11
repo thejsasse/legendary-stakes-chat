@@ -606,123 +606,6 @@
     padding: 24px;
   }
 
-  .key-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--gold);
-    border-radius: 8px;
-    padding: 40px 44px;
-    max-width: 460px;
-    width: 100%;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
-  }
-
-  .key-logo {
-    width: 48px;
-    height: 48px;
-    background: var(--gold-dim);
-    border: 1px solid var(--gold);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-
-  .key-logo svg { width: 26px; height: 26px; color: var(--gold); }
-
-  .key-title {
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 6px;
-  }
-
-  .key-title span { color: var(--gold-light); }
-
-  .key-sub {
-    font-size: 0.88rem;
-    color: var(--text-dim);
-    line-height: 1.65;
-    margin-bottom: 28px;
-    font-weight: 300;
-  }
-
-  .key-sub a { color: var(--gold); text-decoration: none; }
-  .key-sub a:hover { text-decoration: underline; }
-
-  .key-label {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 500;
-    color: var(--text-dim);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .key-input-wrap {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  #keyInput {
-    flex: 1;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 12px 16px;
-    color: var(--text);
-    font-family: monospace;
-    font-size: 0.88rem;
-    letter-spacing: 0.04em;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    padding-right: 72px;
-  }
-
-  #keyInput::placeholder { color: var(--text-muted); font-family: 'Source Serif 4', serif; letter-spacing: 0; font-style: italic; }
-  #keyInput:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
-
-  .key-submit {
-    background: var(--gold);
-    border: none;
-    border-radius: 5px;
-    padding: 12px 22px;
-    color: #0d1117;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    white-space: nowrap;
-  }
-
-  .key-submit:hover { transform: scale(1.03); box-shadow: 0 0 18px var(--gold-glow); }
-  .key-submit:active { transform: scale(0.97); }
-
-  .key-note {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    line-height: 1.55;
-    font-weight: 300;
-  }
-
-  .key-error {
-    font-size: 0.78rem;
-    color: #e8694a;
-    margin-top: 10px;
-    display: none;
-    font-family: 'Oswald', sans-serif;
-    letter-spacing: 0.03em;
-  }
-
   /* Responsive */
   @media (max-width: 640px) {
     header { padding: 0 14px; height: 56px; }
@@ -786,7 +669,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.0</span>
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.1</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1642,9 +1525,7 @@ const SUGGESTIONS = [
   "What were the 2025 season results?"
 ];
 
-document.getElementById('keyInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') submitKey();
-});
+
 
 let conversation = [];
 let isLoading = false;
