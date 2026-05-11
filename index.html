@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+<title>Legendary Stakes — Ask Anything v0.0.2</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #0d1117;
+    --bg2:         #141b24;
+    --bg3:         #1c2530;
+    --border:      #2a3545;
+    --gold:        #c9963a;
+    --gold-light:  #e8b84b;
+    --gold-dim:    rgba(201,150,58,0.15);
+    --gold-glow:   rgba(201,150,58,0.28);
+    --text:        #e8e0d0;
+    --text-dim:    #9aaa9a;
+    --text-muted:  #5a6a5a;
+    --user-bubble: #1a2a3a;
+    --agent-bubble:#141b24;
+    --green:       #4caf72;
+  }
+
+  html, body { height: 100%; overflow: hidden; max-width: 100%; }
+  * { max-width: 100%; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    height: 64px;
+    background: var(--bg2);
+    border-bottom: 2px solid var(--gold);
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(to bottom, rgba(201,150,58,0.12), transparent);
+    pointer-events: none;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-lockup {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-wordmark {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .logo-wordmark span {
+    color: var(--gold-light);
+  }
+
+  .logo-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 7px rgba(76,175,114,0.6);
+    animation: pulse-dot 2.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .clear-btn {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 3px;
+    background: transparent;
+    border: 1px solid rgba(201,150,58,0.4);
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .clear-btn:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  /* MESSAGES */
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 36px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    scroll-behavior: smooth;
+    background: var(--bg);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #messages::-webkit-scrollbar { width: 4px; }
+  #messages::-webkit-scrollbar-track { background: transparent; }
+  #messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .msg-row {
+    display: flex;
+    gap: 14px;
+    animation: msg-in 0.28s ease-out both;
+    max-width: 820px;
+    width: 100%;
+    align-self: center;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  @keyframes msg-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-row.user {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+  }
+
+  .msg-row.user .bubble { max-width: 560px; }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .avatar.agent {
+    background: var(--gold);
+    color: #0d1117;
+  }
+
+  .avatar.user {
+    background: var(--bg3);
+    color: var(--gold);
+    border: 1px solid var(--border);
+  }
+
+  .bubble {
+    padding: 16px 20px;
+    border-radius: 6px;
+    line-height: 1.75;
+    font-size: 1rem;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+    font-weight: 300;
+  }
+
+  .bubble.agent {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-top-left-radius: 2px;
+    color: var(--text);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .bubble.user {
+    background: var(--user-bubble);
+    border: 1px solid #253545;
+    border-top-right-radius: 2px;
+    color: var(--text);
+  }
+
+  .bubble p { margin-bottom: 0.85em; }
+  .bubble p:last-child { margin-bottom: 0; }
+  .bubble strong { color: var(--gold-light); font-weight: 600; }
+  .bubble em { color: var(--text-dim); font-style: italic; }
+
+  /* Resource cards */
+  .res-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  /* ── Base card ── */
+  .res-card {
+    border-radius: 5px;
+    padding: 11px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    border-left: 3px solid var(--border);
+  }
+
+  /* ── GUIDANCE cards (YouTube) — teal/blue, softer ── */
+  .res-card.card-guidance {
+    border-left: 3px solid #3a8fa8;
+    background: rgba(58,143,168,0.07);
+    border-color: rgba(58,143,168,0.3);
+  }
+  .res-card.card-guidance:hover {
+    background: rgba(58,143,168,0.13);
+    border-left-color: #5ab8d4;
+    transform: translateX(2px);
+    box-shadow: 0 2px 12px rgba(58,143,168,0.15);
+  }
+  .res-card.card-guidance .res-icon {
+    background: rgba(58,143,168,0.15);
+  }
+  .res-card.card-guidance .res-icon svg { color: #5ab8d4; }
+  .res-card.card-guidance .res-label { color: #5ab8d4; }
+  .res-card.card-guidance .res-arrow { color: #5ab8d4; }
+
+  /* ── ACTION — Sign Up — gold fill, most prominent ── */
+  .res-card.card-signup {
+    border: 1.5px solid var(--gold);
+    border-left: 4px solid var(--gold-light);
+    background: rgba(201,150,58,0.12);
+  }
+  .res-card.card-signup:hover {
+    background: rgba(201,150,58,0.2);
+    border-color: var(--gold-light);
+    transform: translateX(2px);
+    box-shadow: 0 2px 16px rgba(201,150,58,0.2);
+  }
+  .res-card.card-signup .res-icon {
+    background: var(--gold);
+    border-radius: 4px;
+  }
+  .res-card.card-signup .res-icon svg { color: #0d1117; }
+  .res-card.card-signup .res-label { color: var(--gold-light); }
+  .res-card.card-signup .res-arrow {
+    color: var(--gold-light);
+    font-size: 1rem;
+  }
+  .res-card.card-signup .res-title { font-weight: 600; color: #fff; }
+
+  /* ── ACTION — Sire profile — silver/white, clean ── */
+  .res-card.card-sire {
+    border-left: 3px solid #8a9db5;
+    background: rgba(138,157,181,0.06);
+    border-color: rgba(138,157,181,0.25);
+  }
+  .res-card.card-sire:hover {
+    background: rgba(138,157,181,0.12);
+    border-left-color: #adc0d6;
+    transform: translateX(2px);
+    box-shadow: 0 2px 12px rgba(138,157,181,0.12);
+  }
+  .res-card.card-sire .res-icon {
+    background: rgba(138,157,181,0.12);
+  }
+  .res-card.card-sire .res-icon svg { color: #adc0d6; }
+  .res-card.card-sire .res-label { color: #adc0d6; }
+  .res-card.card-sire .res-arrow { color: #adc0d6; }
+
+  /* ── ACTION — Leaderboard/Results — silver/white, clean ── */
+  .res-card.card-results {
+    border-left: 3px solid #8a9db5;
+    background: rgba(138,157,181,0.06);
+    border-color: rgba(138,157,181,0.25);
+  }
+  .res-card.card-results:hover {
+    background: rgba(138,157,181,0.12);
+    border-left-color: #adc0d6;
+    transform: translateX(2px);
+    box-shadow: 0 2px 12px rgba(138,157,181,0.12);
+  }
+  .res-card.card-results .res-icon {
+    background: rgba(138,157,181,0.12);
+  }
+  .res-card.card-results .res-icon svg { color: #adc0d6; }
+  .res-card.card-results .res-label { color: #adc0d6; }
+  .res-card.card-results .res-arrow { color: #adc0d6; }
+
+  /* ── ACTION — General web ── */
+  .res-card.card-web {
+    border-left: 3px solid var(--gold);
+    background: var(--bg3);
+  }
+  .res-card.card-web:hover {
+    border-left-color: var(--gold-light);
+    background: rgba(201,150,58,0.07);
+    transform: translateX(2px);
+  }
+  .res-card.card-web .res-icon { background: var(--gold-dim); }
+  .res-card.card-web .res-icon svg { color: var(--gold); }
+  .res-card.card-web .res-label { color: var(--gold); }
+  .res-card.card-web .res-arrow { color: var(--gold); }
+
+  .res-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .res-icon svg { width: 15px; height: 15px; }
+
+  .res-info { flex: 1; min-width: 0; }
+
+  .res-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .res-title {
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .res-url {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 3px;
+  }
+
+  .res-arrow {
+    font-size: 0.78rem;
+    flex-shrink: 0;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  /* Typing */
+  .typing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 14px 18px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    border-top-left-radius: 2px;
+    width: fit-content;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* INPUT AREA */
+  .input-area {
+    padding: 16px 24px 18px;
+    background: var(--bg2);
+    border-top: 2px solid var(--gold);
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .input-wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: var(--bg3);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 11px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-wrap:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+  }
+
+  textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.97rem;
+    font-weight: 300;
+    line-height: 1.6;
+    resize: none;
+    min-height: 24px;
+    max-height: 130px;
+    overflow-y: auto;
+  }
+
+  textarea::placeholder { color: var(--text-muted); font-style: italic; }
+  textarea::-webkit-scrollbar { width: 3px; }
+  textarea::-webkit-scrollbar-thumb { background: var(--border); }
+
+  .send-btn {
+    background: var(--gold);
+    border: none;
+    border-radius: 4px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+    margin-bottom: 1px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .send-btn:hover { transform: scale(1.05); box-shadow: 0 0 14px var(--gold-glow); }
+  .send-btn:active { transform: scale(0.94); }
+  .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+  .send-btn svg { width: 16px; height: 16px; color: #0d1117; }
+
+  .input-footer {
+    max-width: 820px;
+    margin: 9px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .input-hint {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .char-count {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-family: 'Oswald', sans-serif;
+  }
+
+  /* Suggestions */
+  .suggestions {
+    max-width: 820px;
+    margin: 0 auto 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sug-btn {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    font-style: italic;
+    padding: 7px 15px;
+    border-radius: 3px;
+    background: rgba(201,150,58,0.08);
+    border: 1px solid rgba(201,150,58,0.3);
+    color: rgba(232,224,208,0.75);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    touch-action: manipulation;
+  }
+
+  .sug-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: var(--gold-dim);
+  }
+
+  /* Error */
+  .error-note {
+    font-size: 0.82rem;
+    color: #e8694a;
+    padding: 10px 15px;
+    background: rgba(232,105,74,0.08);
+    border: 1px solid rgba(232,105,74,0.22);
+    border-radius: 5px;
+    margin-top: 10px;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.03em;
+  }
+
+  /* KEY GATE */
+    position: fixed;
+    inset: 0;
+    background: rgba(8,10,14,0.94);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 24px;
+  }
+
+  .key-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 40px 44px;
+    max-width: 460px;
+    width: 100%;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+  }
+
+  .key-logo {
+    width: 48px;
+    height: 48px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .key-logo svg { width: 26px; height: 26px; color: var(--gold); }
+
+  .key-title {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  .key-title span { color: var(--gold-light); }
+
+  .key-sub {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .key-sub a { color: var(--gold); text-decoration: none; }
+  .key-sub a:hover { text-decoration: underline; }
+
+  .key-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .key-input-wrap {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  #keyInput {
+    flex: 1;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: monospace;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    padding-right: 72px;
+  }
+
+  #keyInput::placeholder { color: var(--text-muted); font-family: 'Source Serif 4', serif; letter-spacing: 0; font-style: italic; }
+  #keyInput:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+
+  .key-submit {
+    background: var(--gold);
+    border: none;
+    border-radius: 5px;
+    padding: 12px 22px;
+    color: #0d1117;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+
+  .key-submit:hover { transform: scale(1.03); box-shadow: 0 0 18px var(--gold-glow); }
+  .key-submit:active { transform: scale(0.97); }
+
+  .key-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  .key-error {
+    font-size: 0.78rem;
+    color: #e8694a;
+    margin-top: 10px;
+    display: none;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.03em;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    header { padding: 0 14px; height: 56px; }
+    .logo-wordmark { font-size: 1.1rem; }
+    .logo-sub { font-size: 0.55rem; }
+    .status-pill span { display: none; }
+    .clear-btn { font-size: 0.6rem; padding: 4px 10px; }
+    #messages { padding: 16px 12px; gap: 16px; }
+    .msg-row { gap: 9px; max-width: 100%; }
+    .msg-row.user .bubble { max-width: 86%; }
+    .bubble { padding: 12px 14px; font-size: 0.92rem; line-height: 1.65; }
+    .avatar { width: 28px; height: 28px; font-size: 0.62rem; }
+    .input-area { padding: 10px 12px 12px; }
+    .input-wrap { padding: 9px 11px; border-radius: 5px; gap: 8px; }
+    textarea { font-size: 0.9rem; min-height: 20px; }
+    .send-btn { width: 34px; height: 34px; min-width: 34px; }
+    .send-btn svg { width: 14px; height: 14px; }
+    .suggestions { gap: 6px; margin-bottom: 8px; display: grid; grid-template-columns: 1fr 1fr; }
+    .sug-btn { font-size: 0.75rem; padding: 8px 10px; white-space: normal; text-align: center; line-height: 1.3; }
+    .key-card { padding: 28px 24px; }
+    .key-title { font-size: 1.35rem; }
+  }
+
+  @media (max-width: 380px) {
+    .logo-wordmark { font-size: 0.95rem; }
+    .bubble { font-size: 0.86rem; }
+    .sug-btn { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+
+<header>
+  <div class="header-left">
+    <div class="logo-lockup">
+      <div class="logo-wordmark">Legendary <span>Stakes</span></div>
+      <div class="logo-sub">Western Performance Horse Platform</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="status-pill">
+      <div class="dot"></div>
+      <span>Ready to help</span>
+    </div>
+    <button class="clear-btn" onclick="clearConversation()">New Chat</button>
+  </div>
+</header>
+
+<div id="messages"></div>
+
+<div class="input-area">
+  <div class="suggestions" id="suggestions"></div>
+  <div class="input-wrap">
+    <textarea id="input" placeholder="Ask anything about Legendary Stakes..." rows="1"></textarea>
+    <button class="send-btn" id="sendBtn" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+  <div class="input-footer">
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.0</span>
+    <span class="char-count" id="charCount"></span>
+  </div>
+  <div id="errorNote" class="error-note" style="display:none;"></div>
+</div>
+
+<script>
+// ─── SYSTEM PROMPT ────────────────────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are the Legendary Stakes AI Assistant — a knowledgeable, plain-spoken guide for the Legendary Stakes western performance horse incentive platform.
+
+## FOUNDERS
+Legendary Stakes was founded by Shane Plummer and Logan Alley — two ranch owners with deep roots in the western performance horse industry.
+
+### Shane Plummer
+Shane is co-founder of Legendary Stakes and owner of SDP Buffalo Ranch in Texas. He comes from a horse industry family with generational roots in the stallion business. His parents stood racing stallions commercially in Utah and Idaho before moving to California, where they built a leading quarter horse racing operation and led the nation in winners from 1988 to 1992. They also operated the first private commercial embryo transfer business in the world. His parents' best-known acquisition was 1998 Kentucky Derby winner Real Quiet.
+
+Shane and his wife purchased the family business in 2008, operating as SDP Buffalo Ranch (legal entity: Legacy Stud LLC). He has personally overseen more than 100 stallions across his career and describes the stallion business as his wheelhouse. His family entered the western performance horse world in 2001 after his father experienced cutting horses in Oklahoma — and the rest, as Shane puts it, is history.
+
+He relocated the family business to Texas to focus specifically on performance sires, which ultimately led to the creation of the Legendary Stakes platform. Shane's vision for Legendary Stakes is to "decentralize and democratize the industry, making it more accessible and engaging for every stakeholder, from riders to breeders, dam and stallion owners."
+
+Note: Sannman, the top-performing sire in the Legendary Stakes 2025 season and the 2026 leaderboard, is owned by SDP Buffalo Ranch — Shane's operation.
+
+### Logan Alley
+Logan Alley is co-founder of Legendary Stakes and owner of Sandance Equine. He shares Shane's deep respect for western heritage and the competitive disciplines that define it. Logan's focus in building Legendary Stakes was on connectivity — creating a platform that unites diverse competitors, events, and disciplines that had never been brought together under one umbrella before. In his own words: "Our vision is clear: to offer a fresh perspective that integrates competition, enjoyment, and earning potential through an advanced technology platform."
+
+### Why They Built It
+Legendary Stakes launched officially on May 1, 2024. The founders built it around a genuine frustration with how the industry worked — good people competing hard, with breeders, dam owners, and stallion owners getting little or no financial recognition for their role in a horse's success. They wanted to change that by creating a platform where every run at every event creates value for the entire chain — rider, owner, breeder, dam owner, and sire owner — simultaneously. The goal from day one was to build the largest annual purse in western performance horse history.
+
+## WHO YOU'RE TALKING TO
+Your primary audience is busy ranchers and horse people, many of them 60 or older, who value straightforward answers over long explanations. They don't need to be impressed — they need to be helped. Some are technology-comfortable, many are not. If someone seems confused or frustrated, slow down, be warm, and give them one clear step at a time.
+
+## YOUR VOICE & TONE
+- Plain-spoken and direct. Talk like a trusted friend in the industry, not a salesperson.
+- Warm and patient, especially when someone is struggling.
+- Encouraging but honest. Don't oversell.
+- Short answers first. Offer to go deeper if they want more.
+- Use horse industry language naturally — "offspring," "sire," "dam," "discipline," "entry," "purse."
+- Never talk down to anyone. Never use tech jargon unless the person uses it first.
+- Avoid corporate-speak: no "synergy," "leverage," "ecosystem," "utilize," or "robust."
+
+## WHAT LEGENDARY STAKES IS
+Legendary Stakes is a technology-driven incentive and stakes platform built for the Western Performance Horse industry. It "piggybacks" on top of existing horse shows and events — it does NOT host its own events. Competitors enter their regular horse shows, then pay a separate $250 Legendary Stakes entry fee to activate that run for the Legendary Purse.
+
+Key facts:
+- 14 western disciplines covered: Barrel Racing, Breakaway Roping, Reined Cow Horse, Cutting, Heading, Heeling, Ranch Horse, Ranch Rodeo, Reining, Steer Wrestling, Tie-Down Roping, Western Pleasure, Pole Bending, and Sorting.
+- 700+ events annually (roughly 50 per discipline).
+- Entry fee: $250 per Legendary Stakes entry.
+- 5 competing participant categories: Horse Owner, Rider, Dam Owner, Breeder, Sire Owner.
+- All payouts happen at year-end following an audit.
+- Real-time leaderboard available through the platform dashboard.
+- Free lifetime enrollment for horses sired by an enrolled Legendary Stallion.
+- As of 2026: 473 total enrolled sires, projected purse of $300,000.
+- IMPORTANT: The sire directory on the website has a "Show Active Only" filter. When checked, it shows 88 sires that currently have active competing offspring. When unchecked, it shows all 473 enrolled sires. If someone says they heard "nearly 500 sires enrolled," that is correct. If someone asks how many sires are in the program, the answer is 473. A sire does not need to be actively competing to have its offspring eligible — enrollment and discipline unlocks are lifetime, so all offspring of all 473 enrolled sires remain eligible forever.
+
+## THE ROYALTY SYSTEM
+Every $250 entry fee is split as follows:
+- Sire Owner: 10% ($25 per entry)
+- Breeder: 10% ($25 per entry)
+- Dam Owner: 10% ($25 per entry)
+- Remainder goes into the Legendary Purse (prize pool)
+
+Royalties are paid automatically. You earn them whether or not your horse wins.
+
+## SIRE ENROLLMENT & COSTS
+- Sire enrollment fee: $25,000 one-time, lifetime — no annual renewals ever.
+- Financing available: $0 down with 0% interest, paid through offspring royalties.
+- Unlocking a discipline: $15,000 per discipline, also one-time for life.
+- Bonus: Unlock one discipline, get a second discipline free.
+- Discipline financing: $5,000 down, remaining $10,000 paid through royalties.
+- Once enrolled and a discipline is unlocked, that stallion's offspring can compete in all 50 events in that discipline every single year, forever.
+
+## THE POINTS SYSTEM
+At any single event, a horse can earn up to 10 points:
+- Entry/Attendance: 4 points just for competing.
+- Top Offspring of Sire: 3 points for placing highest among all offspring of your sire in the division.
+- Best of the Best: 2 points for placing highest among ALL Legendary Stakes entries in the division.
+- Champion Bonus: 1 additional point for winning the overall event.
+Points are tracked across all 5 participant categories (Owner, Rider, Dam Owner, Breeder, Sire). Year-end leaderboard rankings determine annual payout amounts.
+
+## 2025 SEASON RESULTS (Completed)
+- Sire Royalties: 24 sires earned a combined $9,435. Top sire: Sannman ($2,105), owned by SDP Buffalo Ranch.
+- Horse Earnings: 54 horses earned a combined $50,074. Top sire group: Sannman offspring ($29,711 total). Top individual horse: SDP Best of Friends (Sannman offspring, Cowhorse discipline, $16,075), owned by Eric Stevenson of Spur, TX.
+- Rider Earnings: 24 riders earned a combined $39,925. Top group by sire: Sannman riders ($21,101).
+- Breeder Earnings: 15 breeders earned a combined $46,971. Top sire group: TR Illuminiator Cash breeders ($19,456).
+- These are first-year results. The platform and purse grow as more entries are added.
+
+## 2026 SEASON (In Progress)
+- Projected Legendary Purse: $300,000
+- 88 enrolled sires currently active.
+- Top sires by cumulative Legendary Earnings (2026 season-to-date): Sannman ($72,931, 781 offspring), Cats Royal Boon ($48,538, 36 offspring), TR Illuminiator Cash ($43,579, 95 offspring).
+- The sire directory shows 88 sires when filtered to "active only" and 473 total when unfiltered. Both numbers are accurate in context.
+
+## HOW TO PARTICIPATE
+1. Horse's sire must be enrolled in Legendary Stakes.
+2. Create a free account at https://app.legendarystakes.com/signup — it's free and takes just a minute.
+3. Enter your regular horse show as normal.
+4. Also enter the same run via the Legendary Stakes app or website for $250.
+5. Compete. Your Legendary Stakes points and purse earnings accumulate through the year.
+6. Year-end payouts are distributed after audit.
+
+## WEBSITE & RESOURCES
+- Main website: https://www.legendarystakes.com
+- Event listings: https://www.legendarystakes.com (2026 Events in navigation)
+- Leaderboard / Results: https://www.legendarystakes.com (Results/Leaderboard in navigation)
+- Sire directory: https://legendarystakes.com/sires/
+- FAQs: https://www.legendarystakes.com (FAQs in navigation)
+- Contact / questions: info@legendarystakes.com
+- Create a free account (direct signup link): https://app.legendarystakes.com/signup
+- Nominate an event: Email info@legendarystakes.com at least 3 months in advance.
+
+## YOUTUBE VIDEO LIBRARY
+The Legendary Stakes YouTube channel has 29 educational videos. When a question matches a topic below, surface the relevant video(s) using a [RESOURCE|youtube|...] card. Match the video to the question — don't dump every video at once. One or two cards maximum per response.
+
+### Core Concepts & Overview
+- "What is Legendary Stakes?" (overview video 1): https://www.youtube.com/watch?v=siRTcQoWYoY
+- "What is Legendary Stakes?" (overview video 2): https://www.youtube.com/watch?v=O5uL86jJ_6o
+- "The Origin Story" (how it came to be): https://www.youtube.com/watch?v=DJhPbXo5F8Q
+- "Legendary Stakes: Revolutionizing the Industry" (video 1): https://www.youtube.com/watch?v=ATfqje9-QJA
+- "Legendary Stakes: Revolutionizing the Industry" (video 2): https://www.youtube.com/watch?v=6sDQj-ROZQs
+- "How Does The Annual Competition Work?": https://www.youtube.com/watch?v=BkJW_VibuCw
+- "What Makes Legendary Stakes Different?": https://www.youtube.com/watch?v=txDWQ2U0SrI
+
+### Financials & Incentives
+- "Is $15,000 Too Much? Stallion Fee Breakdown": https://www.youtube.com/watch?v=bubh35zHmsQ
+- "Financing Made Easy with Legendary Stakes!": https://www.youtube.com/watch?v=YREnlV4ZW8M
+- "Top Offspring Purse Explained": https://www.youtube.com/watch?v=-DqVhrLaNEk
+- "Compete Smarter, Not Richer: Leveling the Field": https://www.youtube.com/watch?v=NH4szuxnzOs
+
+### User Guides & Dashboards
+- "Getting Started: Setting up an account": https://www.youtube.com/watch?v=OG0qnj8MRUg
+- "The Legendary Point System: Comprehensive Guide" (video 1): https://www.youtube.com/watch?v=gPJp2h-Bg5M
+- "The Legendary Point System: Comprehensive Guide" (video 2): https://www.youtube.com/watch?v=HTXwQsDReog
+- "The Leaderboard: Step-by-Step Guide": https://www.youtube.com/watch?v=gpdke0pmlTg
+- "Sire Owners Dashboard Walkthrough": https://www.youtube.com/watch?v=D0VMfnUW1x0
+- "Horse Owners, Riders, Breeders & Dam Owners Dashboard": https://www.youtube.com/watch?v=Q8ZvaqkJMzc
+
+### Role-Specific Deep Dives
+- "Legendary Stakes for Sire Owners": https://www.youtube.com/watch?v=qIOoBfYXhSo
+- "For Horse Owners, Riders, Breeders & Dam Owners": https://www.youtube.com/watch?v=RkHYIxgxYUU
+
+### Community, Recaps & Testimonials
+- "2024 Competition Stats & 2025 Updates": https://www.youtube.com/watch?v=eJzgQ2G32MU
+- "Facebook Live Recap: Updates, Stats & Financing": https://www.youtube.com/watch?v=MKonBWwq4yU
+- "Testimonial — Cally Thomas, Part 1": https://www.youtube.com/watch?v=aQlGsEFeoQk
+- "Testimonial — Cally Thomas, Part 2": https://www.youtube.com/watch?v=ZU1n-LOqrqc
+- "Testimonial — Cally Thomas, Part 3": https://www.youtube.com/watch?v=VLAue_ZM0vQ
+- "Testimonial — CJ Garland, Part 1": https://www.youtube.com/watch?v=ZMCAEYY1jlc
+- "Testimonial — CJ Garland, Part 2": https://www.youtube.com/watch?v=5hlFoIv3aNw
+- "Testimonial — Jason Perry, Part 1": https://www.youtube.com/watch?v=YQQJEXmdncc
+- "Testimonial — Jason Perry, Part 2": https://www.youtube.com/watch?v=icYMIs6FcLg
+- "Testimonial — Taryn Sippel": https://www.youtube.com/watch?v=SWQSPzQBzF4
+
+### Operational Edge Cases
+- "What Happens When Things Go Wrong At An Event?": https://www.youtube.com/watch?v=pXgxuIJwLPo
+
+### Video Routing Guide (use these to match questions to videos)
+- Someone asks "what is this?" or "how does it work?" → siRTcQoWYoY or O5uL86jJ_6o
+- Someone asks about annual competition structure → BkJW_VibuCw
+- Someone asks what makes it different from other programs → txDWQ2U0SrI
+- Someone asks about stallion costs or the $15,000 fee → bubh35zHmsQ
+- Someone asks about financing options → YREnlV4ZW8M
+- Someone asks about the purse or how winnings are calculated → -DqVhrLaNEk
+- Someone asks about fairness or whether small operators can compete → NH4szuxnzOs
+- Someone asks how to get started, create an account, or sign up → always provide BOTH a [RESOURCE|web|Create Your Free Account|https://app.legendarystakes.com/signup] card AND a [RESOURCE|youtube|Getting Started: Setting Up an Account|https://www.youtube.com/watch?v=OG0qnj8MRUg] card so they can choose — the link if they're ready to go, the video if they want a walkthrough first.
+- Someone asks about points → gPJp2h-Bg5M or HTXwQsDReog
+- Someone asks about the leaderboard → gpdke0pmlTg
+- Someone asks about the sire owner dashboard → D0VMfnUW1x0
+- Someone asks about the horse owner, rider, breeder, or dam owner dashboard → Q8ZvaqkJMzc
+- Someone asks specifically about being a sire owner → qIOoBfYXhSo
+- Someone asks about being a horse owner, rider, breeder, or dam owner → RkHYIxgxYUU
+- Someone wants to hear from real participants or success stories → aQlGsEFeoQk (Cally Thomas), ZMCAEYY1jlc (CJ Garland), YQQJEXmdncc (Jason Perry), SWQSPzQBzF4 (Taryn Sippel)
+- Someone asks what happens if something goes wrong at a show → pXgxuIJwLPo
+- Someone wants historical stats or results → eJzgQ2G32MU
+
+## RESOURCE CARDS
+When a response includes a helpful link or YouTube reference, output it using this special format at the END of your message — the interface will render it as a clickable card:
+
+For website links use: [RESOURCE|web|Title of resource|https://url.com]
+For YouTube use: [RESOURCE|youtube|Title of video topic|https://www.youtube.com/@legendarystakes]
+
+Example: [RESOURCE|web|View the 2026 Leaderboard|https://www.legendarystakes.com]
+Example: [RESOURCE|youtube|How Stallion Enrollment Works|https://www.youtube.com/@legendarystakes]
+
+Only include resource cards when they genuinely add value. One or two per response maximum. Never include them just to fill space.
+
+## ENROLLED SIRES
+There are 473 enrolled sires in Legendary Stakes as of 2026. When someone asks whether a specific stallion is enrolled, check the list below. If the sire is on the list, confirm enrollment and tell them their offspring are eligible to compete. If the sire is not on this list, tell them the stallion may not be enrolled yet and suggest they visit legendarystakes.com/sires/ to verify, or contact info@legendarystakes.com to ask about enrollment.
+
+The interface will automatically surface a direct link to the sire's profile page when a known sire name is detected in your response — you do not need to include a URL in your text. Just confirm by name naturally in your answer.
+
+Full enrolled sire list:
+A DASH TA STREAK, A Mere Guy, A SHINER NAMED SIOUX, A STREAK OF FLING, A Special Dynasty, A TALE OF THE CAT, A Tale of the Hy Rey, A Twyst In Tyme, A Winning Fling, ADIOSS, AINT SEEN NOTHIN YET, ALONE DRIFTER, APOLLO CREED, ARMAGEDDON IT, ARMANI BLUE, AROOSTERCAT, Areybe, Awesome Ish, BBAA Two Moons, BET HESA START, BET YER ACES, BLACK WIDOW LEGACY, BLIND SIDED, BLU PANTHER, BOB HES QUICK, BOON A LITTLE, BOON TOO SUEN, BOONIFIED, BOONS CD MINK, BORN TA BE FAMOUS, BOY NAMED SIOUX, BRACE FOR BERNAL, BRAVE EYED BART, BRICKS VICTORY, BRING THE FURY, BSCC ON EAGLES WINGS, BZ FLIRTN NHOLLYWOOD, Bad Metal, Banderos Bandelino, Bark At The Boon, Better Believe Me, Black N Blu Boon, Bleu On Black, Blicky, Boonin N Da Benz, Born To Boon, Breykin Bad, CALL SIGN VIPER, CATS MOONSHINE, CATS ROYAL BOON, CATTALOU, CC RUNNNING, CD Dualin Peptos, CD FIRST DOWN DASH, CD HEZA FEARLESSFIRE, CD MAKIN US PROUD, CD MO LOTTA CHALADA, CD ROCKIN DA WAGON, CD TRES ACE, CFOUR A DARKNIGHT, CHACHINGG, CHECK YER METAL, CHEX MY GUY, CHEXACAT, CHICOS COVERT OPPS, CHROMED UP SPOOKS, CIRCLE BAR PLAY GUN, COMANCHE MOONSHINE, COUNTIN HOT CHECKS, COWANS POCO COWBOY, COWTOWNS CAT, CTR Metallic Boon, Cadbury Del Cielo, Candi Shop, Cattatap, Cole Blooded, Cool Guitar, Copycatboon, Countin Me In, Country Grammer, Coyote Is My Trade, D R Kerrone, DASH TA FAME, DEEPER SHADE OF BLU, DJANGO CAT, DONN JULIO, DONT STOPP BELIEVIN, DR WATSONS SCRIPT, DREYSCASHMONEYMAKER, DUAL REY, DUAL REYISH, DUAL SMART REY, DUALIN BOON, DUALIN ONCE, DUALLEN CAT RG, DUALS BLUE BOON, Diggin Too Suen, Divo, Dons Smokin Echo, Dun Burnin Chex, EIGHT MILE, EPIC METAL CAT, EVINCEBLE, EXXPEDIA, Epic N French, Epic Yet, Express Lane, FACE THE FACTS GUYZ, FIRST SPITTIN IMAGE, FLINGIN JAMESON, FLINGING DINERO, FR Shining Fly Guy, FR Thatll Do, FR Wimpys Tinsel Town, FRENCH STREAKIN JESS, FRENCH STREAKTOVEGAS, FRENCHY FRANCOIS, FREYK LIKE ME, FROSTARAPTOR, FROSTED PISTOL, FUNNY B BLUEMUCHAMAN, Face It Ima Diamond, Fancy Dash Ta Heaven, Feel The Fame, First Moon Covenant, Fishin Off The Wagon, Freezish, GETTIN BY, GHETTO SLIDE, GISTS FIFTY KING, GO STREAKIN ANGUS, GOODBYE MONEY, GOTTA SHINY GUN, GRAYS CARTEL, GREAT CATSBY, GRINDSTONE, GUNAGETWESTERN, GYPSYS STARLIGHT, HAL OF A RUN, HANDFUL OF JACKSONS, HANDY CASH, HEATTED, HEAVENLY FIREWATER, HES A PEPTO PLAYGUN, HES BULLETPROOF, HES PLAYINGFORKEEPS, HEY BARTENDERR, HEZ MORE LETHAL, HICKORY SAN BLANTON, HICKORYS NU GUNSMOKE, HIGH BROW CAT, HIGH BROW CD, HIGH BROWS GRULLO, HIGH INTEREST CD, HIT THA FLO, HK SHININ BLUE HAWK, HOLDIN ONTO FAME, HOLLYWOODS MONEY, HONTUBBY HOTTISH, HOT HUCKLEBERRY, HOT ONES ONLY, HOTT BUNZ, HOTT TWICE, HOTTISH, HP DASH TA FIESTA, HP HERO BY DESIGN, HP HOTROD, HP INTO THE DARK, HP QUICK TO STING, HUD SUNTRACED N BLUE, HUDSON CRAMBONE, HYDRIVE CAT, Hudson Happenstance, I AM THE PARTY, IDOLIZED IN BLUE, ILL BE SMART, INFERNNO, INLOVEWITHAMONSTER, INSTANT LUMIFICATION, INTENT TA FAME, IRISH CREEK WHISKEY, ISR WYN A BLUE, IT AINT ME, IVORY 36, IVORY INFERNO, JACK DANIELS 34, JACK HAMMERS DELIGHT, JAKES COWBOY LEGACY, JAMAICAN HOTTIE, JASONS PEPTOLENA, JAX SPARROW, JAYMES BOND, JESSCUZICAN, JOHNNY DOGS, JORGE JONEZ, JUDGE CASH, JUICE BOXX, JUST FIRE, KAVIAR, KBAUM LUCKY DRIFTWD, KDB MISTER HAS STYLE, KDB SKIPS TRU LEO, KDBEASYCASHFORDASHIN, KEEPIN TABS, KH SON OF A GUN, KING OF EVERYTHING, KING PINS, KROGS FIDDLE CAT, LECTROMOTION, LEGAL N TWISTED, LEGASEA, LENAS TELESIS, LEO HANCOCK HAYES, LIGHT N LENA, LIL LONG LEGS, LIL SPOON, LITTLE CIELO, LITTLE FAMOUS, LONE WOOLF, LOUS FEVER, LT AREYGIN HAILCAT, LT HEAVY METAL, LT SMARTLILLENABOON, Lectros Master Image, Lets Start A Riot, MAAD CITY, MAGIC MIIKE, MC BET YER MEDICATED, MERADAS BLUE SUE, METAL FIGURE, METALLIC CRUSH, METALLIC ECHO, METALLIC MASTERPIECE, METALLIC OATS, METALLICS MVP, MIDNIGHT COOL, MIDNIGHT RIDER 34, MISTER BEAUJANGLES, MP DINEROS WOODPATCH, MP KING GEORGE, MP SUGERAY, MR FORTY SIX REY, MR FRENCH BUGS, MUI FUEGO, MULBERRY FAME, MY PISTOLS HOTT, MY VEGAS PHLING, MYLOSA, NATURAL TOPAZ, NAVAJO NATION, NITROCAT, NNN FIREWATER ALIVE, NORTHERN METALLIC, NOTHING BUT BLU, NP CATS PLAYGUNS, NRR CAT KING COLE, NZ SCOTCH TIME, Never Truer, OBROTHERWHEREARTCOW, ON STEVIES TIME, ONCE IN A BLU BOON, ONCE YOU GO BLACK, ONE PEPPY INVESTMENT, ONE ROAN PEPTOS, ONE ROYAL KITTY RG, ONE SHINEY METALLIC, ONE TIME UP NORTH, ONENIGHT WITH STEVIE, OPUS CAT OLENA, OZ, PEPTOBOONSMAL, PEPTOREY, PEPTOS ROAN PLAYBOY, PEPTOS ROLLIN COAL, PEPTOS STYLISH OAK, PERKS IN BLUE, PHILO SANDEEN, PIEORITIES, PILOTS MOONFLASH, PLASMA CUTTER, RADDICAL, RAMBLING FEVER, RASTUS BO, RAWHIDES SLIDE, RC FANCY STEP, RE MISSN MECOM 170, REBEL PETE, REBEL ROUZZER, REBELL YELLER, REBS EASY CASH, REDWHITEANDBLUE BOON, REY DUAL, REY JAY METALLIC, REYDIOACTIVE, REYS OF METALLIC, REYSED IN THE DARK, REYZIN CLYDE, RF BACK FOR THE CASH, RF BLAZIN FORTUNE, RIO LOBO III, RN HIGHBROW LENA, ROAN DAWGER, ROASTING, ROCKET REYZ, ROCKIN DUAL, ROCKY MOUNTAIN BLUES, ROJO GOOSE, ROLL N STONE, RONAS CORONA, ROUGHOUTT, ROYAL BLU PEPTO CAT, RUMOHR, RUNNNING FOR RIO, RUNNNING FRENCH GUY, SANDELIC, SANNMAN, SANNMAN SUNLIGHT, SCOOTER 34, SDP BALBOA, SDP BLACK CAT, SDP BROTHER IN ARMS, SDP BUCEPHALUS, SDP FUEL, SDP HY REY BOUND, SDP ICEMANN, SDP LOOK MAN, SDP MANN O WAR, SDP MANNIFEST, SDP MR POSTMANN, SDP NOBIDEN, SDP Nachomann, SDP RED RANGER, SDP REUBEN, SDP ROCKETMANN, SDP SICARIO, SDP SPOCK, SDP STYLISH CD, SF BORNA RAMBLIN MAN, SF COLE CAT, SF DANCIN INTHE RAIN, SF DINERO N CASH, SF FANCY PANTS, SF HOTTISH LUMI CAT, SF IM THE CISCO KID, SF INFRARED, SF KESA CAT, SF LLUMINATI CAT, SF MOTLEY CRUE, SF QUIK N HOT CASH, SF RAMBO CAT, SHADES OF REY, SHAWNE BUGS COPY, SHEIK JEAN FLY HTT, SHINERR TIME, SHONUFF BET HESA CAT, SHOOGA REY LEONARD, SHOTT GUNN, SHOW ME THE MUNEY, SIGALA REY, SINN CITY, SIX MOONS BULLY, SLICK BY DESIGN, SLY AND REBELLIOUS, SLYE BY DESIGN, SLYLY HOT, SMART LITTLE LENA, SMART LOOKIN REY, SMART REYVOLUTION, SMARTY MCGEE, SMOKEDCHA, SMOKIN CUSTOM CROME, SMOKIN HOTTISH, SMOKIN LIL HASH, SMOOTH IVORY, SMOOTH PHANTOM ROLLZ, SOME KINDA GUN, SOULREYN, SOVEREIGN NATION, SPLASH OF GIN, SPOOK N BOON, SPOON CUT, SPOTISH, SPOTS HEFF, SPOTS HOTTIST, SRS VOODOO CHILD, STARLIGHTS GYPSY, STEVIE REY TIME, STEVIE REY VON, STONE BLUE VALENTINE, STYLIN CAT, SUPER STAR 017, SWEET ROLLZ, SWING WIDE, SYLVERADO, Smooth Chutter, Strait Fischer Legacy, TAG HEUER, TAGGLINE, TALEICIOUS, TANGLED UP N BLU, TAPT DANCIN CAT, TASCOSA CAT, TEE BOONE, TH COWBOY RIDES AWAY, THAT BOY BAD, THE ANIMAL, THE BOON, THE CHRONIC, THE DANE GER ZONE, THE GOODBYE LANE, THE HOT PRINCE, THE KANDYMAN, THE PUNISHER 34, THE REYL MCCOY, THIRD CUTTING, THIS GUYZ A KEEPER, THRILLERR, TIK TAC TOE, TIKKI TORCH, TIME TOGET WRECKLESS, TM GAME CHANGER, TOHOTTOHANDLE, TOUGH SON OFA GUN 34, TR DOLLYS FAMOUSDASH, TR DUAL REY, TR ILLUMNIATOR CASH, TR RADLEY, TR Rey Rey, TRES KINGS, TRES MOVE YOU, TRR LUCKY BRAZOS, TRR SON D SEVEN, TRUMP THAT, TS IRISH WHISKEY, TURBO DRIFTER CAT, TWENTYONE THIRTYONE, Thats What She Says, The Big Hauss, Thirty Four, U WANNA PLAY, UNO DEL BAY, UNREYL, Uncle Magic, VALADICTORIAN, VENOM BOONSMAL, VIEW ME FLYING, VINCE VAUN, VINTAGE ENTERPRIZE, VON LONG LEGS, VON SPARTACUS, VS CODE RED, VS FLATLINE, VS GOODRIDE, VSR BREYZEN ATTACK, VSR JUST RITE BLACK, VSR SMART CATALICE, VSR Tic Tac Roe, VU JA ROY, WAGON STAKE, WHATUTALKINABOUT, WHISKEY THIRDY, WILD THING DNA, WINNERAY, WINNERS VERSION, WON TIME MASTERPIECE, WOODY BY A ROCKSTAR, WYATT EARP III, Whiskey Tango Hero, Whistlin R Blues Away, YA KILLIN ME SMALLS, YANKEE GUN, Yer Ace of Diamonds, ZAK 34
+
+## 2026 EVENT CALENDAR
+These are known Legendary Stakes-eligible events for 2026. When someone asks about events in a certain month, region, or discipline, reference this list. Always remind them they can see the full current listing at https://legendarystakes.com and that events can be nominated by emailing info@legendarystakes.com at least 3 months in advance.
+
+Q1 — January through March:
+- Sandhills Stock Show & Rodeo | Odessa, TX | January | Steer Wrestling, Tie-Down Roping
+- National Western Stock Show | Denver, CO | January | Heading, Heeling, Reined Cow Horse, Ranch Horse
+- NBHA Arizona Super Show | Buckeye, AZ | January | Barrel Racing
+- Fort Worth Stock Show & Rodeo | Fort Worth, TX | February | Heading, Heeling, Reined Cow Horse, Ranch Horse
+- San Antonio Stock Show | San Antonio, TX | February | Barrels, Cutting, Breakaway, Tie-Down, Steer Wrestling
+- Houston Livestock Show | Houston, TX | February | Cutting
+- Winnemucca Ranch Hand Rodeo | Winnemucca, NV | March | Pole Bending, Barrel Racing, Sorting, Ranch Rodeo
+- Arizona Sun Circuit | Scottsdale, AZ | March | Heading, Heeling, Western Pleasure, Reined Cow Horse
+
+Q2 — April through June:
+- NRCHA Stallion Stakes | Las Vegas, NV | April | Reined Cow Horse
+- 2026 USTRC Finals | Fort Worth, TX | April | Heading, Heeling
+- BBR World Finals | Oklahoma City, OK | April | Barrel Racing
+- Western Heritage Classic | Abilene, TX | May | Ranch Rodeo
+- The American | Arlington, TX | May | Barrels, Steer Wrestling, Heading, Heeling, Tie-Down
+- Cinch RSNC World Finals | Fort Worth, TX | June | Sorting
+- AQHA VRH World Championships | Guthrie, OK | June | Breakaway Roping, Ranch Horse
+
+Q3 — July through September:
+- Calgary Stampede | Calgary, AB (Canada) | July | Steer Wrestling, Tie-Down Roping
+- NCHA Summer Spectacular | Fort Worth, TX | July | Cutting
+- NRCHA Hackamore Classic | Las Vegas, NV | August | Reined Cow Horse
+- Royal Crown Race | Guthrie, OK | August | Heading, Heeling, Barrel Racing, Breakaway Roping
+- Pendleton Round-Up | Pendleton, OR | September | Barrels, Roping, Steer Wrestling, Breakaway
+- Reno Snaffle Bit Futurity | Reno, NV | September | Reined Cow Horse
+
+Q4 — October through December:
+- Pink Buckle Barrel Race | Guthrie, OK | October | Barrel Racing
+- AQHA World Show | Oklahoma City, OK | October | All 14 Disciplines
+- NRCHA Snaffle-Bit Futurity | Fort Worth, TX | October | Reined Cow Horse
+- WRCA World Championship Ranch Rodeo | Amarillo, TX | November | Ranch Rodeo
+- National Finals Rodeo (NFR) | Las Vegas, NV | December | Barrels, Roping, Steer Wrestling, Breakaway
+
+Quick reference by discipline:
+- Barrel Racing: NBHA Arizona Super Show (Jan), BBR World Finals (Apr), Royal Crown Race (Aug), Pink Buckle (Oct), NFR (Dec)
+- Cutting: Houston Livestock Show (Feb), NCHA Summer Spectacular (Jul)
+- Heading/Heeling: National Western (Jan), Fort Worth (Feb), USTRC Finals (Apr), The American (May), Royal Crown Race (Aug)
+- Reined Cow Horse: National Western (Jan), Fort Worth (Feb), Arizona Sun Circuit (Mar), NRCHA Stallion Stakes (Apr), Hackamore Classic (Aug), Reno Snaffle Bit (Sep), NRCHA Snaffle-Bit Futurity (Oct)
+- Ranch Rodeo: Winnemucca (Mar), Western Heritage Classic (May), WRCA World Championship (Nov)
+- Most disciplines at once: The American in May (5 disciplines), AQHA World Show in October (all 14)
+
+## SIGNUP CARDS
+Any time someone asks how to sign up, create an account, get started, or join Legendary Stakes, always provide TWO resource cards together:
+1. [RESOURCE|web|Create Your Free Account|https://app.legendarystakes.com/signup]
+2. [RESOURCE|youtube|Getting Started: Setting Up an Account|https://www.youtube.com/watch?v=OG0qnj8MRUg]
+
+Give them both — the link for people ready to go right now, and the video for people who want to see it walked through first. Never give one without the other for signup questions.
+
+## SCOPE
+Answer questions about: how the platform works, costs, enrollment, disciplines, events, points, payouts, royalties, leaderboards, how to get started, 2025 results, 2026 season.
+
+If someone asks about something outside Legendary Stakes, bring it back warmly: "That's a bit outside my lane, but I'm happy to help you with anything about Legendary Stakes."
+
+## RESPONSE STYLE
+1. Answer the question directly in the first sentence or two.
+2. Add only the context that's truly needed.
+3. Offer a next step, resource, or follow-up if helpful.
+4. Keep it short. If it can be said in 3 sentences, say it in 3.
+
+Never use bullet points unless the person is clearly asking for a list or comparison. Prose first.
+Never start a response with "Great question!" or any version of complimenting the question.
+Never use em-dashes. Use a comma, period, or rephrase instead.
+Contractions always. "It's," not "it is."
+
+If someone seems confused or lost, say so with warmth: "Let me back up and make this simpler." Then do it.`;
+
+// ─── SIRE DATA ────────────────────────────────────────────────────────────────
+// Full lookup table: sire name → profile URL
+// Used for client-side fuzzy matching to surface profile cards
+const SIRE_DATA = {
+  "A DASH TA STREAK": "https://legendarystakes.com/sires/a-dash-ta-streak/",
+  "A Mere Guy": "https://legendarystakes.com/sires/a-mere-guy/",
+  "A SHINER NAMED SIOUX": "https://legendarystakes.com/sires/a-shiner-named-sioux/",
+  "A STREAK OF FLING": "https://legendarystakes.com/sires/a-streak-of-fling/",
+  "A Special Dynasty": "https://legendarystakes.com/sires/a-special-dynasty/",
+  "A TALE OF THE CAT": "https://legendarystakes.com/sires/a-tale-of-the-cat/",
+  "A Tale of the Hy Rey": "https://legendarystakes.com/sires/a-tale-of-the-hy-rey/",
+  "A Twyst In Tyme": "https://legendarystakes.com/sires/a-twyst-in-tyme/",
+  "A Winning Fling": "https://legendarystakes.com/sires/a-winning-fling/",
+  "ADIOSS": "https://legendarystakes.com/sires/adioss/",
+  "AINT SEEN NOTHIN YET": "https://legendarystakes.com/sires/aint-seen-nothin-yet/",
+  "ALONE DRIFTER": "https://legendarystakes.com/sires/alone-drifter/",
+  "APOLLO CREED": "https://legendarystakes.com/sires/apollo-creed/",
+  "ARMAGEDDON IT": "https://legendarystakes.com/sires/armageddon-it/",
+  "ARMANI BLUE": "https://legendarystakes.com/sires/armani-blue/",
+  "AROOSTERCAT": "https://legendarystakes.com/sires/aroostercat/",
+  "Areybe": "https://legendarystakes.com/sires/areybe/",
+  "Awesome Ish": "https://legendarystakes.com/sires/awesome-ish/",
+  "BBAA Two Moons": "https://legendarystakes.com/sires/bbaa-two-moons/",
+  "BET HESA START": "https://legendarystakes.com/sires/bet-hesa-start/",
+  "BET YER ACES": "https://legendarystakes.com/sires/bet-yer-aces/",
+  "BLACK WIDOW LEGACY": "https://legendarystakes.com/sires/black-widow-legacy/",
+  "BLIND SIDED": "https://legendarystakes.com/sires/blind-sided/",
+  "BLU PANTHER": "https://legendarystakes.com/sires/blu-panther/",
+  "BOB HES QUICK": "https://legendarystakes.com/sires/bob-hes-quick/",
+  "BOON A LITTLE": "https://legendarystakes.com/sires/boon-a-little/",
+  "BOON TOO SUEN": "https://legendarystakes.com/sires/boon-too-suen/",
+  "BOONIFIED": "https://legendarystakes.com/sires/boonified/",
+  "BOONS CD MINK": "https://legendarystakes.com/sires/boons-cd-mink/",
+  "BORN TA BE FAMOUS": "https://legendarystakes.com/sires/born-ta-be-famous/",
+  "BOY NAMED SIOUX": "https://legendarystakes.com/sires/boy-named-sioux/",
+  "BRACE FOR BERNAL": "https://legendarystakes.com/sires/brace-for-bernal/",
+  "BRAVE EYED BART": "https://legendarystakes.com/sires/brave-eyed-bart/",
+  "BRICKS VICTORY": "https://legendarystakes.com/sires/bricks-victory/",
+  "BRING THE FURY": "https://legendarystakes.com/sires/bring-the-fury/",
+  "BSCC ON EAGLES WINGS": "https://legendarystakes.com/sires/bscc-on-eagles-wings/",
+  "BZ FLIRTN NHOLLYWOOD": "https://legendarystakes.com/sires/bz-flirtn-nhollywood/",
+  "Bad Metal": "https://legendarystakes.com/sires/bad-metal/",
+  "Banderos Bandelino": "https://legendarystakes.com/sires/banderos-bandelino/",
+  "Bark At The Boon": "https://legendarystakes.com/sires/bark-at-the-boon/",
+  "Better Believe Me": "https://legendarystakes.com/sires/better-believe-me/",
+  "Black N Blu Boon": "https://legendarystakes.com/sires/black-n-blu-boon/",
+  "Bleu On Black": "https://legendarystakes.com/sires/bleu-on-black/",
+  "Blicky": "https://legendarystakes.com/sires/blicky/",
+  "Boonin N Da Benz": "https://legendarystakes.com/sires/boonin-n-da-benz/",
+  "Born To Boon": "https://legendarystakes.com/sires/born-to-boon/",
+  "Breykin Bad": "https://legendarystakes.com/sires/breykin-bad/",
+  "CALL SIGN VIPER": "https://legendarystakes.com/sires/call-sign-viper/",
+  "CATS MOONSHINE": "https://legendarystakes.com/sires/cats-moonshine/",
+  "CATS ROYAL BOON": "https://legendarystakes.com/sires/cats-royal-boon/",
+  "CATTALOU": "https://legendarystakes.com/sires/cattalou/",
+  "CC RUNNNING": "https://legendarystakes.com/sires/cc-runnning/",
+  "CD Dualin Peptos": "https://legendarystakes.com/sires/cd-dualin-peptos/",
+  "CD FIRST DOWN DASH": "https://legendarystakes.com/sires/cd-first-down-dash/",
+  "CD HEZA FEARLESSFIRE": "https://legendarystakes.com/sires/cd-heza-fearlessfire/",
+  "CD MAKIN US PROUD": "https://legendarystakes.com/sires/cd-makin-us-proud/",
+  "CD MO LOTTA CHALADA": "https://legendarystakes.com/sires/cd-mo-lotta-chalada/",
+  "CD ROCKIN DA WAGON": "https://legendarystakes.com/sires/cd-rockin-da-wagon/",
+  "CD TRES ACE": "https://legendarystakes.com/sires/cd-tres-ace/",
+  "CFOUR A DARKNIGHT": "https://legendarystakes.com/sires/cfour-a-darknight/",
+  "CHACHINGG": "https://legendarystakes.com/sires/chachingg/",
+  "CHECK YER METAL": "https://legendarystakes.com/sires/check-yer-metal/",
+  "CHEX MY GUY": "https://legendarystakes.com/sires/chex-my-guy/",
+  "CHEXACAT": "https://legendarystakes.com/sires/chexacat/",
+  "CHICOS COVERT OPPS": "https://legendarystakes.com/sires/chicos-covert-opps/",
+  "CHROMED UP SPOOKS": "https://legendarystakes.com/sires/chromed-up-spooks/",
+  "CIRCLE BAR PLAY GUN": "https://legendarystakes.com/sires/circle-bar-play-gun/",
+  "COMANCHE MOONSHINE": "https://legendarystakes.com/sires/comanche-moonshine/",
+  "COUNTIN HOT CHECKS": "https://legendarystakes.com/sires/countin-hot-checks/",
+  "COWANS POCO COWBOY": "https://legendarystakes.com/sires/cowans-poco-cowboy/",
+  "COWTOWNS CAT": "https://legendarystakes.com/sires/cowtowns-cat/",
+  "CTR Metallic Boon": "https://legendarystakes.com/sires/ctr-metallic-boon/",
+  "Cadbury Del Cielo": "https://legendarystakes.com/sires/cadbury-del-cielo/",
+  "Candi Shop": "https://legendarystakes.com/sires/candi-shop/",
+  "Cattatap": "https://legendarystakes.com/sires/cattatap/",
+  "Cole Blooded": "https://legendarystakes.com/sires/cole-blooded/",
+  "Cool Guitar": "https://legendarystakes.com/sires/cool-guitar/",
+  "Copycatboon": "https://legendarystakes.com/sires/copycatboon/",
+  "Countin Me In": "https://legendarystakes.com/sires/countin-me-in/",
+  "Country Grammer": "https://legendarystakes.com/sires/country-grammer/",
+  "Coyote Is My Trade": "https://legendarystakes.com/sires/coyote-is-my-trade/",
+  "D R Kerrone": "https://legendarystakes.com/sires/d-r-kerrone/",
+  "DASH TA FAME": "https://legendarystakes.com/sires/dash-ta-fame/",
+  "DEEPER SHADE OF BLU": "https://legendarystakes.com/sires/deeper-shade-of-blu/",
+  "DJANGO CAT": "https://legendarystakes.com/sires/django-cat/",
+  "DONN JULIO": "https://legendarystakes.com/sires/donn-julio/",
+  "DONT STOPP BELIEVIN": "https://legendarystakes.com/sires/dont-stopp-believin/",
+  "DR WATSONS SCRIPT": "https://legendarystakes.com/sires/dr-watsons-script/",
+  "DREYSCASHMONEYMAKER": "https://legendarystakes.com/sires/dreyscashmoneymaker/",
+  "DUAL REY": "https://legendarystakes.com/sires/dual-rey/",
+  "DUAL REYISH": "https://legendarystakes.com/sires/dual-reyish/",
+  "DUAL SMART REY": "https://legendarystakes.com/sires/dual-smart-rey/",
+  "DUALIN BOON": "https://legendarystakes.com/sires/dualin-boon/",
+  "DUALIN ONCE": "https://legendarystakes.com/sires/dualin-once/",
+  "DUALLEN CAT RG": "https://legendarystakes.com/sires/duallen-cat-rg/",
+  "DUALS BLUE BOON": "https://legendarystakes.com/sires/duals-blue-boon/",
+  "Diggin Too Suen": "https://legendarystakes.com/sires/diggin-too-suen/",
+  "Divo": "https://legendarystakes.com/sires/divo/",
+  "Dons Smokin Echo": "https://legendarystakes.com/sires/dons-smokin-echo/",
+  "Dun Burnin Chex": "https://legendarystakes.com/sires/dun-burnin-chex/",
+  "EIGHT MILE": "https://legendarystakes.com/sires/eight-mile/",
+  "EPIC METAL CAT": "https://legendarystakes.com/sires/epic-metal-cat/",
+  "EVINCEBLE": "https://legendarystakes.com/sires/evinceble/",
+  "EXXPEDIA": "https://legendarystakes.com/sires/exxpedia/",
+  "Epic N French": "https://legendarystakes.com/sires/epic-n-french/",
+  "Epic Yet": "https://legendarystakes.com/sires/epic-yet/",
+  "Express Lane": "https://legendarystakes.com/sires/express-lane/",
+  "FACE THE FACTS GUYZ": "https://legendarystakes.com/sires/face-the-facts-guyz/",
+  "FIRST SPITTIN IMAGE": "https://legendarystakes.com/sires/first-spittin-image/",
+  "FLINGIN JAMESON": "https://legendarystakes.com/sires/flingin-jameson/",
+  "FLINGING DINERO": "https://legendarystakes.com/sires/flinging-dinero/",
+  "FR Shining Fly Guy": "https://legendarystakes.com/sires/fr-shining-fly-guy/",
+  "FR Thatll Do": "https://legendarystakes.com/sires/fr-thatll-do/",
+  "FR Wimpys Tinsel Town": "https://legendarystakes.com/sires/fr-wimpys-tinsel-town/",
+  "FRENCH STREAKIN JESS": "https://legendarystakes.com/sires/french-streakin-jess/",
+  "FRENCH STREAKTOVEGAS": "https://legendarystakes.com/sires/french-streaktovegas/",
+  "FRENCHY FRANCOIS": "https://legendarystakes.com/sires/frenchy-francois/",
+  "FREYK LIKE ME": "https://legendarystakes.com/sires/freyk-like-me/",
+  "FROSTARAPTOR": "https://legendarystakes.com/sires/frostaraptor/",
+  "FROSTED PISTOL": "https://legendarystakes.com/sires/frosted-pistol/",
+  "FUNNY B BLUEMUCHAMAN": "https://legendarystakes.com/sires/funny-b-bluemuchaman/",
+  "Face It Ima Diamond": "https://legendarystakes.com/sires/face-it-ima-diamond/",
+  "Fancy Dash Ta Heaven": "https://legendarystakes.com/sires/fancy-dash-ta-heaven/",
+  "Feel The Fame": "https://legendarystakes.com/sires/feel-the-fame/",
+  "First Moon Covenant": "https://legendarystakes.com/sires/first-moon-covenant/",
+  "Fishin Off The Wagon": "https://legendarystakes.com/sires/fishin-off-the-wagon/",
+  "Freezish": "https://legendarystakes.com/sires/freezish/",
+  "GETTIN BY": "https://legendarystakes.com/sires/gettin-by/",
+  "GHETTO SLIDE": "https://legendarystakes.com/sires/ghetto-slide/",
+  "GISTS FIFTY KING": "https://legendarystakes.com/sires/gists-fifty-king/",
+  "GO STREAKIN ANGUS": "https://legendarystakes.com/sires/go-streakin-angus/",
+  "GOODBYE MONEY": "https://legendarystakes.com/sires/goodbye-money/",
+  "GOTTA SHINY GUN": "https://legendarystakes.com/sires/gotta-shiny-gun/",
+  "GRAYS CARTEL": "https://legendarystakes.com/sires/grays-cartel/",
+  "GREAT CATSBY": "https://legendarystakes.com/sires/great-catsby/",
+  "GRINDSTONE": "https://legendarystakes.com/sires/grindstone/",
+  "GUNAGETWESTERN": "https://legendarystakes.com/sires/gunagetwestern/",
+  "GYPSYS STARLIGHT": "https://legendarystakes.com/sires/gypsys-starlight/",
+  "HAL OF A RUN": "https://legendarystakes.com/sires/hal-of-a-run/",
+  "HANDFUL OF JACKSONS": "https://legendarystakes.com/sires/handful-of-jacksons/",
+  "HANDY CASH": "https://legendarystakes.com/sires/handy-cash/",
+  "HEATTED": "https://legendarystakes.com/sires/heatted/",
+  "HEAVENLY FIREWATER": "https://legendarystakes.com/sires/heavenly-firewater/",
+  "HES A PEPTO PLAYGUN": "https://legendarystakes.com/sires/hes-a-pepto-playgun/",
+  "HES BULLETPROOF": "https://legendarystakes.com/sires/hes-bulletproof/",
+  "HES PLAYINGFORKEEPS": "https://legendarystakes.com/sires/hes-playingforkeeps/",
+  "HEY BARTENDERR": "https://legendarystakes.com/sires/hey-bartenderr/",
+  "HEZ MORE LETHAL": "https://legendarystakes.com/sires/hez-more-lethal/",
+  "HICKORY SAN BLANTON": "https://legendarystakes.com/sires/hickory-san-blanton/",
+  "HICKORYS NU GUNSMOKE": "https://legendarystakes.com/sires/hickorys-nu-gunsmoke/",
+  "HIGH BROW CAT": "https://legendarystakes.com/sires/high-brow-cat/",
+  "HIGH BROW CD": "https://legendarystakes.com/sires/high-brow-cd/",
+  "HIGH BROWS GRULLO": "https://legendarystakes.com/sires/high-brows-grullo/",
+  "HIGH INTEREST CD": "https://legendarystakes.com/sires/high-interest-cd/",
+  "HIT THA FLO": "https://legendarystakes.com/sires/hit-tha-flo/",
+  "HK SHININ BLUE HAWK": "https://legendarystakes.com/sires/hk-shinin-blue-hawk/",
+  "HOLDIN ONTO FAME": "https://legendarystakes.com/sires/holdin-onto-fame/",
+  "HOLLYWOODS MONEY": "https://legendarystakes.com/sires/hollywoods-money/",
+  "HONTUBBY HOTTISH": "https://legendarystakes.com/sires/hontubby-hottish/",
+  "HOT HUCKLEBERRY": "https://legendarystakes.com/sires/hot-huckleberry/",
+  "HOT ONES ONLY": "https://legendarystakes.com/sires/hot-ones-only/",
+  "HOTT BUNZ": "https://legendarystakes.com/sires/hott-bunz/",
+  "HOTT TWICE": "https://legendarystakes.com/sires/hott-twice/",
+  "HOTTISH": "https://legendarystakes.com/sires/hottish/",
+  "HP DASH TA FIESTA": "https://legendarystakes.com/sires/hp-dash-ta-fiesta/",
+  "HP HERO BY DESIGN": "https://legendarystakes.com/sires/hp-hero-by-design/",
+  "HP HOTROD": "https://legendarystakes.com/sires/hp-hotrod/",
+  "HP INTO THE DARK": "https://legendarystakes.com/sires/hp-into-the-dark/",
+  "HP QUICK TO STING": "https://legendarystakes.com/sires/hp-quick-to-sting/",
+  "HUD SUNTRACED N BLUE": "https://legendarystakes.com/sires/hud-suntraced-n-blue/",
+  "HUDSON CRAMBONE": "https://legendarystakes.com/sires/hudson-crambone/",
+  "HYDRIVE CAT": "https://legendarystakes.com/sires/hydrive-cat/",
+  "Hudson Happenstance": "https://legendarystakes.com/sires/hudson-happenstance/",
+  "I AM THE PARTY": "https://legendarystakes.com/sires/i-am-the-party/",
+  "IDOLIZED IN BLUE": "https://legendarystakes.com/sires/idolized-in-blue/",
+  "ILL BE SMART": "https://legendarystakes.com/sires/ill-be-smart/",
+  "INFERNNO": "https://legendarystakes.com/sires/infernno/",
+  "INLOVEWITHAMONSTER": "https://legendarystakes.com/sires/inlovewithamonster/",
+  "INSTANT LUMIFICATION": "https://legendarystakes.com/sires/instant-lumification/",
+  "INTENT TA FAME": "https://legendarystakes.com/sires/intent-ta-fame/",
+  "IRISH CREEK WHISKEY": "https://legendarystakes.com/sires/irish-creek-whiskey/",
+  "ISR WYN A BLUE": "https://legendarystakes.com/sires/isr-wyn-a-blue/",
+  "IT AINT ME": "https://legendarystakes.com/sires/it-aint-me/",
+  "IVORY 36": "https://legendarystakes.com/sires/ivory-36/",
+  "IVORY INFERNO": "https://legendarystakes.com/sires/ivory-inferno/",
+  "JACK DANIELS 34": "https://legendarystakes.com/sires/jack-daniels-34/",
+  "JACK HAMMERS DELIGHT": "https://legendarystakes.com/sires/jack-hammers-delight/",
+  "JAKES COWBOY LEGACY": "https://legendarystakes.com/sires/jakes-cowboy-legacy/",
+  "JAMAICAN HOTTIE": "https://legendarystakes.com/sires/jamaican-hottie/",
+  "JASONS PEPTOLENA": "https://legendarystakes.com/sires/jasons-peptolena/",
+  "JAX SPARROW": "https://legendarystakes.com/sires/jax-sparrow/",
+  "JAYMES BOND": "https://legendarystakes.com/sires/jaymes-bond/",
+  "JESSCUZICAN": "https://legendarystakes.com/sires/jesscuzican/",
+  "JOHNNY DOGS": "https://legendarystakes.com/sires/johnny-dogs/",
+  "JORGE JONEZ": "https://legendarystakes.com/sires/jorge-jonez/",
+  "JUDGE CASH": "https://legendarystakes.com/sires/judge-cash/",
+  "JUICE BOXX": "https://legendarystakes.com/sires/juice-boxx/",
+  "JUST FIRE": "https://legendarystakes.com/sires/just-fire/",
+  "KAVIAR": "https://legendarystakes.com/sires/kaviar/",
+  "KBAUM LUCKY DRIFTWD": "https://legendarystakes.com/sires/kbaum-lucky-driftwd/",
+  "KDB MISTER HAS STYLE": "https://legendarystakes.com/sires/kdb-mister-has-style/",
+  "KDB SKIPS TRU LEO": "https://legendarystakes.com/sires/kdb-skips-tru-leo/",
+  "KDBEASYCASHFORDASHIN": "https://legendarystakes.com/sires/kdbeasycashfordashin/",
+  "KEEPIN TABS": "https://legendarystakes.com/sires/keepin-tabs/",
+  "KH SON OF A GUN": "https://legendarystakes.com/sires/kh-son-of-a-gun/",
+  "KING OF EVERYTHING": "https://legendarystakes.com/sires/king-of-everything/",
+  "KING PINS": "https://legendarystakes.com/sires/king-pins/",
+  "KROGS FIDDLE CAT": "https://legendarystakes.com/sires/krogs-fiddle-cat/",
+  "LECTROMOTION": "https://legendarystakes.com/sires/lectromotion/",
+  "LEGAL N TWISTED": "https://legendarystakes.com/sires/legal-n-twisted/",
+  "LEGASEA": "https://legendarystakes.com/sires/legasea/",
+  "LENAS TELESIS": "https://legendarystakes.com/sires/lenas-telesis/",
+  "LEO HANCOCK HAYES": "https://legendarystakes.com/sires/leo-hancock-hayes/",
+  "LIGHT N LENA": "https://legendarystakes.com/sires/light-n-lena/",
+  "LIL LONG LEGS": "https://legendarystakes.com/sires/lil-long-legs/",
+  "LIL SPOON": "https://legendarystakes.com/sires/lil-spoon/",
+  "LITTLE CIELO": "https://legendarystakes.com/sires/little-cielo/",
+  "LITTLE FAMOUS": "https://legendarystakes.com/sires/little-famous/",
+  "LONE WOOLF": "https://legendarystakes.com/sires/lone-woolf/",
+  "LOUS FEVER": "https://legendarystakes.com/sires/lous-fever/",
+  "LT AREYGIN HAILCAT": "https://legendarystakes.com/sires/lt-areygin-hailcat/",
+  "LT HEAVY METAL": "https://legendarystakes.com/sires/lt-heavy-metal/",
+  "LT SMARTLILLENABOON": "https://legendarystakes.com/sires/lt-smartlillenaboon/",
+  "Lectros Master Image": "https://legendarystakes.com/sires/lectros-master-image/",
+  "Lets Start A Riot": "https://legendarystakes.com/sires/lets-start-a-riot/",
+  "MAAD CITY": "https://legendarystakes.com/sires/maad-city/",
+  "MAGIC MIIKE": "https://legendarystakes.com/sires/magic-miike/",
+  "MC BET YER MEDICATED": "https://legendarystakes.com/sires/mc-bet-yer-medicated/",
+  "MERADAS BLUE SUE": "https://legendarystakes.com/sires/meradas-blue-sue/",
+  "METAL FIGURE": "https://legendarystakes.com/sires/metal-figure/",
+  "METALLIC CRUSH": "https://legendarystakes.com/sires/metallic-crush/",
+  "METALLIC ECHO": "https://legendarystakes.com/sires/metallic-echo/",
+  "METALLIC MASTERPIECE": "https://legendarystakes.com/sires/metallic-masterpiece/",
+  "METALLIC OATS": "https://legendarystakes.com/sires/metallic-oats/",
+  "METALLICS MVP": "https://legendarystakes.com/sires/metallics-mvp/",
+  "MIDNIGHT COOL": "https://legendarystakes.com/sires/midnight-cool/",
+  "MIDNIGHT RIDER 34": "https://legendarystakes.com/sires/midnight-rider-34/",
+  "MISTER BEAUJANGLES": "https://legendarystakes.com/sires/mister-beaujangles/",
+  "MP DINEROS WOODPATCH": "https://legendarystakes.com/sires/mp-dineros-woodpatch/",
+  "MP KING GEORGE": "https://legendarystakes.com/sires/mp-king-george/",
+  "MP SUGERAY": "https://legendarystakes.com/sires/mp-sugeray/",
+  "MR FORTY SIX REY": "https://legendarystakes.com/sires/mr-forty-six-rey/",
+  "MR FRENCH BUGS": "https://legendarystakes.com/sires/mr-french-bugs/",
+  "MUI FUEGO": "https://legendarystakes.com/sires/mui-fuego/",
+  "MULBERRY FAME": "https://legendarystakes.com/sires/mulberry-fame/",
+  "MY PISTOLS HOTT": "https://legendarystakes.com/sires/my-pistols-hott/",
+  "MY VEGAS PHLING": "https://legendarystakes.com/sires/my-vegas-phling/",
+  "MYLOSA": "https://legendarystakes.com/sires/mylosa/",
+  "NATURAL TOPAZ": "https://legendarystakes.com/sires/natural-topaz/",
+  "NAVAJO NATION": "https://legendarystakes.com/sires/navajo-nation/",
+  "NITROCAT": "https://legendarystakes.com/sires/nitrocat/",
+  "NNN FIREWATER ALIVE": "https://legendarystakes.com/sires/nnn-firewater-alive/",
+  "NORTHERN METALLIC": "https://legendarystakes.com/sires/northern-metallic/",
+  "NOTHING BUT BLU": "https://legendarystakes.com/sires/nothing-but-blu/",
+  "NP CATS PLAYGUNS": "https://legendarystakes.com/sires/np-cats-playguns/",
+  "NRR CAT KING COLE": "https://legendarystakes.com/sires/nrr-cat-king-cole/",
+  "NZ SCOTCH TIME": "https://legendarystakes.com/sires/nz-scotch-time/",
+  "Never Truer": "https://legendarystakes.com/sires/never-truer/",
+  "OBROTHERWHEREARTCOW": "https://legendarystakes.com/sires/obrotherwhereartcow/",
+  "ON STEVIES TIME": "https://legendarystakes.com/sires/on-stevies-time/",
+  "ONCE IN A BLU BOON": "https://legendarystakes.com/sires/once-in-a-blu-boon/",
+  "ONCE YOU GO BLACK": "https://legendarystakes.com/sires/once-you-go-black/",
+  "ONE PEPPY INVESTMENT": "https://legendarystakes.com/sires/one-peppy-investment/",
+  "ONE ROAN PEPTOS": "https://legendarystakes.com/sires/one-roan-peptos/",
+  "ONE ROYAL KITTY RG": "https://legendarystakes.com/sires/one-royal-kitty-rg/",
+  "ONE SHINEY METALLIC": "https://legendarystakes.com/sires/one-shiney-metallic/",
+  "ONE TIME UP NORTH": "https://legendarystakes.com/sires/one-time-up-north/",
+  "ONENIGHT WITH STEVIE": "https://legendarystakes.com/sires/onenight-with-stevie/",
+  "OPUS CAT OLENA": "https://legendarystakes.com/sires/opus-cat-olena/",
+  "OZ": "https://legendarystakes.com/sires/oz/",
+  "PEPTOBOONSMAL": "https://legendarystakes.com/sires/peptoboonsmal/",
+  "PEPTOREY": "https://legendarystakes.com/sires/peptorey/",
+  "PEPTOS ROAN PLAYBOY": "https://legendarystakes.com/sires/peptos-roan-playboy/",
+  "PEPTOS ROLLIN COAL": "https://legendarystakes.com/sires/peptos-rollin-coal/",
+  "PEPTOS STYLISH OAK": "https://legendarystakes.com/sires/peptos-stylish-oak/",
+  "PERKS IN BLUE": "https://legendarystakes.com/sires/perks-in-blue/",
+  "PHILO SANDEEN": "https://legendarystakes.com/sires/philo-sandeen/",
+  "PIEORITIES": "https://legendarystakes.com/sires/pieorities/",
+  "PILOTS MOONFLASH": "https://legendarystakes.com/sires/pilots-moonflash/",
+  "PLASMA CUTTER": "https://legendarystakes.com/sires/plasma-cutter/",
+  "RADDICAL": "https://legendarystakes.com/sires/raddical/",
+  "RAMBLING FEVER": "https://legendarystakes.com/sires/rambling-fever/",
+  "RASTUS BO": "https://legendarystakes.com/sires/rastus-bo/",
+  "RAWHIDES SLIDE": "https://legendarystakes.com/sires/rawhides-slide/",
+  "RC FANCY STEP": "https://legendarystakes.com/sires/rc-fancy-step/",
+  "RE MISSN MECOM 170": "https://legendarystakes.com/sires/re-missn-mecom-170/",
+  "REBEL PETE": "https://legendarystakes.com/sires/rebel-pete/",
+  "REBEL ROUZZER": "https://legendarystakes.com/sires/rebel-rouzzer/",
+  "REBELL YELLER": "https://legendarystakes.com/sires/rebell-yeller/",
+  "REBS EASY CASH": "https://legendarystakes.com/sires/rebs-easy-cash/",
+  "REDWHITEANDBLUE BOON": "https://legendarystakes.com/sires/redwhiteandblue-boon/",
+  "REY DUAL": "https://legendarystakes.com/sires/rey-dual/",
+  "REY JAY METALLIC": "https://legendarystakes.com/sires/rey-jay-metallic/",
+  "REYDIOACTIVE": "https://legendarystakes.com/sires/reydioactive/",
+  "REYS OF METALLIC": "https://legendarystakes.com/sires/reys-of-metallic/",
+  "REYSED IN THE DARK": "https://legendarystakes.com/sires/reysed-in-the-dark/",
+  "REYZIN CLYDE": "https://legendarystakes.com/sires/reyzin-clyde/",
+  "RF BACK FOR THE CASH": "https://legendarystakes.com/sires/rf-back-for-the-cash/",
+  "RF BLAZIN FORTUNE": "https://legendarystakes.com/sires/rf-blazin-fortune/",
+  "RIO LOBO III": "https://legendarystakes.com/sires/rio-lobo-iii/",
+  "RN HIGHBROW LENA": "https://legendarystakes.com/sires/rn-highbrow-lena/",
+  "ROAN DAWGER": "https://legendarystakes.com/sires/roan-dawger/",
+  "ROASTING": "https://legendarystakes.com/sires/roasting/",
+  "ROCKET REYZ": "https://legendarystakes.com/sires/rocket-reyz/",
+  "ROCKIN DUAL": "https://legendarystakes.com/sires/rockin-dual/",
+  "ROCKY MOUNTAIN BLUES": "https://legendarystakes.com/sires/rocky-mountain-blues/",
+  "ROJO GOOSE": "https://legendarystakes.com/sires/rojo-goose/",
+  "ROLL N STONE": "https://legendarystakes.com/sires/roll-n-stone/",
+  "RONAS CORONA": "https://legendarystakes.com/sires/ronas-corona/",
+  "ROUGHOUTT": "https://legendarystakes.com/sires/roughoutt/",
+  "ROYAL BLU PEPTO CAT": "https://legendarystakes.com/sires/royal-blu-pepto-cat/",
+  "RUMOHR": "https://legendarystakes.com/sires/rumohr/",
+  "RUNNNING FOR RIO": "https://legendarystakes.com/sires/runnning-for-rio/",
+  "RUNNNING FRENCH GUY": "https://legendarystakes.com/sires/runnning-french-guy/",
+  "SANDELIC": "https://legendarystakes.com/sires/sandelic/",
+  "SANNMAN": "https://legendarystakes.com/sires/sannman/",
+  "SANNMAN SUNLIGHT": "https://legendarystakes.com/sires/sannman-sunlight/",
+  "SCOOTER 34": "https://legendarystakes.com/sires/scooter-34/",
+  "SDP BALBOA": "https://legendarystakes.com/sires/sdp-balboa/",
+  "SDP BLACK CAT": "https://legendarystakes.com/sires/sdp-black-cat/",
+  "SDP BROTHER IN ARMS": "https://legendarystakes.com/sires/sdp-brother-in-arms/",
+  "SDP BUCEPHALUS": "https://legendarystakes.com/sires/sdp-bucephalus/",
+  "SDP FUEL": "https://legendarystakes.com/sires/sdp-fuel/",
+  "SDP HY REY BOUND": "https://legendarystakes.com/sires/sdp-hy-rey-bound/",
+  "SDP ICEMANN": "https://legendarystakes.com/sires/sdp-icemann/",
+  "SDP LOOK MAN": "https://legendarystakes.com/sires/sdp-look-man/",
+  "SDP MANN O WAR": "https://legendarystakes.com/sires/sdp-mann-o-war/",
+  "SDP MANNIFEST": "https://legendarystakes.com/sires/sdp-mannifest/",
+  "SDP MR POSTMANN": "https://legendarystakes.com/sires/sdp-mr-postmann/",
+  "SDP NOBIDEN": "https://legendarystakes.com/sires/sdp-nobiden/",
+  "SDP Nachomann": "https://legendarystakes.com/sires/sdp-nachomann/",
+  "SDP RED RANGER": "https://legendarystakes.com/sires/sdp-red-ranger/",
+  "SDP REUBEN": "https://legendarystakes.com/sires/sdp-reuben/",
+  "SDP ROCKETMANN": "https://legendarystakes.com/sires/sdp-rocketmann/",
+  "SDP SICARIO": "https://legendarystakes.com/sires/sdp-sicario/",
+  "SDP SPOCK": "https://legendarystakes.com/sires/sdp-spock/",
+  "SDP STYLISH CD": "https://legendarystakes.com/sires/sdp-stylish-cd/",
+  "SF BORNA RAMBLIN MAN": "https://legendarystakes.com/sires/sf-borna-ramblin-man/",
+  "SF COLE CAT": "https://legendarystakes.com/sires/sf-cole-cat/",
+  "SF DANCIN INTHE RAIN": "https://legendarystakes.com/sires/sf-dancin-inthe-rain/",
+  "SF DINERO N CASH": "https://legendarystakes.com/sires/sf-dinero-n-cash/",
+  "SF FANCY PANTS": "https://legendarystakes.com/sires/sf-fancy-pants/",
+  "SF HOTTISH LUMI CAT": "https://legendarystakes.com/sires/sf-hottish-lumi-cat/",
+  "SF IM THE CISCO KID": "https://legendarystakes.com/sires/sf-im-the-cisco-kid/",
+  "SF INFRARED": "https://legendarystakes.com/sires/sf-infrared/",
+  "SF KESA CAT": "https://legendarystakes.com/sires/sf-kesa-cat/",
+  "SF LLUMINATI CAT": "https://legendarystakes.com/sires/sf-lluminati-cat/",
+  "SF MOTLEY CRUE": "https://legendarystakes.com/sires/sf-motley-crue/",
+  "SF QUIK N HOT CASH": "https://legendarystakes.com/sires/sf-quik-n-hot-cash/",
+  "SF RAMBO CAT": "https://legendarystakes.com/sires/sf-rambo-cat/",
+  "SHADES OF REY": "https://legendarystakes.com/sires/shades-of-rey/",
+  "SHAWNE BUGS COPY": "https://legendarystakes.com/sires/shawne-bugs-copy/",
+  "SHEIK JEAN FLY HTT": "https://legendarystakes.com/sires/sheik-jean-fly-htt/",
+  "SHINERR TIME": "https://legendarystakes.com/sires/shinerr-time/",
+  "SHONUFF BET HESA CAT": "https://legendarystakes.com/sires/shonuff-bet-hesa-cat/",
+  "SHOOGA REY LEONARD": "https://legendarystakes.com/sires/shooga-rey-leonard/",
+  "SHOTT GUNN": "https://legendarystakes.com/sires/shott-gunn/",
+  "SHOW ME THE MUNEY": "https://legendarystakes.com/sires/show-me-the-muney/",
+  "SIGALA REY": "https://legendarystakes.com/sires/sigala-rey/",
+  "SINN CITY": "https://legendarystakes.com/sires/sinn-city/",
+  "SIX MOONS BULLY": "https://legendarystakes.com/sires/six-moons-bully/",
+  "SLICK BY DESIGN": "https://legendarystakes.com/sires/slick-by-design/",
+  "SLY AND REBELLIOUS": "https://legendarystakes.com/sires/sly-and-rebellious/",
+  "SLYE BY DESIGN": "https://legendarystakes.com/sires/slye-by-design/",
+  "SLYLY HOT": "https://legendarystakes.com/sires/slyly-hot/",
+  "SMART LITTLE LENA": "https://legendarystakes.com/sires/smart-little-lena/",
+  "SMART LOOKIN REY": "https://legendarystakes.com/sires/smart-lookin-rey/",
+  "SMART REYVOLUTION": "https://legendarystakes.com/sires/smart-reyvolution/",
+  "SMARTY MCGEE": "https://legendarystakes.com/sires/smarty-mcgee/",
+  "SMOKEDCHA": "https://legendarystakes.com/sires/smokedcha/",
+  "SMOKIN CUSTOM CROME": "https://legendarystakes.com/sires/smokin-custom-crome/",
+  "SMOKIN HOTTISH": "https://legendarystakes.com/sires/smokin-hottish/",
+  "SMOKIN LIL HASH": "https://legendarystakes.com/sires/smokin-lil-hash/",
+  "SMOOTH IVORY": "https://legendarystakes.com/sires/smooth-ivory/",
+  "SMOOTH PHANTOM ROLLZ": "https://legendarystakes.com/sires/smooth-phantom-rollz/",
+  "SOME KINDA GUN": "https://legendarystakes.com/sires/some-kinda-gun/",
+  "SOULREYN": "https://legendarystakes.com/sires/soulreyn/",
+  "SOVEREIGN NATION": "https://legendarystakes.com/sires/sovereign-nation/",
+  "SPLASH OF GIN": "https://legendarystakes.com/sires/splash-of-gin/",
+  "SPOOK N BOON": "https://legendarystakes.com/sires/spook-n-boon/",
+  "SPOON CUT": "https://legendarystakes.com/sires/spoon-cut/",
+  "SPOTISH": "https://legendarystakes.com/sires/spotish/",
+  "SPOTS HEFF": "https://legendarystakes.com/sires/spots-heff/",
+  "SPOTS HOTTIST": "https://legendarystakes.com/sires/spots-hottist/",
+  "SRS VOODOO CHILD": "https://legendarystakes.com/sires/srs-voodoo-child/",
+  "STARLIGHTS GYPSY": "https://legendarystakes.com/sires/starlights-gypsy/",
+  "STEVIE REY TIME": "https://legendarystakes.com/sires/stevie-rey-time/",
+  "STEVIE REY VON": "https://legendarystakes.com/sires/stevie-rey-von/",
+  "STONE BLUE VALENTINE": "https://legendarystakes.com/sires/stone-blue-valentine/",
+  "STYLIN CAT": "https://legendarystakes.com/sires/stylin-cat/",
+  "SUPER STAR 017": "https://legendarystakes.com/sires/super-star-017/",
+  "SWEET ROLLZ": "https://legendarystakes.com/sires/sweet-rollz/",
+  "SWING WIDE": "https://legendarystakes.com/sires/swing-wide/",
+  "SYLVERADO": "https://legendarystakes.com/sires/sylverado/",
+  "Smooth Chutter": "https://legendarystakes.com/sires/smooth-chutter/",
+  "Strait Fischer Legacy": "https://legendarystakes.com/sires/strait-fischer-legacy/",
+  "TAG HEUER": "https://legendarystakes.com/sires/tag-heuer/",
+  "TAGGLINE": "https://legendarystakes.com/sires/taggline/",
+  "TALEICIOUS": "https://legendarystakes.com/sires/taleicious/",
+  "TANGLED UP N BLU": "https://legendarystakes.com/sires/tangled-up-n-blu/",
+  "TAPT DANCIN CAT": "https://legendarystakes.com/sires/tapt-dancin-cat/",
+  "TASCOSA CAT": "https://legendarystakes.com/sires/tascosa-cat/",
+  "TEE BOONE": "https://legendarystakes.com/sires/tee-boone/",
+  "TH COWBOY RIDES AWAY": "https://legendarystakes.com/sires/th-cowboy-rides-away/",
+  "THAT BOY BAD": "https://legendarystakes.com/sires/that-boy-bad/",
+  "THE ANIMAL": "https://legendarystakes.com/sires/the-animal/",
+  "THE BOON": "https://legendarystakes.com/sires/the-boon/",
+  "THE CHRONIC": "https://legendarystakes.com/sires/the-chronic/",
+  "THE DANE GER ZONE": "https://legendarystakes.com/sires/the-dane-ger-zone/",
+  "THE GOODBYE LANE": "https://legendarystakes.com/sires/the-goodbye-lane/",
+  "THE HOT PRINCE": "https://legendarystakes.com/sires/the-hot-prince/",
+  "THE KANDYMAN": "https://legendarystakes.com/sires/the-kandyman/",
+  "THE PUNISHER 34": "https://legendarystakes.com/sires/the-punisher-34/",
+  "THE REYL MCCOY": "https://legendarystakes.com/sires/the-reyl-mccoy/",
+  "THIRD CUTTING": "https://legendarystakes.com/sires/third-cutting/",
+  "THIS GUYZ A KEEPER": "https://legendarystakes.com/sires/this-guyz-a-keeper/",
+  "THRILLERR": "https://legendarystakes.com/sires/thrillerr/",
+  "TIK TAC TOE": "https://legendarystakes.com/sires/tik-tac-toe/",
+  "TIKKI TORCH": "https://legendarystakes.com/sires/tikki-torch/",
+  "TIME TOGET WRECKLESS": "https://legendarystakes.com/sires/time-toget-wreckless/",
+  "TM GAME CHANGER": "https://legendarystakes.com/sires/tm-game-changer/",
+  "TOHOTTOHANDLE": "https://legendarystakes.com/sires/tohottohandle/",
+  "TOUGH SON OFA GUN 34": "https://legendarystakes.com/sires/tough-son-ofa-gun-34/",
+  "TR DOLLYS FAMOUSDASH": "https://legendarystakes.com/sires/tr-dollys-famousdash/",
+  "TR DUAL REY": "https://legendarystakes.com/sires/tr-dual-rey/",
+  "TR ILLUMNIATOR CASH": "https://legendarystakes.com/sires/tr-illumniator-cash/",
+  "TR RADLEY": "https://legendarystakes.com/sires/tr-radley/",
+  "TR Rey Rey": "https://legendarystakes.com/sires/tr-rey-rey/",
+  "TRES KINGS": "https://legendarystakes.com/sires/tres-kings/",
+  "TRES MOVE YOU": "https://legendarystakes.com/sires/tres-move-you/",
+  "TRR LUCKY BRAZOS": "https://legendarystakes.com/sires/trr-lucky-brazos/",
+  "TRR SON D SEVEN": "https://legendarystakes.com/sires/trr-son-d-seven/",
+  "TRUMP THAT": "https://legendarystakes.com/sires/trump-that/",
+  "TS IRISH WHISKEY": "https://legendarystakes.com/sires/ts-irish-whiskey/",
+  "TURBO DRIFTER CAT": "https://legendarystakes.com/sires/turbo-drifter-cat/",
+  "TWENTYONE THIRTYONE": "https://legendarystakes.com/sires/twentyone-thirtyone/",
+  "Thats What She Says": "https://legendarystakes.com/sires/thats-what-she-says/",
+  "The Big Hauss": "https://legendarystakes.com/sires/the-big-hauss/",
+  "Thirty Four": "https://legendarystakes.com/sires/thirty-four/",
+  "U WANNA PLAY": "https://legendarystakes.com/sires/u-wanna-play/",
+  "UNO DEL BAY": "https://legendarystakes.com/sires/uno-del-bay/",
+  "UNREYL": "https://legendarystakes.com/sires/unreyl/",
+  "Uncle Magic": "https://legendarystakes.com/sires/uncle-magic/",
+  "VALADICTORIAN": "https://legendarystakes.com/sires/valadictorian/",
+  "VENOM BOONSMAL": "https://legendarystakes.com/sires/venom-boonsmal/",
+  "VIEW ME FLYING": "https://legendarystakes.com/sires/view-me-flying/",
+  "VINCE VAUN": "https://legendarystakes.com/sires/vince-vaun/",
+  "VINTAGE ENTERPRIZE": "https://legendarystakes.com/sires/vintage-enterprize/",
+  "VON LONG LEGS": "https://legendarystakes.com/sires/von-long-legs/",
+  "VON SPARTACUS": "https://legendarystakes.com/sires/von-spartacus/",
+  "VS CODE RED": "https://legendarystakes.com/sires/vs-code-red/",
+  "VS FLATLINE": "https://legendarystakes.com/sires/vs-flatline/",
+  "VS GOODRIDE": "https://legendarystakes.com/sires/vs-goodride/",
+  "VSR BREYZEN ATTACK": "https://legendarystakes.com/sires/vsr-breyzen-attack/",
+  "VSR JUST RITE BLACK": "https://legendarystakes.com/sires/vsr-just-rite-black/",
+  "VSR SMART CATALICE": "https://legendarystakes.com/sires/vsr-smart-catalice/",
+  "VSR Tic Tac Roe": "https://legendarystakes.com/sires/vsr-tic-tac-roe/",
+  "VU JA ROY": "https://legendarystakes.com/sires/vu-ja-roy/",
+  "WAGON STAKE": "https://legendarystakes.com/sires/wagon-stake/",
+  "WHATUTALKINABOUT": "https://legendarystakes.com/sires/whatutalkinabout/",
+  "WHISKEY THIRDY": "https://legendarystakes.com/sires/whiskey-thirdy/",
+  "WILD THING DNA": "https://legendarystakes.com/sires/wild-thing-dna/",
+  "WINNERAY": "https://legendarystakes.com/sires/winneray/",
+  "WINNERS VERSION": "https://legendarystakes.com/sires/winners-version/",
+  "WON TIME MASTERPIECE": "https://legendarystakes.com/sires/won-time-masterpiece/",
+  "WOODY BY A ROCKSTAR": "https://legendarystakes.com/sires/woody-by-a-rockstar/",
+  "WYATT EARP III": "https://legendarystakes.com/sires/wyatt-earp-iii/",
+  "Whiskey Tango Hero": "https://legendarystakes.com/sires/whiskey-tango-hero/",
+  "Whistlin R Blues Away": "https://legendarystakes.com/sires/whistlin-r-blues-away/",
+  "YA KILLIN ME SMALLS": "https://legendarystakes.com/sires/ya-killin-me-smalls/",
+  "YANKEE GUN": "https://legendarystakes.com/sires/yankee-gun/",
+  "Yer Ace of Diamonds": "https://legendarystakes.com/sires/yer-ace-of-diamonds/",
+  "ZAK 34": "https://legendarystakes.com/sires/zak-34/",
+};
+
+// Normalize for fuzzy matching — uppercase, strip extra spaces
+function normalizeSireName(s) {
+  return s.toUpperCase().replace(/\s+/g, ' ').trim();
+}
+
+// Find a sire by exact or close match, returns { name, url } or null
+function findSire(query) {
+  const q = normalizeSireName(query);
+  // Exact match first
+  for (const [name, url] of Object.entries(SIRE_DATA)) {
+    if (normalizeSireName(name) === q) return { name, url };
+  }
+  // Partial match — name contains query or query contains name
+  for (const [name, url] of Object.entries(SIRE_DATA)) {
+    const n = normalizeSireName(name);
+    if (n.includes(q) || q.includes(n)) return { name, url };
+  }
+  return null;
+}
+
+// Scan agent reply text for enrolled sire names and return first match found
+function detectSireInText(text) {
+  const upper = text.toUpperCase();
+  for (const [name, url] of Object.entries(SIRE_DATA)) {
+    if (upper.includes(normalizeSireName(name))) return { name, url };
+  }
+  return null;
+}
+
+
+// ─── VIDEO DATA ───────────────────────────────────────────────────────────────
+const VIDEO_DATA = {
+  'siRTcQoWYoY': 'What is Legendary Stakes?',
+  'O5uL86jJ_6o': 'What is Legendary Stakes?',
+  'DJhPbXo5F8Q': 'The Origin Story',
+  'ATfqje9-QJA': 'Legendary Stakes: Revolutionizing the Industry',
+  '6sDQj-ROZQs': 'Legendary Stakes: Revolutionizing the Industry',
+  'BkJW_VibuCw': 'How Does The Annual Competition Work?',
+  'txDWQ2U0SrI': 'What Makes Legendary Stakes Different?',
+  'bubh35zHmsQ': 'Is $15,000 Too Much? Stallion Fee Breakdown',
+  'YREnlV4ZW8M': 'Financing Made Easy with Legendary Stakes!',
+  '-DqVhrLaNEk': 'Top Offspring Purse Explained',
+  'NH4szuxnzOs': 'Compete Smarter, Not Richer: Leveling the Field',
+  'OG0qnj8MRUg': 'Getting Started: Setting Up an Account',
+  'gPJp2h-Bg5M': 'The Legendary Point System: Comprehensive Guide',
+  'HTXwQsDReog': 'The Legendary Point System: Comprehensive Guide',
+  'gpdke0pmlTg': 'The Leaderboard: Step-by-Step Guide',
+  'D0VMfnUW1x0': 'Sire Owners Dashboard Walkthrough',
+  'Q8ZvaqkJMzc': 'Horse Owners, Riders, Breeders & Dam Owners Dashboard',
+  'qIOoBfYXhSo': 'Legendary Stakes for Sire Owners',
+  'RkHYIxgxYUU': 'For Horse Owners, Riders, Breeders & Dam Owners',
+  'eJzgQ2G32MU': '2024 Competition Stats & 2025 Updates',
+  'MKonBWwq4yU': 'Facebook Live Recap: Updates, Stats & Financing',
+  'aQlGsEFeoQk': 'Testimonial — Cally Thomas (Part 1)',
+  'ZU1n-LOqrqc': 'Testimonial — Cally Thomas (Part 2)',
+  'VLAue_ZM0vQ': 'Testimonial — Cally Thomas (Part 3)',
+  'ZMCAEYY1jlc': 'Testimonial — CJ Garland (Part 1)',
+  '5hlFoIv3aNw': 'Testimonial — CJ Garland (Part 2)',
+  'YQQJEXmdncc': 'Testimonial — Jason Perry (Part 1)',
+  'icYMIs6FcLg': 'Testimonial — Jason Perry (Part 2)',
+  'SWQSPzQBzF4': 'Testimonial — Taryn Sippel',
+  'pXgxuIJwLPo': 'What Happens When Things Go Wrong At An Event?'
+};
+
+function getVideoTitle(url) {
+  const match = url.match(/[?&]v=([^&]+)/);
+  if (match && VIDEO_DATA[match[1]]) return VIDEO_DATA[match[1]];
+  return null;
+}
+const RESOURCE_ICONS = {
+  // Guidance — YouTube play button
+  youtube: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>`,
+  // Sign up — forward arrow / star
+  signup: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>`,
+  // Sire profile — horse/person silhouette
+  sire: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  // Leaderboard/Results — bar chart
+  results: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+  // General web — globe
+  web: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`
+};
+
+// Classify a resource card type based on url and declared type
+function getCardClass(type, url) {
+  if (type === 'youtube') return 'card-guidance';
+  if (url && url.includes('signup')) return 'card-signup';
+  if (url && (url.includes('leaderboard') || url.includes('results'))) return 'card-results';
+  if (url && url.includes('/sires/')) return 'card-sire';
+  return 'card-web';
+}
+
+function getCardIcon(type, url) {
+  if (type === 'youtube') return RESOURCE_ICONS.youtube;
+  if (url && url.includes('signup')) return RESOURCE_ICONS.signup;
+  if (url && (url.includes('leaderboard') || url.includes('results'))) return RESOURCE_ICONS.results;
+  if (url && url.includes('/sires/')) return RESOURCE_ICONS.sire;
+  return RESOURCE_ICONS.web;
+}
+
+function getCardLabel(type, url) {
+  if (type === 'youtube') return 'Watch on YouTube';
+  if (url && url.includes('signup')) return 'Join Free — Create Account';
+  if (url && (url.includes('leaderboard') || url.includes('results'))) return 'View Results & Leaderboard';
+  if (url && url.includes('/sires/')) return 'View Sire Profile';
+  return 'Visit Website';
+}
+
+const SUGGESTIONS = [
+  "How does Legendary Stakes work?",
+  "What does it cost to enroll my stallion?",
+  "How do I enter an event?",
+  "What were the 2025 season results?"
+];
+
+document.getElementById('keyInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitKey();
+});
+
+let conversation = [];
+let isLoading = false;
+
+const messagesEl    = document.getElementById('messages');
+const inputEl       = document.getElementById('input');
+const sendBtn       = document.getElementById('sendBtn');
+const suggestionsEl = document.getElementById('suggestions');
+const errorNote     = document.getElementById('errorNote');
+const charCount     = document.getElementById('charCount');
+
+// ─── BUILD SUGGESTIONS ────────────────────────────────────────────────────────
+SUGGESTIONS.forEach(s => {
+  const btn = document.createElement('button');
+  btn.className = 'sug-btn';
+  btn.textContent = s;
+  btn.onclick = () => {
+    inputEl.value = s;
+    autoResize();
+    suggestionsEl.style.display = 'none';
+    sendMessage();
+  };
+  suggestionsEl.appendChild(btn);
+});
+
+// ─── GREETING ─────────────────────────────────────────────────────────────────
+const GREETING = `Welcome to the Legendary Stakes AI. I'm here to answer your questions about the program — how it works, what it costs, how to get started, or anything else on your mind.\n\nWhether you're a stallion owner, a competitor, a breeder, or just hearing about this for the first time, ask away. I'll keep it plain and simple.\n\nWhat can I help you with today?`;
+
+setTimeout(() => {
+  addMessage('agent', GREETING);
+  conversation.push({ role: 'assistant', content: GREETING });
+}, 300);
+
+// ─── INPUT HANDLING ───────────────────────────────────────────────────────────
+inputEl.addEventListener('input', () => {
+  autoResize();
+  const len = inputEl.value.length;
+  sendBtn.disabled = len === 0;
+  charCount.textContent = len > 1800 ? `${len}/2000` : '';
+});
+
+inputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!sendBtn.disabled && !isLoading) sendMessage();
+  }
+});
+
+sendBtn.addEventListener('click', () => { if (!isLoading) sendMessage(); });
+
+function autoResize() {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 130) + 'px';
+}
+
+// ─── RENDER HELPERS ───────────────────────────────────────────────────────────
+function parseMarkdown(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+function extractResources(text) {
+  const resources = [];
+  const regex = /\[RESOURCE\|(\w+)\|([^\|]+)\|([^\]]+)\]/g;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    resources.push({ type: match[1], title: match[2], url: match[3] });
+  }
+  return resources;
+}
+
+function stripResourceTags(text) {
+  return text.replace(/\[RESOURCE\|[^\]]+\]/g, '').trim();
+}
+
+function addMessage(role, text) {
+  const row = document.createElement('div');
+  row.className = `msg-row ${role}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = `avatar ${role}`;
+  avatar.textContent = role === 'agent' ? 'LS' : 'You';
+
+  const bubble = document.createElement('div');
+  bubble.className = `bubble ${role}`;
+
+  const cleanText = role === 'agent' ? stripResourceTags(text) : text;
+  bubble.innerHTML = `<p>${parseMarkdown(cleanText)}</p>`;
+
+  if (role === 'agent') {
+    const cardsDiv = document.createElement('div');
+    cardsDiv.className = 'res-cards';
+    let hasCards = false;
+
+    // Explicit resource tags from the AI ([RESOURCE|type|title|url])
+    const resources = extractResources(text);
+    resources.forEach(res => {
+      const card = document.createElement('a');
+      const cardClass = getCardClass(res.type, res.url);
+      card.className = `res-card ${cardClass}`;
+      card.href = res.url;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+      const label = getCardLabel(res.type, res.url);
+      const icon = getCardIcon(res.type, res.url);
+      const cardTitle = res.type === 'youtube' ? (getVideoTitle(res.url) || res.title) : res.title;
+      const displayUrl = res.url.replace(/^https?:\/\//, '');
+      card.innerHTML = `
+        <div class="res-icon">${icon}</div>
+        <div class="res-info">
+          <div class="res-label">${label}</div>
+          <div class="res-title">${cardTitle}</div>
+          <div class="res-url">${displayUrl}</div>
+        </div>
+        <div class="res-arrow">→</div>`;
+      cardsDiv.appendChild(card);
+      hasCards = true;
+    });
+
+    // Auto-detect enrolled sire names in the reply and surface a profile card
+    const sireMatch = detectSireInText(cleanText);
+    if (sireMatch) {
+      const sireCard = document.createElement('a');
+      sireCard.className = 'res-card card-sire';
+      sireCard.href = sireMatch.url;
+      sireCard.target = '_blank';
+      sireCard.rel = 'noopener noreferrer';
+      const displaySireUrl = sireMatch.url.replace(/^https?:\/\//, '');
+      sireCard.innerHTML = `
+        <div class="res-icon">${RESOURCE_ICONS.sire}</div>
+        <div class="res-info">
+          <div class="res-label">View Sire Profile</div>
+          <div class="res-title">${sireMatch.name}</div>
+          <div class="res-url">${displaySireUrl}</div>
+        </div>
+        <div class="res-arrow">→</div>`;
+      cardsDiv.appendChild(sireCard);
+      hasCards = true;
+    }
+
+    if (hasCards) bubble.appendChild(cardsDiv);
+  }
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  messagesEl.appendChild(row);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function addTyping() {
+  const row = document.createElement('div');
+  row.className = 'msg-row agent';
+  row.id = 'typing-indicator';
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar agent';
+  avatar.textContent = 'LS';
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  row.appendChild(avatar);
+  row.appendChild(typing);
+  messagesEl.appendChild(row);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+// ─── CLEAR ────────────────────────────────────────────────────────────────────
+function clearConversation() {
+  conversation = [];
+  messagesEl.innerHTML = '';
+  suggestionsEl.style.display = 'flex';
+  errorNote.style.display = 'none';
+  setTimeout(() => {
+    addMessage('agent', GREETING);
+    conversation.push({ role: 'assistant', content: GREETING });
+  }, 180);
+}
+
+// ─── SEND MESSAGE ─────────────────────────────────────────────────────────────
+async function sendMessage() {
+  const text = inputEl.value.trim();
+  if (!text || isLoading) return;
+
+  suggestionsEl.style.display = 'none';
+  errorNote.style.display = 'none';
+
+  inputEl.value = '';
+  autoResize();
+  sendBtn.disabled = true;
+  charCount.textContent = '';
+
+  addMessage('user', text);
+  conversation.push({ role: 'user', content: text });
+
+  isLoading = true;
+  addTyping();
+
+  try {
+    const response = await fetch('https://cold-bird-2890.jsasse-5c6.workers.dev', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: conversation
+      })
+    });
+
+    removeTyping();
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || "Something went wrong on my end — please try again in a moment.";
+
+    addMessage('agent', reply);
+    conversation.push({ role: 'assistant', content: reply });
+
+  } catch (err) {
+    removeTyping();
+    console.error('Legendary Stakes AI error:', err);
+    errorNote.textContent = `Something went wrong: ${err.message}. Check your connection and try again.`;
+    errorNote.style.display = 'block';
+    conversation.pop();
+  }
+
+  isLoading = false;
+  if (!('ontouchstart' in window)) {
+    inputEl.focus();
+  }
+}
+</script>
+</body>
+</html>
