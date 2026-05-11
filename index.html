@@ -470,8 +470,8 @@
     display: flex;
     gap: 10px;
     align-items: flex-end;
-    background: var(--bg3);
-    border: 1.5px solid var(--border);
+    background: #2a3a4a;
+    border: 1.5px solid rgba(201,150,58,0.5);
     border-radius: 6px;
     padding: 11px 14px;
     transition: border-color 0.2s, box-shadow 0.2s;
@@ -487,7 +487,7 @@
     background: transparent;
     border: none;
     outline: none;
-    color: var(--text);
+    color: #ffffff;
     font-family: 'Source Serif 4', Georgia, serif;
     font-size: 0.97rem;
     font-weight: 300;
@@ -498,7 +498,7 @@
     overflow-y: auto;
   }
 
-  textarea::placeholder { color: var(--text-muted); font-style: italic; }
+  textarea::placeholder { color: rgba(232,224,208,0.45); font-style: italic; }
   textarea::-webkit-scrollbar { width: 3px; }
   textarea::-webkit-scrollbar-thumb { background: var(--border); }
 
@@ -522,7 +522,7 @@
 
   .send-btn:hover { transform: scale(1.05); box-shadow: 0 0 14px var(--gold-glow); }
   .send-btn:active { transform: scale(0.94); }
-  .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+  .send-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
   .send-btn svg { width: 16px; height: 16px; color: #0d1117; }
 
   .input-footer {
@@ -660,7 +660,7 @@
 <div class="input-area">
   <div class="suggestions" id="suggestions"></div>
   <div class="input-wrap">
-    <textarea id="input" placeholder="Ask anything about Legendary Stakes..." rows="1"></textarea>
+    <textarea id="input" placeholder="Select a topic above or ask me anything you like right here..." rows="1"></textarea>
     <button class="send-btn" id="sendBtn" disabled>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <line x1="22" y1="2" x2="11" y2="13"/>
@@ -669,7 +669,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.2</span>
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.1.3</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -916,6 +916,8 @@ Give them both — the link for people ready to go right now, and the video for 
 
 ## SCOPE
 Answer questions about: how the platform works, costs, enrollment, disciplines, events, points, payouts, royalties, leaderboards, how to get started, 2025 results, 2026 season.
+
+When referencing any website or page in your response text, always write the full URL including https:// so it becomes a clickable link (e.g. https://legendarystakes.com/sires/ not just legendarystakes.com/sires/). This ensures users can click directly through without having to type anything.
 
 If someone asks about something outside Legendary Stakes, bring it back warmly: "That's a bit outside my lane, but I'm happy to help you with anything about Legendary Stakes."
 
@@ -1552,7 +1554,7 @@ SUGGESTIONS.forEach(s => {
 });
 
 // ─── GREETING ─────────────────────────────────────────────────────────────────
-const GREETING = `Welcome to Legendary Stakes! Legendary Stakes offers a new way for western performance horse competitors, breeders, and sire owners to benefit from the sport.\n\nWhether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away — how can I help?`;
+const GREETING = `Welcome to Legendary Stakes! We offer a new way to earn in Western Performance horse competitions, nationwide.\n\nWhether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away — how can I help you today?`;
 
 setTimeout(() => {
   addMessage('agent', GREETING);
@@ -1583,7 +1585,13 @@ function autoResize() {
 
 // ─── RENDER HELPERS ───────────────────────────────────────────────────────────
 function parseMarkdown(text) {
-  return text
+  // Linkify bare URLs before other processing
+  // Matches http/https URLs not already inside an HTML tag or markdown
+  const linkified = text.replace(
+    /(?<![">])(https?:\/\/[^\s<>"'\)\]]+)/g,
+    '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:2px;">$1</a>'
+  );
+  return linkified
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/\n\n/g, '</p><p>')
