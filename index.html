@@ -613,12 +613,10 @@
     .send-btn { width: 34px; height: 34px; min-width: 34px; }
     .send-btn svg { width: 14px; height: 14px; }
 
-    /* Suggestions — JS handles layout via isMobile class */
-    .suggestions { gap: 6px; margin-bottom: 8px; }
-    .suggestions.mobile-grid { display: grid !important; grid-template-columns: 1fr 1fr; }
+    /* Suggestions — 3 buttons: first 2 side by side, 3rd full width */
+    .suggestions { gap: 6px; margin-bottom: 8px; display: grid; grid-template-columns: 1fr 1fr; }
     .sug-btn { font-size: 0.75rem; padding: 8px 10px; white-space: normal; text-align: center; line-height: 1.3; }
-    .sug-btn.mobile-hidden { display: none !important; }
-    .sug-btn.mobile-full { grid-column: 1 / -1; }
+    .sug-btn:last-child { grid-column: 1 / -1; }
   }
 
   @media (max-width: 380px) {
@@ -658,7 +656,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.2.0</span>
+    <span class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line &nbsp;·&nbsp; v0.2.1</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1512,7 +1510,6 @@ function getCardLabel(type, url) {
 const SUGGESTIONS = [
   "What is Legendary Stakes?",
   "How do I create an account?",
-  "How do I enroll a horse?",
   "How do I enter an event?"
 ];
 
@@ -1542,27 +1539,7 @@ SUGGESTIONS.forEach((s, i) => {
   suggestionsEl.appendChild(btn);
 });
 
-// Apply mobile layout: hide 3rd button, make 4th full-width, switch to grid
-function applyMobileSuggestions() {
-  const isMobile = window.innerWidth <= 640;
-  const btns = suggestionsEl.querySelectorAll('.sug-btn');
-  if (isMobile) {
-    suggestionsEl.classList.add('mobile-grid');
-    btns.forEach((btn, i) => {
-      if (i === 2) btn.classList.add('mobile-hidden');
-      if (i === 3) btn.classList.add('mobile-full');
-    });
-  } else {
-    suggestionsEl.classList.remove('mobile-grid');
-    btns.forEach(btn => {
-      btn.classList.remove('mobile-hidden', 'mobile-full');
-    });
-  }
-}
 
-// Run after all buttons are in the DOM
-setTimeout(applyMobileSuggestions, 0);
-window.addEventListener('resize', applyMobileSuggestions);
 
 // ─── GREETING ─────────────────────────────────────────────────────────────────
 const GREETING = `Welcome to Legendary Stakes! We offer a new way to earn in Western Performance horse competitions, nationwide.\n\nWhether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away — how can I help you today?`;
@@ -1723,7 +1700,6 @@ function clearConversation() {
   conversation = [];
   messagesEl.innerHTML = '';
   suggestionsEl.style.display = '';
-  setTimeout(applyMobileSuggestions, 0);
   errorNote.style.display = 'none';
   setTimeout(() => {
     addMessage('agent', GREETING);
