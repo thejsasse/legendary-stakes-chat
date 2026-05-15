@@ -363,25 +363,26 @@
     .status-pill { display: none; }
     .clear-btn { font-size: 0.64rem; padding: 5px 10px; white-space: nowrap; line-height: 1.2; }
 
-    /* Hero — full-height layout: heading top, input bottom */
+    /* Hero — full-height: heading fills top, cards+input fill bottom, spacer between */
     #hero { padding: 0; justify-content: flex-start; align-items: stretch; overflow: hidden; }
     .hero-inner {
       gap: 0; width: 100%; max-width: 100%;
       height: 100%;
       display: flex; flex-direction: column;
-      padding: 20px 16px 16px;
+      padding: 20px 16px 14px;
       box-sizing: border-box;
     }
-    .hero-label { font-size: 0.6rem; letter-spacing: 0.14em; margin-bottom: 10px; }
-    .hero-heading { font-size: 1.7rem; margin-bottom: 10px; line-height: 1.08; }
-    .hero-sub { font-size: 0.88rem; line-height: 1.5; margin-bottom: 0; flex: 1; }
-    .hero-cards { flex-direction: column; gap: 8px; margin-top: 16px; }
-    .hero-card { width: 100%; max-width: 100%; min-width: unset; padding: 10px 14px; border-radius: 4px; }
-    .hero-card-label { font-size: 0.6rem; margin-bottom: 2px; }
-    .hero-card-text { font-size: 0.9rem; }
-    .hero-input-wrap { margin-top: 12px; padding: 10px 12px; border-radius: 5px; flex-shrink: 0; }
+    .hero-label { font-size: 0.62rem; letter-spacing: 0.14em; margin-bottom: 10px; flex-shrink: 0; }
+    .hero-heading { font-size: 2rem; margin-bottom: 12px; line-height: 1.06; flex-shrink: 0; }
+    .hero-sub { font-size: 0.95rem; line-height: 1.55; margin-bottom: 0; flex-shrink: 0; }
+    .hero-spacer { flex: 1; min-height: 16px; max-height: 48px; }
+    .hero-cards { flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .hero-card { width: 100%; max-width: 100%; min-width: unset; padding: 11px 14px; border-radius: 4px; }
+    .hero-card-label { font-size: 0.62rem; margin-bottom: 3px; }
+    .hero-card-text { font-size: 0.95rem; }
+    .hero-input-wrap { margin-top: 10px; padding: 10px 12px; border-radius: 5px; flex-shrink: 0; }
     .hero-input-wrap textarea { font-size: 0.95rem; }
-    .hero-footer { font-size: 0.6rem; letter-spacing: 0.06em; margin-top: 8px; color: rgba(255,255,255,0.5); flex-shrink: 0; }
+    .hero-footer { font-size: 0.6rem; letter-spacing: 0.06em; margin-top: 8px; color: rgba(255,255,255,0.5); flex-shrink: 0; text-align: center; }
 
     /* Messages */
     #messages { padding: 14px 12px; gap: 16px; }
@@ -428,6 +429,7 @@
     <div class="hero-label">Western Performance Horse Platform</div>
     <div class="hero-heading">Welcome to<br><span>Legendary Stakes.</span></div>
     <div class="hero-sub">We offer a new way to earn in Western Performance horse competitions, nationwide. Whether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away.</div>
+    <div class="hero-spacer"></div>
     <div class="hero-cards" id="heroCards"></div>
     <div class="hero-input-wrap">
       <textarea id="heroInput" placeholder="Or ask me anything right here..." rows="1"></textarea>
@@ -438,7 +440,7 @@
         </svg>
       </button>
     </div>
-    <div class="hero-footer">Enter to send &nbsp;&middot;&nbsp; v0.3.8</div>
+    <div class="hero-footer">Enter to send &nbsp;&middot;&nbsp; v0.3.9</div>
   </div>
 </div>
 
@@ -456,7 +458,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.3.8</span>
+    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.3.9</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
