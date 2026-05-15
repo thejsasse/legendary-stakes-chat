@@ -101,21 +101,22 @@
   }
   .clear-btn:hover { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-light); }
 
-  /* HERO */
+  /* HERO — full-screen centered cluster */
   #hero {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 0 24px 52px;
+    padding: 0 24px;
     box-sizing: border-box;
   }
 
   .hero-inner {
-    max-width: 860px;
-    margin: 0 auto;
+    max-width: 780px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   #hero.hidden { display: none; }
 
@@ -123,20 +124,23 @@
     font-family: 'Oswald', sans-serif; font-size: 0.65rem; font-weight: 500;
     letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--gold); margin-bottom: 14px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.9);
   }
 
   .hero-heading {
-    font-family: 'Oswald', sans-serif; font-size: 2.4rem; font-weight: 700;
+    font-family: 'Oswald', sans-serif; font-size: 2.8rem; font-weight: 700;
     line-height: 1.1; color: #ffffff;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.9); margin-bottom: 14px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.6);
+    margin-bottom: 12px;
     letter-spacing: 0.03em; text-transform: uppercase;
   }
   .hero-heading span { color: var(--gold-light); }
 
   .hero-sub {
-    font-size: 0.95rem; font-weight: 400; line-height: 1.6;
-    color: rgba(232,224,208,0.85); text-shadow: 0 1px 12px rgba(0,0,0,0.95);
-    margin-bottom: 24px; max-width: 420px;
+    font-size: 1rem; font-weight: 400; line-height: 1.6;
+    color: rgba(232,224,208,0.88);
+    text-shadow: 0 1px 8px rgba(0,0,0,0.95), 0 0 30px rgba(0,0,0,0.7);
+    margin-bottom: 20px; max-width: 580px;
   }
 
   .hero-cards { display: flex; flex-direction: row; gap: 12px; flex-wrap: wrap; }
@@ -265,13 +269,46 @@
   .typing span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-6px); opacity: 1; } }
 
-  /* INPUT AREA */
+  /* INPUT AREA — shown during chat, hidden during hero */
   .input-area {
     padding: 14px 24px 18px;
     background: rgba(13,17,23,0.92); backdrop-filter: blur(8px);
     border-top: 2px solid var(--gold);
     flex-shrink: 0; width: 100%; box-sizing: border-box; overflow: hidden;
     position: relative; z-index: 1;
+    display: none;
+  }
+  .input-area.active { display: block; }
+
+  /* HERO INPUT — embedded in hero cluster */
+  .hero-input-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: rgba(30,45,62,0.88);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(201,150,58,0.6);
+    border-radius: 6px;
+    padding: 13px 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-top: 28px;
+  }
+  .hero-input-wrap:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+  }
+  .hero-input-wrap textarea {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: #ffffff; font-family: 'Inter', sans-serif;
+    font-size: 1.05rem; font-weight: 400; line-height: 1.6;
+    resize: none; min-height: 24px; max-height: 100px; overflow-y: auto;
+  }
+  .hero-input-wrap textarea::placeholder { color: rgba(255,255,255,0.45); }
+  .hero-footer {
+    margin-top: 10px;
+    font-family: 'Oswald', sans-serif; font-size: 0.62rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.22); text-align: center;
   }
 
   .suggestions { max-width: 820px; margin: 0 auto 10px; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -323,7 +360,9 @@
     .logo-img { height: 34px; max-width: 160px; }
     .status-pill span { display: none; }
     .clear-btn { font-size: 0.66rem; padding: 6px 12px; white-space: nowrap; line-height: 1.2; }
-    #hero { padding: 0 16px 28px; }
+    #hero { padding: 0 16px; }
+    .hero-input-wrap { margin-top: 20px; }
+    .hero-input-wrap textarea { font-size: 1rem; }
     .hero-heading { font-size: 1.85rem; }
     .hero-sub { font-size: 0.92rem; margin-bottom: 24px; }
     .hero-cards { flex-direction: column; }
@@ -369,12 +408,22 @@
     <div class="hero-heading">Welcome to<br><span>Legendary Stakes.</span></div>
     <div class="hero-sub">We offer a new way to earn in Western Performance horse competitions, nationwide. Whether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away.</div>
     <div class="hero-cards" id="heroCards"></div>
+    <div class="hero-input-wrap">
+      <textarea id="heroInput" placeholder="Or ask me anything right here..." rows="1"></textarea>
+      <button class="send-btn" id="heroSendBtn" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="hero-footer">Enter to send &nbsp;&middot;&nbsp; v0.3.4</div>
   </div>
 </div>
 
 <div id="messages"></div>
 
-<div class="input-area">
+<div class="input-area" id="inputArea">
   <div class="suggestions" id="suggestions" style="display:none;"></div>
   <div class="input-wrap">
     <textarea id="input" placeholder="How can I help you today?" rows="1"></textarea>
@@ -386,7 +435,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.3.3</span>
+    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.3.4</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1379,9 +1428,12 @@ let isLoading = false;
 let heroVisible = true;
 
 const heroEl        = document.getElementById('hero');
+const inputAreaEl   = document.getElementById('inputArea');
 const messagesEl    = document.getElementById('messages');
 const inputEl       = document.getElementById('input');
 const sendBtn       = document.getElementById('sendBtn');
+const heroInputEl   = document.getElementById('heroInput');
+const heroSendBtn   = document.getElementById('heroSendBtn');
 const suggestionsEl = document.getElementById('suggestions');
 const errorNote     = document.getElementById('errorNote');
 const charCount     = document.getElementById('charCount');
@@ -1406,8 +1458,10 @@ function activateChat() {
   heroVisible = false;
   heroEl.classList.add('hidden');
   messagesEl.classList.add('active');
+  inputAreaEl.classList.add('active');
   buildSuggestions();
   suggestionsEl.style.display = 'flex';
+  setTimeout(() => { if (!('ontouchstart' in window)) inputEl.focus(); }, 100);
 }
 
 // ─── BUILD SUGGESTIONS ───────────────────────────────────────────────────────
@@ -1430,6 +1484,32 @@ function buildSuggestions() {
 }
 
 window.addEventListener('resize', () => { if (!heroVisible) buildSuggestions(); });
+
+// ─── HERO INPUT WIRING ────────────────────────────────────────────────────────
+heroInputEl.addEventListener('input', () => {
+  heroInputEl.style.height = 'auto';
+  heroInputEl.style.height = Math.min(heroInputEl.scrollHeight, 100) + 'px';
+  heroSendBtn.disabled = heroInputEl.value.trim().length === 0;
+});
+
+heroInputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!heroSendBtn.disabled && !isLoading) {
+      inputEl.value = heroInputEl.value;
+      heroInputEl.value = '';
+      sendMessage();
+    }
+  }
+});
+
+heroSendBtn.addEventListener('click', () => {
+  if (!heroSendBtn.disabled && !isLoading) {
+    inputEl.value = heroInputEl.value;
+    heroInputEl.value = '';
+    sendMessage();
+  }
+});
 
 // ─── INPUT HANDLING ───────────────────────────────────────────────────────────
 inputEl.addEventListener('input', () => {
@@ -1585,10 +1665,14 @@ function clearConversation() {
   conversation = [];
   messagesEl.innerHTML = '';
   messagesEl.classList.remove('active');
+  inputAreaEl.classList.remove('active');
   suggestionsEl.style.display = 'none';
   suggestionsEl.innerHTML = '';
   errorNote.style.display = 'none';
   heroEl.classList.remove('hidden');
+  heroInputEl.value = '';
+  heroInputEl.style.height = 'auto';
+  heroSendBtn.disabled = true;
   heroVisible = true;
 }
 
