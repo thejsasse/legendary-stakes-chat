@@ -107,10 +107,15 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-self: flex-start;
     width: 100%;
-    padding: 0 0 52px 52px;
-    max-width: 560px;
+    padding: 0 24px 52px;
+    box-sizing: border-box;
+  }
+
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
   }
   #hero.hidden { display: none; }
 
@@ -134,14 +139,14 @@
     margin-bottom: 24px; max-width: 420px;
   }
 
-  .hero-cards { display: flex; flex-direction: column; gap: 10px; }
+  .hero-cards { display: flex; flex-direction: row; gap: 12px; flex-wrap: wrap; }
 
   .hero-card {
     background: rgba(13,17,23,0.82); backdrop-filter: blur(12px);
     border: 1px solid rgba(201,150,58,0.3); border-left: 3px solid var(--gold);
-    border-radius: 5px; padding: 12px 18px;
+    border-radius: 5px; padding: 14px 20px;
     cursor: pointer; transition: all 0.18s;
-    width: fit-content; min-width: 220px; max-width: 360px;
+    flex: 1; min-width: 180px; max-width: 280px;
     text-align: left; -webkit-tap-highlight-color: transparent;
   }
   .hero-card:hover {
@@ -318,10 +323,11 @@
     .logo-img { height: 34px; max-width: 160px; }
     .status-pill span { display: none; }
     .clear-btn { font-size: 0.66rem; padding: 6px 12px; white-space: nowrap; line-height: 1.2; }
-    #hero { padding: 0 0 28px 20px; max-width: 100%; }
+    #hero { padding: 0 16px 28px; }
     .hero-heading { font-size: 1.85rem; }
     .hero-sub { font-size: 0.92rem; margin-bottom: 24px; }
-    .hero-card { width: 100%; max-width: 100%; padding: 11px 14px; }
+    .hero-cards { flex-direction: column; }
+    .hero-card { width: 100%; max-width: 100%; min-width: unset; padding: 11px 14px; }
     #messages { padding: 14px 12px; gap: 16px; }
     .msg-row { gap: 9px; max-width: 100%; }
     .msg-row.user .bubble { max-width: 86%; }
@@ -358,10 +364,12 @@
 </header>
 
 <div id="hero">
-  <div class="hero-label">Western Performance Horse Platform</div>
-  <div class="hero-heading">Welcome to<br><span>Legendary Stakes.</span></div>
-  <div class="hero-sub">We offer a new way to earn in Western Performance horse competitions, nationwide. Whether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away.</div>
-  <div class="hero-cards" id="heroCards"></div>
+  <div class="hero-inner">
+    <div class="hero-label">Western Performance Horse Platform</div>
+    <div class="hero-heading">Welcome to<br><span>Legendary Stakes.</span></div>
+    <div class="hero-sub">We offer a new way to earn in Western Performance horse competitions, nationwide. Whether you're an owner, a breeder, a competitor, or just hearing about us for the first time, ask away.</div>
+    <div class="hero-cards" id="heroCards"></div>
+  </div>
 </div>
 
 <div id="messages"></div>
@@ -378,7 +386,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.3.2</span>
+    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.3.3</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
@@ -1446,16 +1454,18 @@ function autoResize() {
 }
 
 // ─── RENDER HELPERS ───────────────────────────────────────────────────────────
-function parseMarkdown(text) {
-  const linkified = text.replace(
-    /(?<![">])(https?:\/\/[^\s<>"'\)\]]+)/g,
-    function(url) { return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:2px;">' + url + '<' + '/a>'; }
-  );
-  return linkified
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\n\n/g, '<' + '/p><p>')
-    .replace(/\n/g, '<br>');
+function extractResources(text) {
+  const resources = [];
+  const regex = /\[RESOURCE\|(\w+)\|([^\|]+)\|([^\]]+)\]/g;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    resources.push({ type: match[1], title: match[2], url: match[3] });
+  }
+  return resources;
+}
+
+function stripResourceTags(text) {
+  return text.replace(/\[RESOURCE\|[^\]]+\]/g, '').trim();
 }
 
 function addMessage(role, text) {
@@ -1533,6 +1543,20 @@ function addMessage(role, text) {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
+function parseMarkdown(text) {
+  const linkified = text.replace(
+    /(?<![">])(https?:\/\/[^\s<>"'\)\]]+)/g,
+    function(url) { return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:2px;">' + url + '<' + '/a>'; }
+  );
+  return linkified
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<' + '/p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+
+
 function addTyping() {
   const row = document.createElement('div');
   row.className = 'msg-row agent';
@@ -1572,6 +1596,7 @@ async function sendMessage() {
   const text = inputEl.value.trim();
   if (!text || isLoading) return;
 
+  activateChat();
   suggestionsEl.style.display = 'none';
   errorNote.style.display = 'none';
 
