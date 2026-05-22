@@ -41,10 +41,10 @@
 
   /* Background image — fixed, stays behind all content */
   .brand-bg {
-    position: fixed;
+    position: fixed !important;
     top: 0; right: 0; bottom: 0; left: 0;
-    width: 100vw; height: 100vh;
-    max-width: none; max-height: none;
+    width: 100vw !important; height: 100vh !important;
+    max-width: none !important; max-height: none !important;
     object-fit: cover;
     object-position: right center;
     z-index: 0;
@@ -440,7 +440,7 @@
         </svg>
       </button>
     </div>
-    <div class="hero-footer">Enter to send &nbsp;&middot;&nbsp; v0.4.2</div>
+    <div class="hero-footer">Enter to send &nbsp;&middot;&nbsp; v0.4.3</div>
   </div>
 </div>
 
@@ -458,7 +458,7 @@
     </button>
   </div>
   <div class="input-footer">
-    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.4.2</span>
+    <span class="input-hint">Enter to send &nbsp;&middot;&nbsp; Shift+Enter for new line &nbsp;&middot;&nbsp; v0.4.3</span>
     <span class="char-count" id="charCount"></span>
   </div>
   <div id="errorNote" class="error-note" style="display:none;"></div>
