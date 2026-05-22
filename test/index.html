@@ -40,10 +40,10 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .split-left-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;}
 .split-left-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(20,12,4,0.92) 0%, rgba(20,12,4,0.55) 50%, rgba(20,12,4,0.35) 100%);}
 .split-right{flex:1;display:flex;flex-direction:column;overflow-y:auto;}
-.split-right-top{background:#111008;padding:26px 32px 22px;display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.split-right-top{background:#111008;padding:26px 32px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;min-height:160px;}
 .split-right-top img{width:220px;max-width:100%;display:block;margin-bottom:14px;}
-.hero-line-1{font-size:28px;font-weight:900;color:#F0EDE4;letter-spacing:.5px;text-transform:uppercase;line-height:1.1;display:block;text-align:center;}
-.hero-line-2{font-size:28px;font-weight:900;color:#C49020;letter-spacing:.5px;text-transform:uppercase;line-height:1.1;display:block;margin-top:2px;text-align:center;}
+.hero-line-1{font-size:42px;font-weight:900;color:#F0EDE4;letter-spacing:.5px;text-transform:uppercase;line-height:1.1;display:block;text-align:center;}
+.hero-line-2{font-size:42px;font-weight:900;color:#C49020;letter-spacing:.5px;text-transform:uppercase;line-height:1.1;display:block;margin-top:2px;text-align:center;}
 .split-right-form{flex:1;background:#fff;padding:20px 32px 18px;display:flex;flex-direction:column;justify-content:center;}
 .s-badge{font-size:10px;font-weight:500;color:#C49020;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
 .s-h{font-size:18px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:5px;}
@@ -393,12 +393,13 @@ select.inp{appearance:none;}
       <div class="split">
         <div class="split-left">
           <img class="split-left-img" src="https://thejsasse.github.io/legendary-stakes-chat/test/login-hero.png" alt="Cutting horse at NCHA Futurity" /><div class="split-left-overlay"></div>
-          <div class="s-logo">LEGEN<b>D</b>ARY <span style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;display:block;font-weight:400;">S T A K E S</span></div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.1.1</div>
+          <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
+            <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:180px;max-width:80%;" />
+          </div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.1.2</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
-            <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
           </div>
@@ -436,12 +437,13 @@ select.inp{appearance:none;}
       <div class="split">
         <div class="split-left">
           <img class="split-left-img" src="https://thejsasse.github.io/legendary-stakes-chat/test/login-hero.png" alt="Cutting horse at NCHA Futurity" /><div class="split-left-overlay"></div>
-          <div class="s-logo">LEGEN<b>D</b>ARY <span style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;display:block;font-weight:400;">S T A K E S</span></div>
+          <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
+            <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:180px;max-width:80%;" />
+          </div>
           <div style="position:relative;z-index:2;"><div class="s-badge">Free to join</div><div class="s-h">Takes 2 minutes.</div><div class="s-p">No card needed. Free for horses by enrolled stallions.</div></div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
-            <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
           </div>
