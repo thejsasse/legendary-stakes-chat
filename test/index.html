@@ -24,7 +24,7 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .logo{font-size:13px;font-weight:600;color:#8A6010;}
 .logo b{color:#C49020;font-weight:600;}
 .menu-btn{background:#EDD98A;border:none;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;color:#6B4E10;cursor:pointer;display:flex;align-items:center;gap:5px;}
-.back-btn{background:none;border:none;font-size:12px;color:#B07A18;cursor:pointer;display:flex;align-items:center;gap:4px;}
+.back-btn{background:none;border:none;font-size:12px;color:#B07A18;cursor:pointer;display:flex;align-items:center;gap:4px;order:-1;margin-right:auto;}
 .icon-btn{background:none;border:none;color:#999;cursor:pointer;padding:3px;font-size:17px;display:flex;align-items:center;}
 .top-right{display:flex;align-items:center;gap:8px;}
 .event-strip{background:#2C2214;padding:10px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
@@ -396,7 +396,7 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.1.3</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.1.5</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
@@ -474,7 +474,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-signup2" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><button class="back-btn" onclick="nav('sc-signup1')"><i class="ti ti-arrow-left"></i> Back</button></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-signup1')"><i class="ti ti-arrow-left"></i> Back</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span></div>
       <div class="screen-scroll" style="background:#fff;padding:22px 28px;">
         <div class="form-title" style="margin-bottom:3px;">Tell us about yourself</div>
         <div class="form-sub" style="margin-bottom:14px;">Step 2 of 3 — your profile</div>
@@ -489,23 +489,251 @@ select.inp{appearance:none;}
       </div>
     </div>
 
+    <!-- STEP 3: HORSE SEARCH (new horse-name-first flow) -->
     <div id="sc-signup3" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><button class="back-btn" onclick="nav('sc-signup2')"><i class="ti ti-arrow-left"></i> Back</button></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-signup2')"><i class="ti ti-arrow-left"></i> Back</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span></div>
       <div class="screen-scroll" style="background:#fff;padding:22px 28px;">
-        <div class="form-title" style="margin-bottom:3px;">Add your first horse</div>
-        <div class="form-sub" style="margin-bottom:14px;">Step 3 of 3 — free if sired by an enrolled stallion</div>
+        <div class="form-title" style="margin-bottom:3px;">Find your horse</div>
+        <div class="form-sub" style="margin-bottom:14px;">Step 3 of 3 — find one horse and we'll match the rest of your barn automatically</div>
         <div class="prog"><div class="pdot done"><i class="ti ti-check" style="font-size:10px;"></i></div><span class="plbl done">Account</span><div class="pline done"></div><div class="pdot done"><i class="ti ti-check" style="font-size:10px;"></i></div><span class="plbl done">Profile</span><div class="pline done"></div><div class="pdot now">3</div><span class="plbl now">Horse</span></div>
-        <label class="lbl">Search for your horse's sire</label>
-        <div class="sire-box"><input class="sire-inp" value="Sannman" /><div class="sire-res"><div class="sire-av"><i class="ti ti-horse"></i></div><div style="flex:1;"><div class="sire-n">Sannman</div><div class="sire-m">781 offspring · 10 disciplines</div></div><span class="sire-badge"><i class="ti ti-check" style="font-size:9px;"></i> Enrolled</span></div></div>
-        <div style="font-size:10px;color:#aaa;margin-bottom:10px;">Don't see your sire? <a style="color:#B07A18;cursor:pointer;">Enter name manually</a></div>
-        <div class="sel-sire"><div class="chk-c"><i class="ti ti-check" style="font-size:10px;"></i></div><div><div style="font-size:11px;font-weight:500;color:#6B4E10;">Sannman selected — enrolls free</div><div style="font-size:10px;color:#8A6820;">10 disciplines available</div></div></div>
-        <label class="lbl">Horse name</label><input class="inp" value="Nelliebell" />
-        <div class="row2"><div><label class="lbl">Dam</label><input class="inp" value="A Feisty Fling" /></div><div><label class="lbl">Year of birth</label><input class="inp" value="2019" /></div></div>
-        <div class="row2"><div><label class="lbl">Sex</label><select class="inp"><option>Mare</option><option>Gelding</option><option>Stallion</option></select></div><div><label class="lbl">Color</label><select class="inp"><option>Sorrel</option><option>Bay</option></select></div></div>
-        <label class="lbl">AQHA / APHA # <span style="color:#aaa;font-weight:400;">(optional)</span></label><input class="inp" placeholder="Add later if needed" />
-        <button class="gold-full" onclick="nav('sc-success')">Register my horse — I'm ready to compete</button>
-        <div style="font-size:11px;color:#aaa;text-align:center;margin-top:5px;cursor:pointer;" onclick="nav('sc-dashboard')">Skip for now</div>
-        <div class="note">Need help? Call <a>817-221-0778</a></div>
+
+        <!-- Value prop teaser -->
+        <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:1px solid #E8D48A;border-radius:10px;padding:12px 14px;margin-bottom:18px;display:flex;gap:10px;align-items:flex-start;">
+          <div style="font-size:20px;flex-shrink:0;">🏇</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#2C2A20;margin-bottom:2px;">Find one horse — we'll find them all</div>
+            <div style="font-size:11px;color:#7A6830;line-height:1.5;">We cross-reference your name against the full AQHA registry. Verify one horse and we'll show you every other horse registered to the same owner — so you can add your entire barn in a single step.</div>
+          </div>
+        </div>
+
+        <label class="lbl">Horse's registered name</label>
+        <div style="position:relative;margin-bottom:6px;">
+          <input class="inp" id="horse-search-inp" value="Nellie" oninput="showHorseResults()" style="padding-left:34px;" />
+          <i class="ti ti-search" style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#bbb;font-size:13px;pointer-events:none;"></i>
+        </div>
+
+        <!-- Live results list -->
+        <div id="horse-results" style="border:1px solid #E8E0D0;border-radius:8px;overflow:hidden;margin-bottom:14px;">
+          <div style="background:#F7F4EE;padding:6px 12px;font-size:10px;font-weight:600;color:#888;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid #E8E0D0;">3 matches — keep typing to narrow down</div>
+          <!-- Result row 1 — highlighted match -->
+          <div onclick="nav('sc-horse-match')" style="padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;background:#FFFCF0;border-bottom:1px solid #F0EBE0;border-left:3px solid #C49020;">
+            <i class="ti ti-horse" style="color:#C49020;font-size:16px;flex-shrink:0;"></i>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:700;color:#2C2A20;">Nelliebell</div>
+              <div style="font-size:11px;color:#999;">Mare · 2019 · Sorrel · By Sannman · D. Smith · TX</div>
+            </div>
+            <span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:3px 8px;border-radius:10px;">✓ Enrolled sire</span>
+          </div>
+          <!-- Result row 2 -->
+          <div style="padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #F0EBE0;" onclick="nav('sc-horse-match')">
+            <i class="ti ti-horse" style="color:#bbb;font-size:16px;flex-shrink:0;"></i>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#2C2A20;">Nellie's Last Dance</div>
+              <div style="font-size:11px;color:#999;">Mare · 2021 · Bay · By Cats Royal Boon · B. Culver · NM</div>
+            </div>
+            <span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:3px 8px;border-radius:10px;">✓ Enrolled sire</span>
+          </div>
+          <!-- Result row 3 -->
+          <div style="padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="nav('sc-horse-match')">
+            <i class="ti ti-horse" style="color:#bbb;font-size:16px;flex-shrink:0;"></i>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#2C2A20;">Nellibelle Run</div>
+              <div style="font-size:11px;color:#999;">Gelding · 2017 · Palomino · By TR Illuminator Cash · J. Reeves · OK</div>
+            </div>
+            <span style="font-size:10px;background:#F3F1EA;color:#888;font-weight:700;padding:3px 8px;border-radius:10px;">Not enrolled</span>
+          </div>
+        </div>
+
+        <div style="text-align:center;font-size:11px;color:#aaa;margin-bottom:16px;">Can't find your horse? <a style="color:#B07A18;cursor:pointer;" onclick="nav('sc-horse-claim')">Submit a claim →</a></div>
+        <div style="font-size:11px;color:#aaa;text-align:center;cursor:pointer;" onclick="nav('sc-dashboard')">Skip for now</div>
+        <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
+      </div>
+    </div>
+
+    <!-- HORSE CONFIRM: user tapped a result, confirm it's theirs -->
+    <div id="sc-horse-match" class="screen">
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-signup3')"><i class="ti ti-arrow-left"></i> Back</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span></div>
+      <div class="screen-scroll" style="background:#fff;padding:22px 28px;">
+        <div class="form-title" style="margin-bottom:3px;">Is this your horse?</div>
+        <div class="form-sub" style="margin-bottom:18px;">Confirm the details match — then we'll check for the rest of your barn</div>
+
+        <!-- Horse card -->
+        <div style="background:#FFFCF0;border:2px solid #C49020;border-radius:12px;padding:16px;display:flex;gap:14px;align-items:center;margin-bottom:20px;">
+          <div style="width:52px;height:52px;background:linear-gradient(180deg,#A0522D,#6B3410);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;">🐴</div>
+          <div style="flex:1;">
+            <div style="font-size:17px;font-weight:700;color:#2C2A20;">Nelliebell</div>
+            <div style="font-size:12px;color:#888;margin-top:2px;">Mare · Sorrel · Foaled 04/12/2019 · Reg #5892341</div>
+            <div style="font-size:12px;color:#555;margin-top:2px;">Sire: <strong>Sannman</strong> · Dam: A Feisty Fling</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="font-size:10px;color:#999;">Registry owner</div>
+            <div style="font-size:12px;font-weight:700;color:#2C2A20;">D. Smith · TX</div>
+          </div>
+        </div>
+
+        <!-- Sannman enrolled callout -->
+        <div style="background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;margin-bottom:20px;display:flex;gap:10px;align-items:center;">
+          <i class="ti ti-circle-check" style="color:#166534;font-size:18px;flex-shrink:0;"></i>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#166534;">Sannman is an enrolled Legendary Stakes sire</div>
+            <div style="font-size:11px;color:#166534;opacity:.8;">Nelliebell enrolls free and is eligible for 10 disciplines immediately.</div>
+          </div>
+        </div>
+
+        <button class="gold-full" onclick="nav('sc-barn-sweep')">Yes, this is my horse — continue</button>
+        <div style="font-size:12px;color:#aaa;text-align:center;margin-top:10px;cursor:pointer;" onclick="nav('sc-signup3')">Not my horse — search again</div>
+        <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
+      </div>
+    </div>
+
+    <!-- BARN SWEEP: Section D — we found more horses -->
+    <div id="sc-barn-sweep" class="screen">
+      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span></div>
+      <div class="screen-scroll" style="background:#fff;padding:22px 28px;">
+
+        <!-- Success header -->
+        <div style="text-align:center;margin-bottom:22px;">
+          <div style="width:56px;height:56px;background:linear-gradient(135deg,#166534,#4ADE80);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:28px;color:white;margin-bottom:12px;box-shadow:0 6px 20px rgba(22,101,52,0.2);">✓</div>
+          <div style="font-size:20px;font-weight:700;color:#2C2A20;margin-bottom:4px;">Nelliebell is verified, Dale.</div>
+          <div style="font-size:13px;color:#888;max-width:380px;margin:0 auto;line-height:1.5;">We searched the AQHA registry for other horses registered to <strong style="color:#2C2A20;">D. Smith · TX</strong> — and found 3 more. Add them all now with one tap.</div>
+        </div>
+
+        <!-- Horse checklist -->
+        <div style="border:1px solid #E8E0D0;border-radius:10px;overflow:hidden;margin-bottom:16px;">
+          <!-- Verified horse (locked) -->
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:12px;background:#F7FDF9;border-bottom:1px solid #E8E0D0;">
+            <input type="checkbox" checked disabled style="accent-color:#166534;width:16px;height:16px;" />
+            <div style="width:36px;height:36px;background:linear-gradient(180deg,#A0522D,#6B3410);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🐴</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:700;color:#2C2A20;">Nelliebell <span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:6px;">✓ Verified</span></div>
+              <div style="font-size:11px;color:#999;">Mare · 2019 · Sorrel · By Sannman · 10 disciplines</div>
+            </div>
+          </div>
+          <!-- Header for others -->
+          <div style="background:#F7F4EE;padding:6px 14px;font-size:10px;font-weight:600;color:#888;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid #E8E0D0;">Also registered to D. Smith · TX</div>
+          <!-- Horse 2 -->
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F0EBE0;">
+            <input type="checkbox" checked style="accent-color:#C49020;width:16px;height:16px;" />
+            <div style="width:36px;height:36px;background:linear-gradient(180deg,#6B4423,#3D2710);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🐎</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#2C2A20;">SDP Best of Friends</div>
+              <div style="font-size:11px;color:#999;">Gelding · 2018 · Bay · By Sannman · Reg #…2341</div>
+            </div>
+            <span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;">✓ Enrolled sire</span>
+          </div>
+          <!-- Horse 3 -->
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F0EBE0;">
+            <input type="checkbox" checked style="accent-color:#C49020;width:16px;height:16px;" />
+            <div style="width:36px;height:36px;background:linear-gradient(180deg,#D4A04A,#8B6914);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🐴</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#2C2A20;">Honey Run Lady</div>
+              <div style="font-size:11px;color:#999;">Mare · 2020 · Palomino · By TR Illuminator Cash · Reg #…8821</div>
+            </div>
+            <span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;">✓ Enrolled sire</span>
+          </div>
+          <!-- Horse 4 -->
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:12px;">
+            <input type="checkbox" checked style="accent-color:#C49020;width:16px;height:16px;" />
+            <div style="width:36px;height:36px;background:linear-gradient(180deg,#8B7E74,#5C5048);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🐎</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#2C2A20;">Cactus Rose</div>
+              <div style="font-size:11px;color:#999;">Mare · 2021 · Roan · By Cats Royal Boon · Reg #…7714</div>
+            </div>
+            <span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;">✓ Enrolled sire</span>
+          </div>
+        </div>
+
+        <button class="gold-full" onclick="nav('sc-barn-success')">Add all 4 horses to my barn →</button>
+        <div style="font-size:11px;color:#aaa;text-align:center;margin-top:8px;cursor:pointer;" onclick="nav('sc-barn-success')">Just add Nelliebell for now</div>
+        <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
+      </div>
+    </div>
+
+    <!-- BARN SUCCESS: Section E -->
+    <div id="sc-barn-success" class="screen">
+      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span></div>
+      <div class="screen-scroll" style="background:#fff;padding:28px;">
+        <div style="text-align:center;margin-bottom:24px;">
+          <div style="width:64px;height:64px;background:linear-gradient(135deg,#C49020,#D4AF37);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:14px;box-shadow:0 8px 24px rgba(184,150,12,0.3);">🏆</div>
+          <div style="font-size:22px;font-weight:700;color:#2C2A20;margin-bottom:5px;">Your barn is built, Dale.</div>
+          <div style="font-size:13px;color:#888;max-width:360px;margin:0 auto;line-height:1.5;"><strong style="color:#2C2A20;">4 horses</strong> added · <strong style="color:#C49020;">3 eligible to compete immediately</strong></div>
+        </div>
+
+        <!-- Horse grid -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
+          <div style="border:1px solid #E8E0D0;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:4px;">🐴</div>
+            <div style="font-size:10px;font-weight:700;color:#2C2A20;margin-bottom:3px;">Nelliebell</div>
+            <span style="font-size:9px;background:#FEF3C7;color:#92400E;font-weight:700;padding:2px 6px;border-radius:8px;">10 disc.</span>
+          </div>
+          <div style="border:1px solid #E8E0D0;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:4px;">🐎</div>
+            <div style="font-size:10px;font-weight:700;color:#2C2A20;margin-bottom:3px;">SDP Best of Friends</div>
+            <span style="font-size:9px;background:#FEF3C7;color:#92400E;font-weight:700;padding:2px 6px;border-radius:8px;">10 disc.</span>
+          </div>
+          <div style="border:1px solid #E8E0D0;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:4px;">🐴</div>
+            <div style="font-size:10px;font-weight:700;color:#2C2A20;margin-bottom:3px;">Honey Run Lady</div>
+            <span style="font-size:9px;background:#FEF3C7;color:#92400E;font-weight:700;padding:2px 6px;border-radius:8px;">8 disc.</span>
+          </div>
+          <div style="border:1px solid #E8E0D0;border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:4px;">🐎</div>
+            <div style="font-size:10px;font-weight:700;color:#2C2A20;margin-bottom:3px;">Cactus Rose</div>
+            <span style="font-size:9px;background:#FEF3C7;color:#92400E;font-weight:700;padding:2px 6px;border-radius:8px;">7 disc.</span>
+          </div>
+        </div>
+
+        <!-- Breeder discovery teaser -->
+        <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:1px solid #E8D48A;border-radius:10px;padding:14px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:36px;height:36px;background:#C49020;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">✦</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#2C2A20;margin-bottom:3px;">One more thing — you're also a breeder.</div>
+            <div style="font-size:12px;color:#7A6830;line-height:1.5;">We see <strong>12 horses currently competing</strong> that list you as breeder. They earn you <strong style="color:#C49020;">$25 every time they enter an event.</strong></div>
+            <button class="gold-full" style="margin-top:10px;padding:8px;font-size:12px;" onclick="nav('sc-dashboard')">Set up my Breeder Barn →</button>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div onclick="nav('sc-events')" style="background:#FEF3C7;border:1.5px solid #C49020;border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;">
+            <div style="width:34px;height:34px;background:#C49020;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📅</div>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:#2C2A20;">Enter your first event</div><div style="font-size:10px;color:#7A6830;">Mid South Cutting · May 20 · Memphis</div></div>
+            <span style="color:#C49020;font-size:16px;">→</span>
+          </div>
+          <div onclick="nav('sc-dashboard')" style="background:#fff;border:1px solid #E8E0D0;border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;">
+            <div style="width:34px;height:34px;background:#F7F4EE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏠</div>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:#2C2A20;">Go to my dashboard</div><div style="font-size:10px;color:#999;">See your barn, leaderboard, season</div></div>
+            <span style="color:#ccc;font-size:16px;">→</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HORSE CLAIM: fallback when horse not found -->
+    <div id="sc-horse-claim" class="screen">
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-signup3')"><i class="ti ti-arrow-left"></i> Back</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span></div>
+      <div class="screen-scroll" style="background:#fff;padding:22px 28px;">
+        <div class="form-title" style="margin-bottom:3px;">Help us find your horse</div>
+        <div class="form-sub" style="margin-bottom:18px;">Fill out what you know — we'll query AQHA directly and create the profile within 1–3 business days</div>
+        <div class="row2">
+          <div><label class="lbl">Registered name</label><input class="inp" placeholder="As shown on papers" /></div>
+          <div><label class="lbl">Barn name <span style="font-weight:400;color:#bbb;">(optional)</span></label><input class="inp" placeholder="What you call them" /></div>
+        </div>
+        <div class="row2">
+          <div><label class="lbl">AQHA / APHA #</label><input class="inp" placeholder="If known" /></div>
+          <div><label class="lbl">Year of birth</label><input class="inp" placeholder="e.g. 2018" /></div>
+        </div>
+        <div class="row2">
+          <div><label class="lbl">Sex</label><select class="inp"><option value="">Select…</option><option>Mare</option><option>Gelding</option><option>Stallion</option></select></div>
+          <div><label class="lbl">Color</label><input class="inp" placeholder="e.g. Sorrel, Bay" /></div>
+        </div>
+        <label class="lbl">Sire name <span style="font-weight:400;color:#bbb;">(optional)</span></label>
+        <input class="inp" placeholder="If known" />
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 12px;margin-bottom:16px;font-size:11px;color:#1E40AF;line-height:1.5;">
+          <strong>While we verify:</strong> You can still browse events. Once your horse is confirmed (1–3 business days), you'll be able to enter and compete immediately.
+        </div>
+        <button class="gold-full" onclick="nav('sc-dashboard')">Submit claim — take me to my dashboard</button>
+        <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
       </div>
     </div>
 
@@ -600,7 +828,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-events" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button></div></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:20px 22px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-size:17px;font-weight:500;color:#2C2A20;">Events</div><select class="inp" style="margin:0;padding:5px 9px;font-size:11px;width:auto;"><option>All disciplines</option><option>Barrel Racing</option><option>Cutting</option><option>Reined Cow Horse</option></select></div>
         <div class="slabel">Open now</div>
@@ -612,7 +840,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-event-detail" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back to events</button><button class="menu-btn"><i class="ti ti-menu-2"></i> My Account</button></div></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back to events</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="menu-btn"><i class="ti ti-menu-2"></i> My Account</button></div></div>
       <div class="event-hero"><div class="eh-logo"><i class="ti ti-horse"></i></div><div style="flex:1;"><div style="display:flex;align-items:center;gap:7px;margin-bottom:4px;"><span class="status-pill"><span class="sdot"></span> Open</span><span style="font-size:10px;color:rgba(255,255,255,.4);">Closes May 19</span></div><div class="eh-title">Mid South Memorial Day Cutting</div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;"><span class="es-meta"><i class="ti ti-calendar" style="font-size:11px;"></i> May 20, 2026</span><span class="es-meta"><i class="ti ti-map-pin" style="font-size:11px;"></i> Memphis, TN</span><span class="es-meta"><i class="ti ti-building" style="font-size:11px;"></i> Mid South CDHA</span></div></div></div>
       <div class="detail-body">
         <div class="dl">
@@ -634,7 +862,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-cart" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back to event</button><button class="menu-btn"><i class="ti ti-menu-2"></i> My Account</button></div></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back to event</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="menu-btn"><i class="ti ti-menu-2"></i> My Account</button></div></div>
       <div class="event-strip"><div><div class="es-name">Mid South Memorial Day Cutting</div><div class="es-meta"><i class="ti ti-calendar" style="font-size:11px;"></i> May 20 · Memphis, TN</div></div><div style="font-size:11px;color:rgba(255,255,255,.4);">Closes May 19</div></div>
       <div class="entry-body">
         <div class="el">
@@ -658,7 +886,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-review" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Edit entries</button><button class="menu-btn"><i class="ti ti-menu-2"></i> My Account</button></div></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Edit entries</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="menu-btn"><i class="ti ti-menu-2"></i> My Account</button></div></div>
       <div class="event-strip"><div><div class="es-name">Mid South Memorial Day Cutting</div><div class="es-meta"><i class="ti ti-calendar" style="font-size:11px;"></i> May 20 · Memphis, TN</div></div></div>
       <div class="detail-body">
         <div class="dl">
@@ -701,7 +929,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-entries" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:20px 22px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-size:17px;font-weight:500;color:#2C2A20;">My Entries</div><button class="gold-btn" style="padding:8px 16px;font-size:12px;" onclick="nav('sc-events')">+ Enter an event</button></div>
         <div class="slabel">Upcoming</div>
@@ -713,7 +941,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-barn" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')"><i class="ti ti-menu-2"></i> My Account</button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')"><i class="ti ti-menu-2"></i> My Account</button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:18px 20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:16px;font-weight:500;color:#2C2A20;">My Barn</div><button class="gold-btn" style="padding:8px 16px;font-size:12px;" onclick="nav('sc-signup3')">+ Add a horse</button></div>
         <div class="alert-banner"><div class="alert-ico"><i class="ti ti-alert-triangle" style="font-size:9px;"></i></div><div><div class="alert-t">1 horse needs ownership verification before payout</div><div class="alert-s">You can still enter events, but winnings are held until ownership is confirmed. Verification takes 1–3 business days.</div></div></div>
@@ -746,7 +974,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-horse-detail" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> My Barn</button></div></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> My Barn</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"></div></div>
       <div class="detail-body">
         <div class="dl">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;"><div><div style="font-size:16px;font-weight:500;color:#2C2A20;">Nelliebell</div><div style="display:flex;align-items:center;gap:5px;margin-top:3px;"><span class="status-badge sb-unverified"><i class="ti ti-alert-circle" style="font-size:9px;"></i> Not verified</span><span style="font-size:10px;color:#aaa;">Enrolled May 2026</span></div></div><button class="gold-btn" style="font-size:11px;padding:6px 12px;">Save changes</button></div>
@@ -791,7 +1019,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-sire-dash" class="screen">
-      <div class="topbar"><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> My Barn</button></div></div>
+      <div class="topbar"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> My Barn</button><span class="logo" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;">LEGEN<b>D</b>ARY stakes</span><div class="top-right"></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:18px 20px;">
         <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;"><div style="width:42px;height:42px;border-radius:8px;background:#2C2214;border:0.5px solid #5A4828;display:flex;align-items:center;justify-content:center;font-size:18px;color:#C49020;flex-shrink:0;"><i class="ti ti-horse"></i></div><div><div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1px;">Stallion Dashboard</div><div style="font-size:16px;font-weight:500;color:#2C2A20;">SDP Best of Friends</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="status-badge sb-sire">Legendary Stallion</span><span class="status-badge sb-verified"><i class="ti ti-circle-check" style="font-size:9px;"></i> Verified</span></div></div></div>
         <div class="stat-grid3">
