@@ -1,214 +1,338 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:var(--font-sans);}
-.proto-shell{background:#E8E4D8;border-radius:12px;overflow:hidden;border:0.5px solid #C8C0A8;min-height:560px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+.shell{background:#E8E4D8;border-radius:12px;overflow:hidden;border:.5px solid #C8C0A8;min-height:560px;}
 .screen{display:none;flex-direction:column;min-height:560px;}
 .screen.active{display:flex;}
-
-.topbar{background:#F5F2EA;border-bottom:0.5px solid #D8D0BC;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.logo{font-size:13px;font-weight:500;color:#8A6010;letter-spacing:.2px;}
+.topbar{background:#F5F2EA;border-bottom:.5px solid #D8D0BC;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.logo{font-size:13px;font-weight:500;color:#8A6010;}
 .logo b{color:#C49020;font-weight:500;}
 .menu-btn{background:#EDD98A;border:none;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;color:#6B4E10;cursor:pointer;display:flex;align-items:center;gap:5px;}
-.icon-btn{background:none;border:none;color:#999;cursor:pointer;padding:3px;display:flex;align-items:center;font-size:17px;}
 .back-btn{background:none;border:none;font-size:12px;color:#B07A18;cursor:pointer;display:flex;align-items:center;gap:4px;}
+.icon-btn{background:none;border:none;color:#999;cursor:pointer;padding:3px;font-size:17px;display:flex;align-items:center;}
+.top-right{display:flex;align-items:center;gap:8px;}
+.event-strip{background:#2C2214;padding:10px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.es-name{font-size:13px;font-weight:500;color:#fff;}
+.es-meta{font-size:11px;color:rgba(255,255,255,.5);}
+.main{padding:20px 22px;flex:1;background:#F5F2EA;overflow-y:auto;}
+.gold-btn{background:#C49020;color:#fff;border:none;border-radius:8px;padding:11px 22px;font-size:13px;font-weight:500;cursor:pointer;}
+.ghost-btn{background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:8px;padding:10px 18px;font-size:12px;color:#555;cursor:pointer;}
+.slabel{font-size:10px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:#aaa;margin-bottom:8px;display:block;}
+.card{background:#fff;border:.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;}
+.note{font-size:11px;color:#ccc;text-align:center;margin-top:14px;}
+.note a{color:#B07A18;text-decoration:none;}
 
-.dropdown-wrap{position:relative;}
-.dd{position:absolute;top:36px;right:0;background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:5px;width:200px;z-index:20;display:none;}
-.dd.open{display:block;}
-.dd-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:12px;color:#3A3020;}
-.dd-item:hover{background:#FEF3D0;color:#6B4E10;}
-.dd-item i{font-size:15px;color:#C49020;}
-.dd-div{height:.5px;background:#E8E0D0;margin:3px 0;}
-.dd-danger{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:12px;color:#aaa;}
-.dd-danger:hover{background:#FEF3D0;color:#c0392b;}
-
-.split-layout{display:flex;flex:1;}
+.split{display:flex;flex:1;}
 .split-left{width:40%;background:#1E160A;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;position:relative;flex-shrink:0;}
-.split-bg{position:absolute;inset:0;background:#1E160A;}
-.split-trophy{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:52px;color:#C49020;opacity:.18;}
-.split-badge{font-size:10px;font-weight:500;color:#C49020;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
-.split-h{font-size:19px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px;}
-.split-p{font-size:11px;color:rgba(255,255,255,.55);line-height:1.6;}
-.split-logo{position:absolute;top:20px;left:20px;font-size:13px;font-weight:500;color:#C49020;}
-.split-right{flex:1;background:#fff;padding:28px 32px;display:flex;flex-direction:column;justify-content:center;}
-
+.split-right{flex:1;background:#fff;padding:26px 30px;display:flex;flex-direction:column;justify-content:center;overflow-y:auto;}
+.s-badge{font-size:10px;font-weight:500;color:#C49020;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
+.s-h{font-size:18px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:5px;}
+.s-p{font-size:11px;color:rgba(255,255,255,.5);line-height:1.6;}
+.s-logo{position:absolute;top:18px;left:18px;font-size:13px;font-weight:500;color:#C49020;}
+.s-trophy{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:48px;color:#C49020;opacity:.15;}
 .form-eyebrow{font-size:13px;font-weight:500;color:#8A6010;margin-bottom:2px;}
 .form-eyebrow b{color:#C49020;font-weight:500;}
-.form-tagline{font-size:10px;color:#aaa;letter-spacing:.5px;margin-bottom:20px;}
-.form-title{font-size:17px;font-weight:500;color:#2C2A20;margin-bottom:3px;}
-.form-sub{font-size:12px;color:#999;margin-bottom:18px;}
+.form-tagline{font-size:10px;color:#aaa;letter-spacing:.5px;margin-bottom:18px;}
+.form-title{font-size:16px;font-weight:500;color:#2C2A20;margin-bottom:3px;}
+.form-sub{font-size:12px;color:#999;margin-bottom:16px;}
 .lbl{font-size:11px;font-weight:500;color:#666;display:block;margin-bottom:3px;}
-.inp{width:100%;border:.5px solid #D0C8B0;border-radius:7px;padding:9px 11px;font-size:13px;color:#333;background:#FDFBF6;outline:none;margin-bottom:11px;font-family:var(--font-sans);}
-.inp:focus{border-color:#C49020;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.gold-btn{background:#C49020;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;width:100%;margin-bottom:8px;}
-.ghost-btn{background:#F5F2EA;border:1px solid #D0C8B0;border-radius:8px;padding:10px;font-size:13px;color:#555;cursor:pointer;width:100%;margin-bottom:8px;}
-.link-line{font-size:12px;color:#999;text-align:center;}
-.link-line a{color:#B07A18;cursor:pointer;}
-.divider{display:flex;align-items:center;gap:8px;margin:12px 0;}
+.inp{width:100%;border:.5px solid #D0C8B0;border-radius:7px;padding:8px 11px;font-size:12px;color:#333;background:#FDFBF6;outline:none;margin-bottom:10px;font-family:var(--font-sans);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.gold-full{background:#C49020;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:500;cursor:pointer;width:100%;margin-bottom:7px;}
+.ghost-full{background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:8px;padding:9px;font-size:12px;color:#555;cursor:pointer;width:100%;margin-bottom:7px;}
+.link-sm{font-size:12px;color:#999;text-align:center;}
+.link-sm a{color:#B07A18;cursor:pointer;}
+.divider{display:flex;align-items:center;gap:8px;margin:10px 0;}
 .div-line{flex:1;height:.5px;background:#E0D9C8;}
 .div-txt{font-size:11px;color:#aaa;}
-
-.prog-bar{display:flex;align-items:center;margin-bottom:20px;}
-.prog-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
-.prog-dot.done{background:#C49020;color:#fff;}
-.prog-dot.now{background:#C49020;color:#fff;}
-.prog-dot.todo{background:#EEE8D8;color:#aaa;}
-.prog-lbl{font-size:10px;margin-left:5px;white-space:nowrap;}
-.prog-lbl.done,.prog-lbl.now{color:#B07A18;font-weight:500;}
-.prog-lbl.todo{color:#aaa;}
-.prog-line{flex:1;height:.5px;background:#E0D9C8;margin:0 6px;}
-.prog-line.done{background:#C49020;}
-
-.main-pad{padding:22px 24px;flex:1;background:#F5F2EA;overflow-y:auto;}
-.page-title{font-size:17px;font-weight:500;color:#2C2A20;}
-.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.slabel{font-size:10px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:#aaa;margin-bottom:8px;}
-.gold-sm{background:#C49020;color:#fff;border:none;border-radius:7px;padding:8px 16px;font-size:12px;font-weight:500;cursor:pointer;}
-.ghost-sm{background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:7px;padding:7px 13px;font-size:12px;color:#555;cursor:pointer;}
-
+.prog{display:flex;align-items:center;margin-bottom:18px;}
+.pdot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
+.pdot.done{background:#C49020;color:#fff;}
+.pdot.now{background:#C49020;color:#fff;}
+.pdot.todo{background:#EEE8D8;color:#aaa;}
+.plbl{font-size:10px;margin-left:4px;white-space:nowrap;}
+.plbl.done,.plbl.now{color:#B07A18;font-weight:500;}
+.plbl.todo{color:#aaa;}
+.pline{flex:1;height:.5px;background:#E0D9C8;margin:0 5px;}
+.pline.done{background:#C49020;}
+.sire-box{border:.5px solid #D0C8B0;border-radius:7px;overflow:hidden;margin-bottom:7px;}
+.sire-inp{width:100%;border:none;padding:8px 11px;font-size:12px;color:#333;outline:none;background:#FDFBF6;font-family:var(--font-sans);}
+.sire-res{display:flex;align-items:center;gap:9px;padding:8px 11px;border-top:.5px solid #EEE8D8;cursor:pointer;background:#FEF3D0;}
+.sire-av{width:28px;height:28px;border-radius:5px;background:#EDD98A;display:flex;align-items:center;justify-content:center;font-size:13px;color:#7A5010;}
+.sire-n{font-size:12px;font-weight:500;color:#2C2A20;}
+.sire-m{font-size:10px;color:#999;}
+.sire-badge{background:#EDD98A;color:#7A5010;font-size:10px;font-weight:500;padding:2px 6px;border-radius:99px;margin-left:auto;}
+.sel-sire{display:flex;align-items:center;gap:8px;background:#FEF3D0;border:.5px solid #E5C060;border-radius:7px;padding:8px 11px;margin-bottom:11px;}
+.chk-c{width:18px;height:18px;border-radius:50%;background:#C49020;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;}
+select.inp{appearance:none;}
+.success-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:#fff;text-align:center;}
+.sico{width:54px;height:54px;border-radius:50%;background:#EDD98A;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:25px;color:#8A6010;}
+.st{font-size:19px;font-weight:500;color:#2C2A20;margin-bottom:5px;}
+.ss{font-size:13px;color:#888;margin-bottom:20px;line-height:1.6;max-width:300px;}
+.nc{background:#FEF3D0;border:.5px solid #E5C060;border-radius:10px;padding:12px 14px;width:100%;max-width:310px;text-align:left;margin-bottom:7px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.nc:hover{background:#FDE8A0;}
+.nc-ico{width:32px;height:32px;border-radius:7px;background:#C49020;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;}
+.nc-t{font-size:12px;font-weight:500;color:#6B4E10;margin-bottom:1px;}
+.nc-s{font-size:10px;color:#8A6820;}
+.nc.gray{background:#F5F2EA;border-color:#D0C8B0;}
+.nc.gray .nc-ico{background:#C8BFA8;}
+.nc.gray .nc-t{color:#4A4030;}
+.nc.gray .nc-s{color:#888;}
+.dd{position:absolute;top:40px;right:0;background:#fff;border:.5px solid #E0D9C8;border-radius:10px;padding:5px;width:190px;z-index:20;display:none;}
+.dd.open{display:block;}
+.ddi{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;cursor:pointer;font-size:12px;color:#3A3020;}
+.ddi:hover{background:#FEF3D0;color:#6B4E10;}
+.ddi i{font-size:14px;color:#C49020;}
+.dddiv{height:.5px;background:#E8E0D0;margin:3px 0;}
+.ddanger{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;cursor:pointer;font-size:12px;color:#aaa;}
+.ddanger:hover{background:#FEF3D0;color:#c0392b;}
+.ddwrap{position:relative;}
+.greeting{font-size:12px;color:#999;margin-bottom:2px;}
+.headline{font-size:18px;font-weight:500;color:#2C2A20;margin-bottom:13px;}
+.nudge{background:#FEF3D0;border:.5px solid #E5C060;border-radius:10px;padding:11px 13px;margin-bottom:13px;display:flex;align-items:flex-start;gap:10px;}
+.nudge-ico{width:24px;height:24px;border-radius:50%;background:#C49020;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;flex-shrink:0;}
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-bottom:14px;padding-bottom:14px;border-bottom:.5px solid #D8D0BC;}
-.metric{padding-right:14px;border-right:.5px solid #D8D0BC;padding-left:2px;}
+.metric{padding-right:14px;border-right:.5px solid #D8D0BC;}
 .metric:first-child{padding-left:0;}
 .metric:last-child{border-right:none;}
-.metric-val{font-size:20px;font-weight:500;color:#2C2A20;}
+.metric-val{font-size:19px;font-weight:500;color:#2C2A20;}
 .metric-val.gold{color:#B07A18;}
 .metric-lbl{font-size:10px;color:#999;margin-top:1px;}
-
-.two-col{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px;}
-.card{background:#fff;border:.5px solid #E0D9C8;border-radius:10px;padding:10px 13px;}
-.horse-row{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:.5px solid #EEE8D8;}
+.two-col{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:11px;}
+.horse-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:.5px solid #EEE8D8;}
 .horse-row:last-of-type{border-bottom:none;margin-bottom:5px;}
-.hico{width:28px;height:28px;border-radius:6px;background:#F5F2EA;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hico{width:26px;height:26px;border-radius:5px;background:#F5F2EA;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:#aaa;}
 .hname{font-size:12px;font-weight:500;color:#2C2A20;}
-.hmeta{font-size:11px;color:#999;}
-.pts{background:#EDD98A;color:#7A5010;font-size:11px;font-weight:500;padding:2px 7px;border-radius:99px;white-space:nowrap;}
+.hmeta{font-size:10px;color:#999;}
+.pts{background:#EDD98A;color:#7A5010;font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px;white-space:nowrap;}
 .pts.gray{background:#EEE8D8;color:#888;}
-.browse-btn{width:100%;border:.5px solid #D0C8B0;background:#F5F2EA;border-radius:7px;padding:7px;font-size:11px;color:#666;cursor:pointer;text-align:center;}
-.lb-row{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:.5px solid #EEE8D8;font-size:11px;}
+.browse-btn{width:100%;border:.5px solid #D0C8B0;background:#F5F2EA;border-radius:6px;padding:6px;font-size:11px;color:#666;cursor:pointer;text-align:center;}
+.lb-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:.5px solid #EEE8D8;font-size:11px;}
 .lb-row:last-child{border-bottom:none;}
-.lb-r{width:14px;color:#aaa;}
+.lb-r{width:13px;color:#aaa;}
 .lb-n{flex:1;color:#4A4030;}
-.lb-p{color:#aaa;min-width:44px;}
-.lb-e{color:#B07A18;font-weight:500;min-width:42px;text-align:right;}
-.lb-you{background:#EDD98A;border-radius:5px;margin:0 -5px;padding:6px 5px;}
+.lb-p{color:#aaa;min-width:42px;}
+.lb-e{color:#B07A18;font-weight:500;min-width:40px;text-align:right;}
+.lb-you{background:#EDD98A;border-radius:5px;margin:0 -4px;padding:5px 4px;}
 .lb-you .lb-n{font-weight:500;color:#6B4E10;}
 .lb-you .lb-r{color:#6B4E10;}
 .lb-you .lb-p{color:#8A6820;}
-
-.nudge{background:#FEF3D0;border:.5px solid #E5C060;border-radius:10px;padding:11px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;}
-.nudge-ico{width:26px;height:26px;border-radius:50%;background:#C49020;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:#fff;}
-.nudge-t{font-size:12px;font-weight:500;color:#6B4E10;margin-bottom:2px;}
-.nudge-b{font-size:11px;color:#8A6820;line-height:1.5;margin-bottom:8px;}
-.nudge-actions{display:flex;gap:6px;}
-.n-primary{background:#C49020;color:#fff;border:none;border-radius:6px;padding:5px 11px;font-size:11px;cursor:pointer;}
-.n-ask{background:transparent;border:.5px solid #C8A040;border-radius:6px;padding:5px 11px;font-size:11px;color:#8A6010;cursor:pointer;}
-
 .ai-panel{width:0;flex-shrink:0;border-left:none;display:flex;flex-direction:column;background:#FDFBF6;overflow:hidden;transition:width .3s ease;}
-.ai-panel.open{width:240px;border-left:.5px solid #E0D9C8;}
-.ai-hdr{padding:11px 12px 8px;border-bottom:.5px solid #E0D9C8;display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.ai-panel.open{width:230px;border-left:.5px solid #E0D9C8;}
+.ai-hdr{padding:10px 12px 8px;border-bottom:.5px solid #E0D9C8;display:flex;align-items:center;gap:7px;flex-shrink:0;}
 .ai-dot{width:7px;height:7px;border-radius:50%;background:#C49020;}
-.ai-title{font-size:12px;font-weight:500;color:#6B4E10;flex:1;}
+.ai-title-text{font-size:12px;font-weight:500;color:#6B4E10;flex:1;}
 .ai-close{font-size:11px;color:#bbb;cursor:pointer;background:none;border:none;}
 .ai-msgs{flex:1;padding:10px 11px 6px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;min-height:0;}
 .msg-ai{background:#EDD98A;color:#5A3E08;border-radius:0 8px 8px 8px;padding:7px 9px;font-size:11px;line-height:1.5;}
-.msg-user{background:#fff;color:#333;border:.5px solid #E0D9C8;border-radius:8px 8px 0 8px;padding:7px 9px;font-size:11px;line-height:1.5;align-self:flex-end;}
+.msg-user{background:#fff;color:#333;border:.5px solid #E0D9C8;border-radius:8px 8px 0 8px;padding:7px 9px;font-size:11px;align-self:flex-end;}
 .msg-ai2{background:#EDD98A;color:#5A3E08;border-radius:0 8px 8px 8px;padding:7px 9px;font-size:11px;line-height:1.5;}
-.ai-sugs{padding:0 11px 7px;display:flex;flex-direction:column;gap:4px;}
-.sug{background:#fff;border:.5px solid #D0C8B0;border-radius:6px;padding:6px 8px;font-size:11px;color:#6B4E10;cursor:pointer;text-align:left;}
-.sug:hover{background:#FEF3D0;}
+.ai-sugs{padding:0 11px 7px;display:flex;flex-direction:column;gap:3px;}
+.sug{background:#fff;border:.5px solid #D0C8B0;border-radius:6px;padding:5px 8px;font-size:11px;color:#6B4E10;cursor:pointer;text-align:left;}
 .ai-inp-row{padding:6px 10px 10px;border-top:.5px solid #E0D9C8;display:flex;gap:5px;flex-shrink:0;}
 .ai-inp{flex:1;border:.5px solid #D0C8B0;border-radius:6px;padding:6px 8px;font-size:11px;background:#fff;color:#333;outline:none;font-family:var(--font-sans);min-width:0;}
-.ai-send{background:#C49020;border:none;border-radius:6px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;flex-shrink:0;}
+.ai-send{background:#C49020;border:none;border-radius:6px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;}
+.body-row{display:flex;flex:1;overflow:hidden;}
 
-.entry-card{background:#fff;border:.5px solid #E0D9C8;border-radius:10px;margin-bottom:9px;overflow:hidden;}
-.entry-hdr{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:.5px solid #EEE8D8;}
-.edate{text-align:center;width:34px;flex-shrink:0;}
-.emon{font-size:9px;font-weight:500;color:#C49020;text-transform:uppercase;letter-spacing:.5px;}
-.eday{font-size:18px;font-weight:500;color:#2C2A20;line-height:1;}
-.ediv{width:.5px;height:32px;background:#E0D9C8;flex-shrink:0;}
-.ename{font-size:12px;font-weight:500;color:#2C2A20;margin-bottom:1px;}
-.eloc{font-size:11px;color:#999;}
-.pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 9px;border-radius:99px;white-space:nowrap;}
-.pill-up{background:#EDD98A;color:#7A5010;}
+.event-card{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;margin-bottom:8px;overflow:hidden;}
+.ec-hdr{display:flex;align-items:center;gap:11px;padding:10px 13px;border-bottom:.5px solid #EEE8D8;}
+.ec-date{text-align:center;width:30px;flex-shrink:0;}
+.ec-mo{font-size:9px;font-weight:500;color:#C49020;text-transform:uppercase;}
+.ec-day{font-size:16px;font-weight:500;color:#2C2A20;line-height:1;}
+.ec-div{width:.5px;height:28px;background:#E0D9C8;flex-shrink:0;}
+.ec-name{font-size:12px;font-weight:500;color:#2C2A20;margin-bottom:1px;}
+.ec-loc{font-size:11px;color:#999;}
+.pill{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;white-space:nowrap;}
 .pill-op{background:#D4EDDA;color:#1a6b30;}
+.pill-up{background:#EDD98A;color:#7A5010;}
 .pill-pa{background:#EEE8D8;color:#888;}
-.entry-rows{padding:0 14px;}
-.erow{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:.5px solid #F0EAD8;}
-.erow:last-child{border-bottom:none;}
-.echip{display:flex;align-items:center;gap:5px;font-size:12px;color:#3A3020;font-weight:500;}
-.echip i{font-size:12px;color:#C49020;}
-.etag{background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:4px;padding:2px 7px;font-size:10px;color:#666;}
-.earn{margin-left:auto;text-align:right;}
+.etag{background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:4px;padding:1px 6px;font-size:10px;color:#666;}
+.elig-tag{background:#EDD98A;color:#7A5010;font-size:10px;font-weight:500;padding:1px 7px;border-radius:99px;}
+.enter-btn{background:#C49020;color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:500;cursor:pointer;margin-left:auto;white-space:nowrap;}
+
+.event-hero{background:#2C2214;padding:18px 20px;display:flex;align-items:flex-start;gap:14px;flex-shrink:0;}
+.eh-logo{width:48px;height:48px;border-radius:7px;background:#3D3020;border:.5px solid #5A4828;display:flex;align-items:center;justify-content:center;font-size:20px;color:#C49020;flex-shrink:0;}
+.eh-title{font-size:16px;font-weight:500;color:#fff;margin-bottom:4px;}
+.status-pill{display:inline-flex;align-items:center;gap:4px;background:#1a6b30;color:#D4EDDA;font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;margin-bottom:4px;}
+.sdot{width:5px;height:5px;border-radius:50%;background:#6FCF97;}
+.detail-body{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:0;flex:1;}
+.dl{padding:16px 18px;border-right:.5px solid #E0D9C8;overflow-y:auto;}
+.dr{padding:14px 15px;overflow-y:auto;}
+.stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:16px;}
+.stat-card{background:#fff;border:.5px solid #E0D9C8;border-radius:7px;padding:9px 11px;}
+.stat-val{font-size:17px;font-weight:500;color:#2C2A20;}
+.stat-val.gold{color:#B07A18;}
+.stat-lbl{font-size:10px;color:#999;margin-top:1px;}
+.disc-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:14px;}
+.disc-card{background:#fff;border:.5px solid #E0D9C8;border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:7px;}
+.disc-card.elig{border-color:#C8A040;background:#FEF3D0;}
+.disc-icon{width:24px;height:24px;border-radius:5px;background:#F5F2EA;display:flex;align-items:center;justify-content:center;font-size:13px;color:#aaa;flex-shrink:0;}
+.disc-card.elig .disc-icon{background:#EDD98A;color:#7A5010;}
+.disc-name{font-size:11px;font-weight:500;color:#2C2A20;}
+.disc-card.elig .disc-name{color:#6B4E10;}
+.disc-sub{font-size:10px;color:#999;}
+.disc-card.elig .disc-sub{color:#8A6820;}
+.eb{margin-left:auto;background:#C49020;color:#fff;font-size:10px;font-weight:500;padding:2px 6px;border-radius:99px;white-space:nowrap;}
+.entry-cta{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;padding:12px 13px;margin-bottom:9px;}
+.ep{font-size:18px;font-weight:500;color:#2C2A20;margin-bottom:2px;}
+.es{font-size:11px;color:#999;margin-bottom:10px;line-height:1.5;}
+.cred-row{display:flex;align-items:center;gap:5px;font-size:11px;color:#8A6820;background:#FEF3D0;border-radius:6px;padding:5px 8px;margin-top:5px;}
+.notify-card2{background:#FEF3D0;border:.5px solid #E5C060;border-radius:9px;padding:10px 12px;margin-bottom:9px;}
+.nt{font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:3px;display:flex;align-items:center;gap:4px;}
+.nb{font-size:11px;color:#8A6820;line-height:1.5;}
+.ntags{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px;}
+.ntag{font-size:10px;font-weight:500;padding:2px 6px;border-radius:99px;}
+.nt-s{background:#E6F1FB;color:#0C447C;}
+.nt-d{background:#EEE8D8;color:#5F5E5A;}
+.nt-b{background:#EAF3DE;color:#27500A;}
+.purse-bar{background:#fff;border:.5px solid #E0D9C8;border-radius:7px;padding:9px 11px;margin-bottom:6px;}
+.purse-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:.5px solid #F0EAD8;}
+.purse-row:last-child{border-bottom:none;}
+.purse-role{color:#999;}
+.purse-amt{font-weight:500;color:#B07A18;}
+
+.horse-btns{display:flex;gap:5px;margin-bottom:12px;}
+.hbtn{flex:1;display:flex;align-items:center;gap:7px;padding:7px 9px;border:.5px solid #D0C8B0;border-radius:7px;background:#F5F2EA;cursor:pointer;}
+.hbtn.sel{border-color:#C49020;background:#FEF3D0;}
+.hbtn-ico{width:22px;height:22px;border-radius:4px;background:#EEE8D8;display:flex;align-items:center;justify-content:center;font-size:11px;color:#aaa;flex-shrink:0;}
+.hbtn.sel .hbtn-ico{background:#EDD98A;color:#7A5010;}
+.hbtn-n{font-size:11px;font-weight:500;color:#3A3020;text-align:left;}
+.hbtn-m{font-size:10px;color:#999;}
+.hbtn.sel .hbtn-n{color:#6B4E10;}
+.sel-dot{width:13px;height:13px;border-radius:50%;border:.5px solid #D0C8B0;background:#fff;flex-shrink:0;margin-left:auto;display:flex;align-items:center;justify-content:center;font-size:8px;}
+.hbtn.sel .sel-dot{background:#C49020;border-color:#C49020;color:#fff;}
+.disc-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px;}
+.dtab{padding:4px 11px;border:.5px solid #D0C8B0;border-radius:99px;font-size:11px;color:#888;cursor:pointer;background:#F5F2EA;}
+.dtab.sel{background:#EDD98A;color:#7A5010;border-color:#C8A040;font-weight:500;}
+.dtab.dis{opacity:.4;cursor:not-allowed;}
+.tier-btns{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.tbtn{padding:5px 10px;border:.5px solid #D0C8B0;border-radius:6px;font-size:11px;color:#888;cursor:pointer;background:#F5F2EA;}
+.tbtn.sel{background:#EDD98A;border-color:#C49020;color:#7A5010;font-weight:500;}
+.tbtn-sub{font-size:10px;color:#aaa;margin-top:1px;}
+.tbtn.sel .tbtn-sub{color:#8A6820;}
+.div-list{display:flex;flex-direction:column;gap:3px;}
+.div-opt{display:flex;align-items:center;gap:7px;padding:6px 9px;border:.5px solid #E0D9C8;border-radius:6px;background:#FDFBF6;cursor:pointer;}
+.div-opt:hover,.div-opt.sel{background:#FEF3D0;border-color:#C49020;}
+.div-check{width:14px;height:14px;border-radius:3px;border:.5px solid #D0C8B0;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;}
+.div-opt.sel .div-check{background:#C49020;border-color:#C49020;color:#fff;}
+.div-name{font-size:11px;color:#2C2A20;flex:1;}
+.step-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;}
+.step-num{width:20px;height:20px;border-radius:50%;background:#C49020;color:#fff;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-title{font-size:11px;font-weight:500;color:#2C2A20;margin-bottom:5px;}
+.rider-opts{display:flex;flex-direction:column;gap:3px;}
+.rider-opt{display:flex;align-items:center;gap:7px;padding:6px 9px;border:.5px solid #E0D9C8;border-radius:6px;cursor:pointer;background:#FDFBF6;}
+.rider-opt.sel{background:#FEF3D0;border-color:#C49020;}
+.r-radio{width:13px;height:13px;border-radius:50%;border:.5px solid #D0C8B0;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.rider-opt.sel .r-radio{border-color:#C49020;}
+.r-dot{width:6px;height:6px;border-radius:50%;background:#C49020;display:none;}
+.rider-opt.sel .r-dot{display:block;}
+.r-label{font-size:11px;color:#2C2A20;}
+.r-sub{font-size:10px;color:#999;}
+.also-row{display:flex;align-items:center;gap:7px;padding:6px 9px;border:.5px solid #E0D9C8;border-radius:6px;cursor:pointer;background:#FDFBF6;margin-top:4px;}
+.also-row.sel{background:#FEF3D0;border-color:#C49020;}
+.also-chk{width:13px;height:13px;border-radius:3px;border:.5px solid #D0C8B0;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;}
+.also-row.sel .also-chk{background:#C49020;border-color:#C49020;color:#fff;}
+.add-btn{width:100%;background:#C49020;color:#fff;border:none;border-radius:7px;padding:9px;font-size:12px;font-weight:500;cursor:pointer;margin-top:9px;display:flex;align-items:center;justify-content:center;gap:4px;}
+.add-btn:disabled{background:#D0C8B0;cursor:not-allowed;}
+.cart-card2{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;overflow:hidden;margin-bottom:8px;}
+.cart-hdr2{background:#F5F2EA;padding:7px 11px;font-size:11px;font-weight:500;color:#6B4E10;border-bottom:.5px solid #E0D9C8;}
+.cart-item2{display:flex;align-items:flex-start;gap:7px;padding:7px 11px;border-bottom:.5px solid #EEE8D8;}
+.cart-item2:last-of-type{border-bottom:none;}
+.ci-h{font-size:11px;font-weight:500;color:#2C2A20;margin-bottom:1px;}
+.ci-d{font-size:10px;color:#999;line-height:1.4;}
+.ci-p{font-size:11px;font-weight:500;color:#B07A18;white-space:nowrap;}
+.ci-rm{background:none;border:none;color:#ccc;cursor:pointer;font-size:12px;padding:0;margin-left:2px;}
+.rtag{display:inline-block;font-size:10px;font-weight:500;padding:1px 5px;border-radius:99px;}
+.rt-o{background:#EDD98A;color:#7A5010;}
+.rt-r{background:#D4EDDA;color:#1a6b30;}
+.cart-total2{display:flex;justify-content:space-between;padding:8px 11px;border-top:.5px solid #E0D9C8;font-size:12px;}
+.empty-cart{padding:14px;text-align:center;}
+.empty-cart i{font-size:22px;color:#D0C8B0;display:block;margin-bottom:3px;}
+.empty-cart p{font-size:11px;color:#aaa;}
+.credit-notice{background:#FEF3D0;border:.5px solid #E5C060;border-radius:7px;padding:6px 9px;font-size:11px;color:#7A5010;display:flex;align-items:center;gap:5px;margin-bottom:7px;}
+.checkout-btn{width:100%;background:#C49020;color:#fff;border:none;border-radius:7px;padding:10px;font-size:12px;font-weight:500;cursor:pointer;}
+.checkout-btn:disabled{background:#D0C8B0;cursor:not-allowed;}
+.add-more{width:100%;background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:7px;padding:7px;font-size:11px;color:#555;cursor:pointer;margin-top:4px;}
+
+.review-card{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;overflow:hidden;margin-bottom:11px;}
+.rc-hdr{background:#F5F2EA;padding:7px 13px;font-size:11px;font-weight:500;color:#6B4E10;border-bottom:.5px solid #E0D9C8;display:flex;justify-content:space-between;align-items:center;}
+.entry-row2{display:flex;align-items:center;gap:9px;padding:9px 13px;border-bottom:.5px solid #EEE8D8;}
+.entry-row2:last-of-type{border-bottom:none;}
+.er-date{text-align:center;width:28px;flex-shrink:0;}
+.er-mo{font-size:9px;font-weight:500;color:#C49020;text-transform:uppercase;}
+.er-day{font-size:14px;font-weight:500;color:#2C2A20;line-height:1;}
+.er-vd{width:.5px;height:28px;background:#E0D9C8;flex-shrink:0;}
+.er-name{font-size:12px;font-weight:500;color:#2C2A20;margin-bottom:1px;}
+.er-meta{font-size:10px;color:#999;}
+.er-price{font-size:12px;font-weight:500;color:#B07A18;white-space:nowrap;}
+.notify-band{display:flex;align-items:flex-start;gap:9px;padding:10px 13px;background:#F5F2EA;}
+.nb-ico{width:24px;height:24px;border-radius:50%;background:#EDD98A;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7A5010;flex-shrink:0;margin-top:1px;}
+.pay-panel{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;padding:12px 13px;margin-bottom:10px;}
+.pp-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:.5px solid #EEE8D8;}
+.pp-row:last-of-type{border-bottom:none;}
+.pp-l{color:#999;}
+.pp-v{font-weight:500;color:#2C2A20;}
+.pp-v.green{color:#1a6b30;}
+.pp-v.gold{color:#B07A18;}
+.total-row{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border:.5px solid #E0D9C8;border-radius:9px;background:#fff;margin-bottom:10px;}
+.terms-row{display:flex;align-items:flex-start;gap:6px;margin-bottom:10px;font-size:11px;color:#888;}
+.terms-row input{accent-color:#C49020;margin-top:2px;}
+.pay-btn-final{width:100%;background:#C49020;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;}
+.pay-btn-final:disabled{background:#D0C8B0;cursor:not-allowed;}
+.pay-btn-final.zero{background:#1a6b30;}
+.back-link{display:block;text-align:center;font-size:11px;color:#B07A18;cursor:pointer;margin-top:7px;}
+.summ-card{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;overflow:hidden;margin-bottom:8px;}
+.summ-hdr{background:#F5F2EA;padding:6px 11px;font-size:11px;font-weight:500;color:#6B4E10;border-bottom:.5px solid #E0D9C8;}
+.summ-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 11px;border-bottom:.5px solid #EEE8D8;}
+.summ-row:last-child{border-bottom:none;}
+
+.entry-body{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:0;flex:1;}
+.el{padding:14px 16px;border-right:.5px solid #E0D9C8;overflow-y:auto;}
+.er{padding:13px 14px;overflow-y:auto;}
+
+.barn-card{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;margin-bottom:8px;overflow:hidden;}
+.barn-hdr{display:flex;align-items:center;gap:11px;padding:11px 13px;}
+.hav{width:36px;height:36px;border-radius:7px;background:#F5F2EA;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:.5px solid #E0D9C8;font-size:18px;color:#C49020;}
+.barn-actions{margin-left:auto;display:flex;gap:4px;}
+.act-btn{background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:5px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#888;font-size:12px;}
+.barn-dets{padding:0 13px 10px;display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.det-l{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;}
+.det-v{font-size:11px;color:#3A3020;}
+.disc-row2{padding:0 13px 10px;display:flex;gap:3px;flex-wrap:wrap;}
+.disc2{background:#EDD98A;color:#7A5010;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:500;}
+.disc2.locked{background:#EEE8D8;color:#aaa;}
+.add-horse-card{background:#fff;border:.5px dashed #D0C8B0;border-radius:9px;padding:16px;text-align:center;cursor:pointer;}
+.add-horse-card:hover{background:#FEF3D0;border-color:#C8A040;}
+
+.my-entries-card{background:#fff;border:.5px solid #E0D9C8;border-radius:9px;margin-bottom:8px;overflow:hidden;}
+.mec-hdr{display:flex;align-items:center;gap:10px;padding:9px 13px;border-bottom:.5px solid #EEE8D8;}
+.mec-date{text-align:center;width:28px;flex-shrink:0;}
+.mec-mo{font-size:9px;font-weight:500;color:#C49020;text-transform:uppercase;}
+.mec-day{font-size:14px;font-weight:500;color:#2C2A20;line-height:1;}
+.mec-vd{width:.5px;height:26px;background:#E0D9C8;flex-shrink:0;}
+.mec-rows{padding:0 13px;}
+.mec-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:.5px solid #F0EAD8;}
+.mec-row:last-child{border-bottom:none;}
+.mec-chip{display:flex;align-items:center;gap:4px;font-size:11px;color:#3A3020;font-weight:500;}
+.mec-chip i{font-size:11px;color:#C49020;}
 .earn-v{font-size:11px;font-weight:500;}
 .earn-l{font-size:10px;color:#aaa;}
-
-.barn-card{background:#fff;border:.5px solid #E0D9C8;border-radius:10px;margin-bottom:9px;overflow:hidden;}
-.barn-hdr{display:flex;align-items:center;gap:12px;padding:12px 14px;}
-.hav{width:40px;height:40px;border-radius:8px;background:#F5F2EA;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:.5px solid #E0D9C8;font-size:20px;color:#C49020;}
-.barn-actions{margin-left:auto;display:flex;gap:5px;}
-.act-btn{background:#F5F2EA;border:.5px solid #D0C8B0;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#888;font-size:13px;}
-.act-btn:hover{background:#EDD98A;color:#7A5010;border-color:#C8A040;}
-.barn-dets{padding:0 14px 12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-.det-l{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px;}
-.det-v{font-size:12px;color:#3A3020;}
-.disc-row{padding:0 14px 12px;display:flex;gap:4px;flex-wrap:wrap;}
-.disc{background:#EDD98A;color:#7A5010;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:500;}
-.disc.locked{background:#EEE8D8;color:#aaa;}
-.add-horse{background:#fff;border:.5px dashed #D0C8B0;border-radius:10px;padding:18px;text-align:center;cursor:pointer;}
-.add-horse:hover{background:#FEF3D0;border-color:#C8A040;}
-.add-horse i{font-size:22px;color:#D0C8B0;display:block;margin-bottom:4px;}
-.add-horse p{font-size:12px;color:#aaa;}
-
-.sire-box{border:.5px solid #D0C8B0;border-radius:8px;overflow:hidden;margin-bottom:8px;}
-.sire-inp{width:100%;border:none;padding:9px 12px;font-size:12px;color:#333;outline:none;background:#FDFBF6;font-family:var(--font-sans);}
-.sire-res{display:flex;align-items:center;gap:10px;padding:9px 12px;border-top:.5px solid #EEE8D8;cursor:pointer;}
-.sire-res:hover,.sire-res.sel{background:#FEF3D0;}
-.sire-av{width:30px;height:30px;border-radius:5px;background:#F5F2EA;display:flex;align-items:center;justify-content:center;font-size:14px;color:#C49020;}
-.sire-n{font-size:12px;font-weight:500;color:#2C2A20;margin-bottom:1px;}
-.sire-m{font-size:10px;color:#999;}
-.sire-badge{background:#EDD98A;color:#7A5010;font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px;margin-left:auto;}
-.sel-sire{display:flex;align-items:center;gap:9px;background:#FEF3D0;border:.5px solid #E5C060;border-radius:8px;padding:9px 12px;margin-bottom:12px;}
-.sel-sire-n{font-size:12px;font-weight:500;color:#6B4E10;margin-bottom:1px;}
-.sel-sire-m{font-size:10px;color:#8A6820;}
-.chk-c{width:20px;height:20px;border-radius:50%;background:#C49020;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:#fff;}
-
-.success-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 28px;background:#fff;text-align:center;}
-.success-ico{width:56px;height:56px;border-radius:50%;background:#EDD98A;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px;color:#8A6010;}
-.success-t{font-size:19px;font-weight:500;color:#2C2A20;margin-bottom:5px;}
-.success-s{font-size:13px;color:#888;margin-bottom:22px;line-height:1.6;max-width:300px;}
-.next-card{background:#FEF3D0;border:.5px solid #E5C060;border-radius:10px;padding:14px 16px;width:100%;max-width:320px;text-align:left;margin-bottom:8px;display:flex;align-items:center;gap:11px;cursor:pointer;}
-.next-card:hover{background:#FDE8A0;}
-.next-ico{width:34px;height:34px;border-radius:7px;background:#C49020;display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;flex-shrink:0;}
-.next-t{font-size:12px;font-weight:500;color:#6B4E10;margin-bottom:1px;}
-.next-s{font-size:10px;color:#8A6820;}
-.next-card.gray{background:#F5F2EA;border-color:#D0C8B0;}
-.next-card.gray .next-ico{background:#C8BFA8;}
-.next-card.gray .next-t{color:#4A4030;}
-.next-card.gray .next-s{color:#888;}
-
-.body-row{display:flex;flex:1;overflow:hidden;}
-.note{font-size:11px;color:#ccc;text-align:center;margin-top:14px;}
-.note a{color:#B07A18;cursor:pointer;text-decoration:none;}
-
-select.inp{appearance:none;}
 </style>
 
-<h2 class="sr-only">Legendary Stakes interactive prototype — full navigable flow from signup through dashboard, entries, and barn management</h2>
+<h2 class="sr-only">Legendary Stakes full interactive prototype including all screens: login, signup, dashboard, events, event detail, cart builder, review payment, my entries, and my barn</h2>
 
-<div class="proto-shell">
+<div class="shell">
 
 <div id="sc-login" class="screen active">
-  <div class="split-layout">
+  <div class="split">
     <div class="split-left">
-      <div class="split-bg"></div>
-      <div class="split-trophy"><i class="ti ti-trophy" aria-hidden="true"></i></div>
-      <div class="split-logo">LEGEN<b>D</b>ARY <span style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;display:block;">S T A K E S</span></div>
+      <div class="s-logo">LEGEN<b>D</b>ARY</div>
+      <div class="s-trophy"><i class="ti ti-trophy" aria-hidden="true"></i></div>
       <div style="position:relative;z-index:1;">
-        <div class="split-badge">The game has changed</div>
-        <div class="split-h">Build your legacy. Earn what you're worth.</div>
-        <div class="split-p">700 events. 14 disciplines. One platform that pays everyone — rider, owner, breeder, sire.</div>
+        <div class="s-badge">The game has changed</div>
+        <div class="s-h">Build your legacy. Earn what you're worth.</div>
+        <div class="s-p">700 events. 14 disciplines. One platform that pays everyone.</div>
       </div>
     </div>
     <div class="split-right">
@@ -216,190 +340,119 @@ select.inp{appearance:none;}
       <div class="form-tagline">IT'S A GREAT DAY TO BE LEGENDARY</div>
       <div class="form-title">Welcome back</div>
       <div class="form-sub">Sign in to your account</div>
-      <label class="lbl">Email</label>
-      <input class="inp" type="email" value="dale@smithranch.com" />
-      <label class="lbl">Password</label>
-      <input class="inp" type="password" value="••••••••" />
-      <button class="gold-btn" onclick="nav('sc-dashboard')">Sign in</button>
-      <div class="link-line" style="margin-bottom:10px;">Forgot your password?</div>
+      <label class="lbl">Email</label><input class="inp" type="email" value="dale@smithranch.com" />
+      <label class="lbl">Password</label><input class="inp" type="password" value="••••••••" />
+      <button class="gold-full" onclick="nav('sc-dashboard')">Sign in</button>
+      <div class="link-sm" style="margin-bottom:9px;">Forgot your password?</div>
       <div class="divider"><div class="div-line"></div><span class="div-txt">new here?</span><div class="div-line"></div></div>
-      <button class="ghost-btn" onclick="nav('sc-signup1')">Create a free account</button>
-      <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
+      <button class="ghost-full" onclick="nav('sc-signup1')">Create a free account</button>
+      <div class="note">Need help? <a>817-221-0778</a></div>
     </div>
   </div>
 </div>
 
 <div id="sc-signup1" class="screen">
-  <div class="split-layout">
+  <div class="split">
     <div class="split-left">
-      <div class="split-bg"></div>
-      <div class="split-logo">LEGEN<b>D</b>ARY <span style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:2px;display:block;">S T A K E S</span></div>
-      <div style="position:relative;z-index:1;">
-        <div class="split-badge">Free to join</div>
-        <div class="split-h">Your account takes 2 minutes.</div>
-        <div class="split-p">No credit card. No annual fees. Free for any horse sired by a Legendary Stallion.</div>
+      <div class="s-logo">LEGEN<b>D</b>ARY</div>
+      <div class="split-img-content" style="position:relative;z-index:1;">
+        <div class="s-badge">Free to join</div>
+        <div class="s-h">Takes 2 minutes.</div>
+        <div class="s-p">No card needed. Free for horses by enrolled stallions.</div>
       </div>
     </div>
     <div class="split-right">
       <div class="form-title">Create your free account</div>
-      <div class="form-sub" style="margin-bottom:16px;">Step 1 of 3 — email and password</div>
-      <div class="prog-bar">
-        <div class="prog-dot now">1</div><span class="prog-lbl now">Account</span>
-        <div class="prog-line"></div>
-        <div class="prog-dot todo">2</div><span class="prog-lbl todo">Profile</span>
-        <div class="prog-line"></div>
-        <div class="prog-dot todo">3</div><span class="prog-lbl todo">Horse</span>
-      </div>
-      <label class="lbl">Email address</label>
-      <input class="inp" type="email" placeholder="your@email.com" />
-      <label class="lbl">Create a password</label>
-      <input class="inp" type="password" placeholder="At least 8 characters" />
-      <label class="lbl">Confirm password</label>
-      <input class="inp" type="password" placeholder="••••••••" />
-      <button class="gold-btn" onclick="nav('sc-signup2')">Continue</button>
-      <div class="link-line">Already have an account? <a onclick="nav('sc-login')">Sign in</a></div>
-      <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
+      <div class="form-sub" style="margin-bottom:14px;">Step 1 of 3 — email and password</div>
+      <div class="prog"><div class="pdot now">1</div><span class="plbl now">Account</span><div class="pline"></div><div class="pdot todo">2</div><span class="plbl todo">Profile</span><div class="pline"></div><div class="pdot todo">3</div><span class="plbl todo">Horse</span></div>
+      <label class="lbl">Email</label><input class="inp" type="email" placeholder="your@email.com" />
+      <label class="lbl">Password</label><input class="inp" type="password" placeholder="At least 8 characters" />
+      <label class="lbl">Confirm password</label><input class="inp" type="password" placeholder="••••••••" />
+      <button class="gold-full" onclick="nav('sc-signup2')">Continue</button>
+      <div class="link-sm">Already have an account? <a onclick="nav('sc-login')">Sign in</a></div>
+      <div class="note">Need help? <a>817-221-0778</a></div>
     </div>
   </div>
 </div>
 
 <div id="sc-signup2" class="screen">
-  <div class="topbar">
-    <span class="logo">LEGEN<b>D</b>ARY stakes</span>
-    <button class="back-btn" onclick="nav('sc-signup1')"><i class="ti ti-arrow-left"></i> Back</button>
-  </div>
-  <div style="flex:1;background:#fff;padding:28px 32px;overflow-y:auto;">
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><button class="back-btn" onclick="nav('sc-signup1')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button></div>
+  <div style="flex:1;background:#fff;padding:22px 28px;overflow-y:auto;">
     <div class="form-title" style="margin-bottom:3px;">Tell us about yourself</div>
-    <div class="form-sub" style="margin-bottom:16px;">This is how you'll appear on the leaderboard and receive payouts.</div>
-    <div class="prog-bar">
-      <div class="prog-dot done"><i class="ti ti-check" style="font-size:11px;"></i></div><span class="prog-lbl done">Account</span>
-      <div class="prog-line done"></div>
-      <div class="prog-dot now">2</div><span class="prog-lbl now">Profile</span>
-      <div class="prog-line"></div>
-      <div class="prog-dot todo">3</div><span class="prog-lbl todo">Horse</span>
-    </div>
-    <div class="row2">
-      <div><label class="lbl">First name</label><input class="inp" value="Dale" /></div>
-      <div><label class="lbl">Last name</label><input class="inp" value="Smith" /></div>
-    </div>
-    <label class="lbl">Phone number</label>
-    <input class="inp" value="(479) 555-0192" />
-    <div class="row2">
-      <div><label class="lbl">City</label><input class="inp" value="Johnson" /></div>
-      <div><label class="lbl">State</label><select class="inp"><option>AR</option><option>TX</option><option>OK</option></select></div>
-    </div>
-    <label class="lbl">Operation / barn name <span style="color:#aaa;font-weight:400;">(optional)</span></label>
-    <input class="inp" value="Smith Quarter Horses" />
-    <div style="display:flex;align-items:center;gap:7px;margin-bottom:18px;">
-      <input type="checkbox" checked style="width:15px;height:15px;accent-color:#C49020;" />
-      <span style="font-size:12px;color:#888;">Send me event reminders and leaderboard updates</span>
-    </div>
-    <button class="gold-btn" onclick="nav('sc-signup3')">Continue — add your horse</button>
-    <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
+    <div class="form-sub" style="margin-bottom:14px;">Step 2 of 3 — your profile</div>
+    <div class="prog"><div class="pdot done"><i class="ti ti-check" style="font-size:10px;" aria-hidden="true"></i></div><span class="plbl done">Account</span><div class="pline done"></div><div class="pdot now">2</div><span class="plbl now">Profile</span><div class="pline"></div><div class="pdot todo">3</div><span class="plbl todo">Horse</span></div>
+    <div class="row2"><div><label class="lbl">First name</label><input class="inp" value="Dale" /></div><div><label class="lbl">Last name</label><input class="inp" value="Smith" /></div></div>
+    <label class="lbl">Phone</label><input class="inp" value="(479) 555-0192" />
+    <div class="row2"><div><label class="lbl">City</label><input class="inp" value="Johnson" /></div><div><label class="lbl">State</label><select class="inp"><option>AR</option><option>TX</option><option>OK</option></select></div></div>
+    <label class="lbl">Barn / operation name <span style="color:#aaa;font-weight:400;">(optional)</span></label><input class="inp" value="Smith Quarter Horses" />
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px;"><input type="checkbox" checked style="accent-color:#C49020;" /><span style="font-size:11px;color:#888;">Send me event reminders and leaderboard updates</span></div>
+    <button class="gold-full" onclick="nav('sc-signup3')">Continue — add your horse</button>
+    <div class="note">Need help? <a>817-221-0778</a></div>
   </div>
 </div>
 
 <div id="sc-signup3" class="screen">
-  <div class="topbar">
-    <span class="logo">LEGEN<b>D</b>ARY stakes</span>
-    <button class="back-btn" onclick="nav('sc-signup2')"><i class="ti ti-arrow-left"></i> Back</button>
-  </div>
-  <div style="flex:1;background:#fff;padding:24px 32px;overflow-y:auto;">
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><button class="back-btn" onclick="nav('sc-signup2')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button></div>
+  <div style="flex:1;background:#fff;padding:22px 28px;overflow-y:auto;">
     <div class="form-title" style="margin-bottom:3px;">Add your first horse</div>
-    <div class="form-sub" style="margin-bottom:16px;">Free to enroll if sired by a Legendary Stallion.</div>
-    <div class="prog-bar">
-      <div class="prog-dot done"><i class="ti ti-check" style="font-size:11px;"></i></div><span class="prog-lbl done">Account</span>
-      <div class="prog-line done"></div>
-      <div class="prog-dot done"><i class="ti ti-check" style="font-size:11px;"></i></div><span class="prog-lbl done">Profile</span>
-      <div class="prog-line done"></div>
-      <div class="prog-dot now">3</div><span class="prog-lbl now">Horse</span>
-    </div>
+    <div class="form-sub" style="margin-bottom:14px;">Step 3 of 3 — free if sired by an enrolled stallion</div>
+    <div class="prog"><div class="pdot done"><i class="ti ti-check" style="font-size:10px;" aria-hidden="true"></i></div><span class="plbl done">Account</span><div class="pline done"></div><div class="pdot done"><i class="ti ti-check" style="font-size:10px;" aria-hidden="true"></i></div><span class="plbl done">Profile</span><div class="pline done"></div><div class="pdot now">3</div><span class="plbl now">Horse</span></div>
     <label class="lbl">Search for your horse's sire</label>
-    <div class="sire-box">
-      <input class="sire-inp" value="Sannman" />
-      <div class="sire-res sel">
-        <div class="sire-av"><i class="ti ti-horse"></i></div>
-        <div style="flex:1;"><div class="sire-n">Sannman</div><div class="sire-m">781 offspring · 10 disciplines</div></div>
-        <span class="sire-badge"><i class="ti ti-check" style="font-size:10px;"></i> Enrolled</span>
-      </div>
-      <div class="sire-res">
-        <div class="sire-av"><i class="ti ti-horse"></i></div>
-        <div style="flex:1;"><div class="sire-n">Cats Royal Boon</div><div class="sire-m">36 offspring · 4 disciplines</div></div>
-        <span class="sire-badge"><i class="ti ti-check" style="font-size:10px;"></i> Enrolled</span>
-      </div>
-    </div>
-    <div class="sel-sire">
-      <div class="chk-c"><i class="ti ti-check" style="font-size:11px;"></i></div>
-      <div><div class="sel-sire-n">Sannman selected — enrolls free</div><div class="sel-sire-m">10 disciplines available for your horse</div></div>
-    </div>
-    <label class="lbl">Horse name</label>
-    <input class="inp" value="Nelliebell" />
-    <div class="row2">
-      <div><label class="lbl">Dam</label><input class="inp" value="A Feisty Fling" /></div>
-      <div><label class="lbl">Year of birth</label><input class="inp" value="2019" /></div>
-    </div>
-    <div class="row2">
-      <div><label class="lbl">Sex</label><select class="inp"><option>Mare</option><option>Gelding</option><option>Stallion</option></select></div>
-      <div><label class="lbl">Color</label><select class="inp"><option>Sorrel</option><option>Bay</option><option>Black</option></select></div>
-    </div>
-    <label class="lbl">AQHA / APHA number <span style="color:#aaa;font-weight:400;">(optional)</span></label>
-    <input class="inp" placeholder="You can add this later" />
-    <button class="gold-btn" onclick="nav('sc-success')">Register my horse — I'm ready to compete</button>
-    <div style="font-size:11px;color:#aaa;text-align:center;margin-top:6px;cursor:pointer;" onclick="nav('sc-dashboard')">Skip for now — add my horse later</div>
-    <div class="note" style="margin-top:10px;">Need help? Call <a>817-221-0778</a></div>
+    <div class="sire-box"><input class="sire-inp" value="Sannman" /><div class="sire-res"><div class="sire-av"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="sire-n">Sannman</div><div class="sire-m">781 offspring · 10 disciplines</div></div><span class="sire-badge"><i class="ti ti-check" style="font-size:9px;" aria-hidden="true"></i> Enrolled</span></div></div>
+    <div style="font-size:10px;color:#aaa;margin-bottom:10px;">Don't see your sire? <a style="color:#B07A18;cursor:pointer;">Enter name manually</a></div>
+    <div class="sel-sire"><div class="chk-c"><i class="ti ti-check" style="font-size:10px;" aria-hidden="true"></i></div><div><div style="font-size:11px;font-weight:500;color:#6B4E10;">Sannman selected — enrolls free</div><div style="font-size:10px;color:#8A6820;">10 disciplines available</div></div></div>
+    <label class="lbl">Horse name</label><input class="inp" value="Nelliebell" />
+    <div class="row2"><div><label class="lbl">Dam</label><input class="inp" value="A Feisty Fling" /></div><div><label class="lbl">Year of birth</label><input class="inp" value="2019" /></div></div>
+    <div class="row2"><div><label class="lbl">Sex</label><select class="inp"><option>Mare</option><option>Gelding</option><option>Stallion</option></select></div><div><label class="lbl">Color</label><select class="inp"><option>Sorrel</option><option>Bay</option></select></div></div>
+    <label class="lbl">AQHA / APHA # <span style="color:#aaa;font-weight:400;">(optional)</span></label><input class="inp" placeholder="Add later if needed" />
+    <button class="gold-full" onclick="nav('sc-success')">Register my horse — I'm ready to compete</button>
+    <div style="font-size:11px;color:#aaa;text-align:center;margin-top:5px;cursor:pointer;" onclick="nav('sc-dashboard')">Skip for now</div>
+    <div class="note">Need help? <a>817-221-0778</a></div>
   </div>
 </div>
 
 <div id="sc-success" class="screen">
   <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span></div>
   <div class="success-wrap">
-    <div class="success-ico"><i class="ti ti-trophy"></i></div>
-    <div class="success-t">You're in, Dale.</div>
-    <div class="success-s">Nelliebell is registered and eligible to compete. There's one thing left to do — enter your first event.</div>
-    <div class="next-card" onclick="nav('sc-events')">
-      <div class="next-ico"><i class="ti ti-calendar-event"></i></div>
-      <div style="flex:1;"><div class="next-t">Find an event to enter</div><div class="next-s">700 events available. $250 per entry.</div></div>
-      <i class="ti ti-arrow-right" style="color:#C49020;font-size:15px;"></i>
-    </div>
-    <div class="next-card gray" onclick="nav('sc-dashboard')">
-      <div class="next-ico"><i class="ti ti-home"></i></div>
-      <div style="flex:1;"><div class="next-t">Go to my dashboard</div><div class="next-s">See your barn and leaderboard.</div></div>
-      <i class="ti ti-arrow-right" style="color:#aaa;font-size:15px;"></i>
-    </div>
-    <div class="note" style="margin-top:16px;">Need help? Call <a>817-221-0778</a></div>
+    <div class="sico"><i class="ti ti-trophy" aria-hidden="true"></i></div>
+    <div class="st">You're in, Dale.</div>
+    <div class="ss">Nelliebell is registered and eligible to compete. One thing left — enter your first event.</div>
+    <div class="nc" onclick="nav('sc-events')"><div class="nc-ico"><i class="ti ti-calendar-event" aria-hidden="true"></i></div><div style="flex:1;"><div class="nc-t">Find an event to enter</div><div class="nc-s">700 events · $250 per entry</div></div><i class="ti ti-arrow-right" style="color:#C49020;font-size:14px;" aria-hidden="true"></i></div>
+    <div class="nc gray" onclick="nav('sc-dashboard')"><div class="nc-ico"><i class="ti ti-home" aria-hidden="true"></i></div><div style="flex:1;"><div class="nc-t">Go to my dashboard</div><div class="nc-s">See your barn and leaderboard</div></div><i class="ti ti-arrow-right" style="color:#aaa;font-size:14px;" aria-hidden="true"></i></div>
+    <div class="note">Need help? <a>817-221-0778</a></div>
   </div>
 </div>
 
 <div id="sc-dashboard" class="screen">
   <div class="topbar">
     <span class="logo">LEGEN<b>D</b>ARY stakes</span>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <button class="icon-btn" aria-label="Notifications"><i class="ti ti-bell"></i></button>
-      <div class="dropdown-wrap">
-        <button class="menu-btn" onclick="toggleDD('dd-main')"><i class="ti ti-menu-2"></i> My Account</button>
+    <div class="top-right">
+      <button class="icon-btn" aria-label="Notifications"><i class="ti ti-bell" aria-hidden="true"></i></button>
+      <div class="ddwrap">
+        <button class="menu-btn" onclick="toggleDD('dd-main')"><i class="ti ti-menu-2" aria-hidden="true"></i> My Account</button>
         <div class="dd" id="dd-main">
-          <div class="dd-item" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event"></i> My Entries</div>
-          <div class="dd-item" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-home"></i> My Barn</div>
-          <div class="dd-div"></div>
-          <div class="dd-item" onclick="toggleDD('dd-main')"><i class="ti ti-user"></i> Profile &amp; settings</div>
-          <div class="dd-div"></div>
-          <div class="dd-danger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout"></i> Sign out</div>
+          <div class="ddi" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event" aria-hidden="true"></i> My Entries</div>
+          <div class="ddi" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-home" aria-hidden="true"></i> My Barn</div>
+          <div class="dddiv"></div>
+          <div class="ddi" onclick="toggleDD('dd-main')"><i class="ti ti-user" aria-hidden="true"></i> Profile &amp; settings</div>
+          <div class="dddiv"></div>
+          <div class="ddanger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout" aria-hidden="true"></i> Sign out</div>
         </div>
       </div>
     </div>
   </div>
   <div class="body-row">
-    <div class="main-pad" style="flex:1;">
-      <div style="font-size:12px;color:#999;margin-bottom:2px;">Good morning, Dale</div>
-      <div style="font-size:18px;font-weight:500;color:#2C2A20;margin-bottom:14px;">You're sitting 3rd in barrel racing.</div>
+    <div class="main" style="flex:1;">
+      <div class="greeting">Good morning, Dale</div>
+      <div class="headline">You're sitting 3rd in barrel racing.</div>
       <div class="nudge">
-        <div class="nudge-ico"><i class="ti ti-sparkles"></i></div>
+        <div class="nudge-ico"><i class="ti ti-sparkles" aria-hidden="true"></i></div>
         <div style="flex:1;">
-          <div class="nudge-t">You're 13 points behind 2nd place</div>
-          <div class="nudge-b">Two solid barrel runs could close that gap. Nelliebell is eligible for the Mid South Cutting on May 20.</div>
-          <div class="nudge-actions">
-            <button class="n-primary" onclick="nav('sc-events')">Find that event</button>
-            <button class="n-ask" onclick="openAI()">Ask me anything</button>
+          <div style="font-size:12px;font-weight:500;color:#6B4E10;margin-bottom:2px;">You're 13 points behind 2nd place</div>
+          <div style="font-size:11px;color:#8A6820;line-height:1.5;margin-bottom:7px;">Two solid barrel runs could close that gap. Nelliebell is eligible for the Mid South Cutting on May 20.</div>
+          <div style="display:flex;gap:6px;">
+            <button style="background:#C49020;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;" onclick="nav('sc-events')">Find that event</button>
+            <button style="background:transparent;border:.5px solid #C8A040;border-radius:6px;padding:5px 10px;font-size:11px;color:#8A6010;cursor:pointer;" onclick="openAI()">Ask me anything</button>
           </div>
         </div>
       </div>
@@ -413,16 +466,8 @@ select.inp{appearance:none;}
         <div>
           <div class="slabel">My Horses</div>
           <div class="card">
-            <div class="horse-row">
-              <div class="hico"><i class="ti ti-horse" style="font-size:14px;color:#aaa;"></i></div>
-              <div style="flex:1;"><div class="hname">SDP Best of Friends</div><div class="hmeta">Sannman · Cowhorse · 6 entries</div></div>
-              <span class="pts">42 pts</span>
-            </div>
-            <div class="horse-row">
-              <div class="hico"><i class="ti ti-horse" style="font-size:14px;color:#aaa;"></i></div>
-              <div style="flex:1;"><div class="hname">Nelliebell</div><div class="hmeta">Sannman · Barrel · 8 entries</div></div>
-              <span class="pts gray">45 pts</span>
-            </div>
+            <div class="horse-row"><div class="hico"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="hname">SDP Best of Friends</div><div class="hmeta">Sannman · Cowhorse · 6 entries</div></div><span class="pts">42 pts</span></div>
+            <div class="horse-row"><div class="hico"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="hname">Nelliebell</div><div class="hmeta">Sannman · Barrel · 8 entries</div></div><span class="pts gray">45 pts</span></div>
             <button class="browse-btn" onclick="nav('sc-events')">Browse open events to enter</button>
           </div>
         </div>
@@ -437,296 +482,225 @@ select.inp{appearance:none;}
           </div>
         </div>
       </div>
-      <div class="note">Need help? Call <a>817-221-0778</a></div>
+      <div class="note">Need help? <a>817-221-0778</a></div>
     </div>
     <div class="ai-panel" id="ai-panel">
-      <div class="ai-hdr">
-        <div class="ai-dot"></div>
-        <span class="ai-title">Legendary Assistant</span>
-        <button class="ai-close" onclick="closeAI()">✕ close</button>
-      </div>
+      <div class="ai-hdr"><div class="ai-dot"></div><span class="ai-title-text">Legendary Assistant</span><button class="ai-close" onclick="closeAI()">✕</button></div>
       <div class="ai-msgs" id="ai-msgs">
-        <div class="msg-ai">Hey Dale — I know your horses, your entries, and your leaderboard position. What's on your mind?</div>
-        <div class="msg-user" id="ai-q" style="display:none;">How does the purse work if I enter more?</div>
-        <div class="msg-ai2" id="ai-a" style="display:none;">Every $250 entry grows the annual purse pool. Your share is based on your points rank at year-end — so more entries means more points AND a bigger pool. It compounds both ways.<br><br>Two more entries for Nelliebell could push you past Donna R. — that's roughly $1,300 more at year-end.</div>
+        <div class="msg-ai">Hey Dale — I know your horses, entries, and leaderboard position. What's on your mind?</div>
+        <div class="msg-user" id="ai-q" style="display:none;">How does the purse grow with more entries?</div>
+        <div class="msg-ai2" id="ai-a" style="display:none;">Every $250 entry grows the annual purse pool. Your share is based on your year-end rank — so more entries means more points AND a bigger pool. Two more Nelliebell entries could push you past Donna R. — roughly $1,300 more.</div>
       </div>
       <div class="ai-sugs" id="ai-sugs">
         <button class="sug" onclick="aiReply()">How does the purse grow with more entries?</button>
         <button class="sug">What events is Nelliebell eligible for?</button>
         <button class="sug">How are year-end payouts calculated?</button>
       </div>
-      <div class="ai-inp-row">
-        <input class="ai-inp" placeholder="Ask anything..." />
-        <button class="ai-send" onclick="aiReply()"><i class="ti ti-arrow-up" style="font-size:12px;"></i></button>
-      </div>
+      <div class="ai-inp-row"><input class="ai-inp" placeholder="Ask anything..." /><button class="ai-send" onclick="aiReply()"><i class="ti ti-arrow-up" style="font-size:12px;" aria-hidden="true"></i></button></div>
     </div>
   </div>
 </div>
 
 <div id="sc-events" class="screen">
-  <div class="topbar">
-    <span class="logo">LEGEN<b>D</b>ARY stakes</span>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button>
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back home</button></div></div>
+  <div class="main">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-size:17px;font-weight:500;color:#2C2A20;">Events</div><select class="inp" style="margin:0;padding:5px 9px;font-size:11px;width:auto;"><option>All disciplines</option><option>Barrel Racing</option><option>Cutting</option><option>Reined Cow Horse</option></select></div>
+    <div class="slabel">Open now</div>
+    <div class="event-card">
+      <div class="ec-hdr"><div class="ec-date"><div class="ec-mo">May</div><div class="ec-day">20</div></div><div class="ec-div"></div><div style="flex:1;"><div class="ec-name">Mid South Memorial Day Cutting</div><div class="ec-loc"><i class="ti ti-map-pin" style="font-size:10px;" aria-hidden="true"></i> Memphis, TN</div></div><span class="pill pill-op" style="margin-right:8px;">Open</span><button class="enter-btn" onclick="nav('sc-event-detail')">View &amp; Enter</button></div>
+      <div style="padding:6px 13px;display:flex;gap:5px;align-items:center;"><span class="etag">Cutting</span><span class="etag">Ranch Horse</span><span class="elig-tag" style="margin-left:auto;">Your horses eligible</span></div>
+    </div>
+    <div class="event-card">
+      <div class="ec-hdr"><div class="ec-date"><div class="ec-mo">May</div><div class="ec-day">19</div></div><div class="ec-div"></div><div style="flex:1;"><div class="ec-name">PRCHA Windy City</div><div class="ec-loc"><i class="ti ti-map-pin" style="font-size:10px;" aria-hidden="true"></i> Lubbock, TX</div></div><span class="pill pill-op" style="margin-right:8px;">Open</span><button class="enter-btn" onclick="nav('sc-event-detail')">View &amp; Enter</button></div>
+      <div style="padding:6px 13px;display:flex;gap:5px;align-items:center;"><span class="etag">Reined Cow Horse</span><span class="elig-tag" style="margin-left:auto;">Your horses eligible</span></div>
+    </div>
+    <div class="event-card">
+      <div class="ec-hdr"><div class="ec-date"><div class="ec-mo">Jun</div><div class="ec-day">7</div></div><div class="ec-div"></div><div style="flex:1;"><div class="ec-name">Idaho RCHA Classic Derby</div><div class="ec-loc"><i class="ti ti-map-pin" style="font-size:10px;" aria-hidden="true"></i> Nampa, ID</div></div><span class="pill pill-op" style="margin-right:8px;">Open</span><button class="enter-btn" onclick="nav('sc-event-detail')">View &amp; Enter</button></div>
+      <div style="padding:6px 13px;display:flex;gap:5px;align-items:center;"><span class="etag">Reined Cow Horse</span><span class="elig-tag" style="margin-left:auto;">Your horses eligible</span></div>
+    </div>
+    <div class="note">Need help? <a>817-221-0778</a></div>
+  </div>
+</div>
+
+<div id="sc-event-detail" class="screen">
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to events</button><button class="menu-btn"><i class="ti ti-menu-2" aria-hidden="true"></i> My Account</button></div></div>
+  <div class="event-hero"><div class="eh-logo"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div style="display:flex;align-items:center;gap:7px;margin-bottom:4px;"><span class="status-pill"><span class="sdot"></span> Open</span><span style="font-size:10px;color:rgba(255,255,255,.4);">Closes May 19</span></div><div class="eh-title">Mid South Memorial Day Cutting</div><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;"><span class="es-meta"><i class="ti ti-calendar" style="font-size:11px;" aria-hidden="true"></i> May 20, 2026</span><span class="es-meta"><i class="ti ti-map-pin" style="font-size:11px;" aria-hidden="true"></i> Memphis, TN</span><span class="es-meta"><i class="ti ti-building" style="font-size:11px;" aria-hidden="true"></i> Mid South CDHA</span></div></div></div>
+  <div class="detail-body">
+    <div class="dl">
+      <div class="stat-grid"><div class="stat-card"><div class="stat-val gold">$48,200</div><div class="stat-lbl">Current purse</div></div><div class="stat-card"><div class="stat-val">193</div><div class="stat-lbl">Entries so far</div></div><div class="stat-card"><div class="stat-val">4 days</div><div class="stat-lbl">Until entry closes</div></div></div>
+      <div class="slabel">Disciplines at this event</div>
+      <div class="disc-grid" style="margin-bottom:14px;">
+        <div class="disc-card elig"><div class="disc-icon"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="disc-name">Cutting</div><div class="disc-sub">Your horses eligible</div></div><span class="eb">Eligible</span></div>
+        <div class="disc-card elig"><div class="disc-icon"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="disc-name">Ranch Horse</div><div class="disc-sub">Your horses eligible</div></div><span class="eb">Eligible</span></div>
+        <div class="disc-card"><div class="disc-icon"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="disc-name">Reining</div><div class="disc-sub">Not unlocked by your sire</div></div></div>
+        <div class="disc-card"><div class="disc-icon"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="disc-name">Western Pleasure</div><div class="disc-sub">Not unlocked</div></div></div>
+      </div>
+      <div class="slabel">Your eligible horses</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="horse-row"><div class="hico"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="hname">Nelliebell</div><div class="hmeta">Sannman · Cutting, Ranch Horse</div></div><span class="elig-tag">2 disciplines</span></div>
+        <div class="horse-row"><div class="hico"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="hname">SDP Best of Friends</div><div class="hmeta">Sannman · Cutting only</div></div><span class="elig-tag">1 discipline</span></div>
+      </div>
+      <div class="note">Need help? <a>817-221-0778</a></div>
+    </div>
+    <div class="dr">
+      <div class="entry-cta"><div class="ep">$250 <span style="font-size:12px;font-weight:400;color:#999;">per entry</span></div><div class="es">Each horse + division + role is a separate entry. Build your cart and pay once.</div><button style="width:100%;background:#C49020;color:#fff;border:none;border-radius:8px;padding:10px;font-size:12px;font-weight:500;cursor:pointer;" onclick="nav('sc-cart')">Start entering this event</button><div class="cred-row"><i class="ti ti-coin" aria-hidden="true"></i> <strong style="color:#7A5010;">$750</strong> in credits — covers 3 entries</div></div>
+      <div class="notify-card2"><div class="nt"><i class="ti ti-bell" aria-hidden="true"></i> Others can earn here too</div><div class="nb">Your sire owner, dam owner, and breeder are notified when you enter — they can compete for their own purse money.</div><div class="ntags"><span class="ntag nt-s">Sire owner</span><span class="ntag nt-d">Dam owner</span><span class="ntag nt-b">Breeder</span></div></div>
+      <div class="slabel">Purse breakdown — cutting</div>
+      <div class="purse-bar"><div class="purse-row"><span class="purse-role">Horse owner</span><span class="purse-amt">~$14,200</span></div><div class="purse-row"><span class="purse-role">Rider</span><span class="purse-amt">~$12,800</span></div><div class="purse-row"><span class="purse-role">Sire owner</span><span class="purse-amt">~$9,400</span></div><div class="purse-row"><span class="purse-role">Dam owner</span><span class="purse-amt">~$6,400</span></div><div class="purse-row"><span class="purse-role">Breeder</span><span class="purse-amt">~$5,400</span></div></div>
+      <div style="font-size:10px;color:#aaa;line-height:1.5;margin-top:4px;">Projected — grows as more competitors join. Final at year-end.</div>
     </div>
   </div>
-  <div class="main-pad">
-    <div class="page-header">
-      <div class="page-title">Events</div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <select class="inp" style="margin:0;padding:6px 10px;font-size:11px;width:auto;">
-          <option>All disciplines</option><option>Barrel Racing</option><option>Cutting</option><option>Reined Cow Horse</option>
-        </select>
-      </div>
-    </div>
-    <div class="slabel">Open now</div>
-    <div class="entry-card">
-      <div class="entry-hdr">
-        <div class="edate"><div class="emon">May</div><div class="eday">20</div></div>
-        <div class="ediv"></div>
-        <div style="flex:1;"><div class="ename">Mid South Memorial Day Cutting</div><div class="eloc"><i class="ti ti-map-pin" style="font-size:10px;"></i> Memphis, TN</div></div>
-        <span class="pill pill-op">Open</span>
-      </div>
-      <div class="entry-rows">
-        <div class="erow">
-          <span class="etag">Cutting</span>
-          <span class="etag">Barrel Racing</span>
-          <div class="earn" style="margin-left:auto;"><div class="earn-v" style="color:#1a6b30;">Nelliebell eligible</div><div class="earn-l">$250 entry</div></div>
+</div>
+
+<div id="sc-cart" class="screen">
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to event</button><button class="menu-btn"><i class="ti ti-menu-2" aria-hidden="true"></i> My Account</button></div></div>
+  <div class="event-strip"><div><div class="es-name">Mid South Memorial Day Cutting</div><div class="es-meta"><i class="ti ti-calendar" style="font-size:11px;" aria-hidden="true"></i> May 20 · Memphis, TN</div></div><div style="font-size:11px;color:rgba(255,255,255,.4);">Closes May 19</div></div>
+  <div class="entry-body">
+    <div class="el">
+      <div class="step-row"><div class="step-num">1</div><div style="flex:1;"><div class="step-title">Which horse?</div><div class="horse-btns"><button class="hbtn sel" id="hb-nell" onclick="pickH('nell')"><div class="hbtn-ico"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="hbtn-n">Nelliebell</div><div class="hbtn-m">Cutting · Ranch Horse</div></div><div class="sel-dot"><i class="ti ti-check" aria-hidden="true"></i></div></button><button class="hbtn" id="hb-sdp" onclick="pickH('sdp')"><div class="hbtn-ico"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div class="hbtn-n">SDP Best of Friends</div><div class="hbtn-m">Cutting only</div></div><div class="sel-dot"></div></button></div></div></div>
+      <div class="step-row"><div class="step-num">2</div><div style="flex:1;"><div class="step-title">Which discipline?</div><div class="disc-tabs"><div class="dtab sel" id="dt-cut" onclick="pickD('cut')">Cutting</div><div class="dtab" id="dt-ran" onclick="pickD('ran')">Ranch Horse</div></div></div></div>
+      <div class="step-row"><div class="step-num">3</div><div style="flex:1;">
+        <div class="step-title">Which earnings tier?</div>
+        <div class="tier-btns"><div class="tbtn" onclick="pickT('low',this)"><div>Entry level</div><div class="tbtn-sub">Under $5k</div></div><div class="tbtn sel" onclick="pickT('mid',this)"><div>Mid level</div><div class="tbtn-sub">$5k–$25k</div></div><div class="tbtn" onclick="pickT('high',this)"><div>Open / Pro</div><div class="tbtn-sub">$25k+</div></div></div>
+        <div class="div-list" id="div-list"></div>
+        <div style="font-size:10px;color:#aaa;margin-top:4px;">Not sure? <a style="color:#B07A18;cursor:pointer;">Call 817-221-0778</a></div>
+      </div></div>
+      <div style="height:.5px;background:#E0D9C8;margin:4px 0 12px;"></div>
+      <div class="step-row"><div class="step-num">4</div><div style="flex:1;"><div class="step-title">Who is riding?</div>
+        <div class="rider-opts">
+          <div class="rider-opt sel" id="ro-own" onclick="pickR('own')"><div class="r-radio"><div class="r-dot"></div></div><div><div class="r-label">I'll ride (Dale Smith)</div><div class="r-sub">Owner entry</div></div></div>
+          <div class="rider-opt" id="ro-nam" onclick="pickR('nam')"><div class="r-radio"><div class="r-dot"></div></div><div><div class="r-label">A different rider</div><div class="r-sub">Search registered riders</div></div></div>
         </div>
-      </div>
+        <div id="also-wrap" style="margin-top:4px;"><div class="also-row" id="also-row" onclick="toggleAlso()"><div class="also-chk" id="also-chk"></div><div><div style="font-size:11px;color:#2C2A20;">Also enter me as Rider (+$250)</div><div style="font-size:10px;color:#999;">Same run — separate rider purse entry</div></div></div></div>
+      </div></div>
+      <button class="add-btn" id="add-btn" onclick="addToCart()" disabled><i class="ti ti-plus" aria-hidden="true"></i> <span id="add-lbl">Add to cart — $250</span></button>
     </div>
-    <div class="entry-card">
-      <div class="entry-hdr">
-        <div class="edate"><div class="emon">May</div><div class="eday">19</div></div>
-        <div class="ediv"></div>
-        <div style="flex:1;"><div class="ename">PRCHA Windy City</div><div class="eloc"><i class="ti ti-map-pin" style="font-size:10px;"></i> Lubbock, TX</div></div>
-        <span class="pill pill-op">Open</span>
-      </div>
-      <div class="entry-rows">
-        <div class="erow">
-          <span class="etag">Reined Cow Horse</span>
-          <div class="earn" style="margin-left:auto;"><div class="earn-v" style="color:#1a6b30;">SDP Best of Friends eligible</div><div class="earn-l">$250 entry</div></div>
-        </div>
-      </div>
+    <div class="er">
+      <div class="slabel">Your cart</div>
+      <div class="cart-card2"><div class="cart-hdr2">Mid South Memorial Day Cutting</div><div id="cart-items"><div class="empty-cart"><i class="ti ti-shopping-cart" aria-hidden="true"></i><p>No entries yet</p></div></div><div id="cart-total2" style="display:none;" class="cart-total2"><span style="font-size:11px;font-weight:500;color:#2C2A20;"><span id="ec">0</span> entries</span><span style="font-size:13px;font-weight:500;color:#B07A18;" id="cv">$0</span></div></div>
+      <div class="credit-notice"><i class="ti ti-coin" aria-hidden="true"></i><span><strong style="color:#7A5010;">$750</strong> credits applied at checkout</span></div>
+      <button class="checkout-btn" id="checkout-btn" disabled onclick="nav('sc-review')">Review &amp; pay</button>
+      <button class="add-more" id="add-more" style="display:none;" onclick="resetB()"><i class="ti ti-plus" style="font-size:11px;" aria-hidden="true"></i> Add another entry</button>
+      <div style="background:#fff;border:.5px solid #E0D9C8;border-radius:8px;padding:8px 10px;margin-top:9px;"><div style="font-size:11px;font-weight:500;color:#2C2A20;margin-bottom:3px;"><i class="ti ti-bell" style="font-size:12px;color:#C49020;" aria-hidden="true"></i> When you check out</div><div style="font-size:11px;color:#999;line-height:1.5;">Sannman's owner, Nelliebell's dam owner, and your breeder are notified and can enter their own accounts.</div></div>
+      <div class="note">Need help? <a>817-221-0778</a></div>
     </div>
-    <div class="entry-card">
-      <div class="entry-hdr">
-        <div class="edate"><div class="emon">Jun</div><div class="eday">7</div></div>
-        <div class="ediv"></div>
-        <div style="flex:1;"><div class="ename">Idaho RCHA Classic Derby</div><div class="eloc"><i class="ti ti-map-pin" style="font-size:10px;"></i> Nampa, ID</div></div>
-        <span class="pill pill-op">Open</span>
+  </div>
+</div>
+
+<div id="sc-review" class="screen">
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><div class="top-right"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Edit entries</button><button class="menu-btn"><i class="ti ti-menu-2" aria-hidden="true"></i> My Account</button></div></div>
+  <div class="event-strip"><div><div class="es-name">Mid South Memorial Day Cutting</div><div class="es-meta"><i class="ti ti-calendar" style="font-size:11px;" aria-hidden="true"></i> May 20 · Memphis, TN</div></div></div>
+  <div class="detail-body">
+    <div class="dl">
+      <div class="slabel">Review your entries</div>
+      <div class="review-card">
+        <div class="rc-hdr">3 entries <a onclick="nav('sc-cart')" style="font-size:11px;color:#B07A18;cursor:pointer;font-weight:400;">Edit</a></div>
+        <div class="entry-row2"><div class="er-date"><div class="er-mo">May</div><div class="er-day">20</div></div><div class="er-vd"></div><div style="flex:1;"><div class="er-name">Nelliebell — Cutting</div><div class="er-meta"><span class="rtag rt-o">Owner</span> Dale Smith · $15k Amateur</div></div><div class="er-price">$250</div></div>
+        <div class="entry-row2"><div class="er-date"><div class="er-mo">May</div><div class="er-day">20</div></div><div class="er-vd"></div><div style="flex:1;"><div class="er-name">Nelliebell — Cutting</div><div class="er-meta"><span class="rtag rt-r">Rider</span> Dale Smith · $15k Amateur</div></div><div class="er-price">$250</div></div>
+        <div class="entry-row2"><div class="er-date"><div class="er-mo">May</div><div class="er-day">20</div></div><div class="er-vd"></div><div style="flex:1;"><div class="er-name">SDP Best of Friends — Cutting</div><div class="er-meta"><span class="rtag rt-o">Owner</span> Dale Smith · $5k Non Pro</div></div><div class="er-price">$250</div></div>
+        <div class="notify-band"><div class="nb-ico"><i class="ti ti-bell" aria-hidden="true"></i></div><div><div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:2px;">These people are notified when you confirm</div><div class="ntags"><span class="ntag nt-s">Sannman owner</span><span class="ntag nt-d">Dam owner</span><span class="ntag nt-b">Breeder</span></div></div></div>
       </div>
-      <div class="entry-rows">
-        <div class="erow">
-          <span class="etag">Reined Cow Horse</span>
-          <div class="earn" style="margin-left:auto;"><div class="earn-v" style="color:#1a6b30;">SDP Best of Friends eligible</div><div class="earn-l">$250 entry</div></div>
-        </div>
+      <div class="slabel">Payment</div>
+      <div class="pay-panel">
+        <div class="pp-row"><span class="pp-l">Subtotal (3 entries)</span><span class="pp-v">$750</span></div>
+        <div class="pp-row"><span class="pp-l">Credits applied</span><span class="pp-v green">−$750</span></div>
       </div>
+      <div class="total-row"><span style="font-size:13px;font-weight:500;color:#2C2A20;">Total due today</span><span style="font-size:17px;font-weight:500;color:#B07A18;">$0.00</span></div>
+      <div class="terms-row"><input type="checkbox" id="terms" onchange="document.getElementById('pay-final').disabled=!this.checked;" style="accent-color:#C49020;" /><span>I agree to the <a style="color:#B07A18;cursor:pointer;">terms and conditions</a> for event registration</span></div>
+      <button class="pay-btn-final zero" id="pay-final" disabled onclick="nav('sc-confirm')">Confirm — $0.00 due</button>
+      <a class="back-link" onclick="nav('sc-cart')">← Go back and edit entries</a>
+      <div class="note">Need help? <a>817-221-0778</a></div>
     </div>
-    <div class="note">Need help? Call <a>817-221-0778</a></div>
+    <div class="dr">
+      <div class="slabel">Order summary</div>
+      <div class="summ-card"><div class="summ-hdr">Mid South Memorial Day Cutting</div><div class="summ-row"><span style="color:#999;">Nelliebell · Owner</span><span style="color:#B07A18;font-weight:500;">$250</span></div><div class="summ-row"><span style="color:#999;">Nelliebell · Rider</span><span style="color:#B07A18;font-weight:500;">$250</span></div><div class="summ-row"><span style="color:#999;">SDP Best of Friends · Owner</span><span style="color:#B07A18;font-weight:500;">$250</span></div><div class="summ-row" style="border-bottom:none;"><span style="font-weight:500;color:#2C2A20;">Subtotal</span><span style="font-weight:500;color:#2C2A20;">$750</span></div></div>
+      <div style="background:#fff;border:.5px solid #E0D9C8;border-radius:8px;padding:9px 11px;margin-bottom:8px;"><div style="font-size:11px;font-weight:500;color:#2C2A20;margin-bottom:4px;"><i class="ti ti-coin" style="font-size:12px;color:#C49020;" aria-hidden="true"></i> Credit balance</div><div style="font-size:20px;font-weight:500;color:#B07A18;">$750</div><div style="font-size:10px;color:#999;margin-top:1px;">Covers all 3 entries — no card needed</div></div>
+      <div style="background:#FEF3D0;border:.5px solid #E5C060;border-radius:8px;padding:9px 11px;"><div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:2px;"><i class="ti ti-trophy" style="font-size:11px;" aria-hidden="true"></i> After you confirm</div><div style="font-size:11px;color:#8A6820;line-height:1.6;">Your entries are locked in and your purse share starts growing immediately.</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="sc-confirm" class="screen">
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span></div>
+  <div class="success-wrap">
+    <div class="sico" style="background:#D4EDDA;"><i class="ti ti-circle-check" style="color:#1a6b30;" aria-hidden="true"></i></div>
+    <div class="st">You're entered, Dale.</div>
+    <div class="ss">3 entries confirmed for Mid South Memorial Day Cutting on May 20. Your purse share is growing — check your dashboard any time.</div>
+    <div style="background:#F5F2EA;border:.5px solid #E0D9C8;border-radius:9px;padding:11px 14px;width:100%;max-width:310px;margin-bottom:14px;text-align:left;">
+      <div style="font-size:10px;font-weight:500;color:#aaa;letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px;">Confirmation #LS-2026-04821</div>
+      <div style="font-size:11px;color:#2C2A20;margin-bottom:3px;"><span class="rtag rt-o">Owner</span> Nelliebell · $15k Amateur · Cutting</div>
+      <div style="font-size:11px;color:#2C2A20;margin-bottom:3px;"><span class="rtag rt-r">Rider</span> Nelliebell · $15k Amateur · Cutting</div>
+      <div style="font-size:11px;color:#2C2A20;margin-bottom:7px;"><span class="rtag rt-o">Owner</span> SDP Best of Friends · $5k Non Pro · Cutting</div>
+      <div style="font-size:11px;color:#999;">$750 in credits applied · $0.00 charged</div>
+    </div>
+    <div class="nc" onclick="nav('sc-dashboard')"><div class="nc-ico"><i class="ti ti-home" aria-hidden="true"></i></div><div style="flex:1;"><div class="nc-t">Back to dashboard</div><div class="nc-s">Check your leaderboard position</div></div><i class="ti ti-arrow-right" style="color:#C49020;font-size:14px;" aria-hidden="true"></i></div>
+    <div class="nc gray" onclick="nav('sc-entries')"><div class="nc-ico"><i class="ti ti-calendar-event" aria-hidden="true"></i></div><div style="flex:1;"><div class="nc-t">View my entries</div><div class="nc-s">See all upcoming and past entries</div></div><i class="ti ti-arrow-right" style="color:#aaa;font-size:14px;" aria-hidden="true"></i></div>
+    <div class="note">Need help? <a>817-221-0778</a></div>
   </div>
 </div>
 
 <div id="sc-entries" class="screen">
-  <div class="topbar">
-    <span class="logo">LEGEN<b>D</b>ARY stakes</span>
-    <button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button>
-  </div>
-  <div class="main-pad">
-    <div class="page-header">
-      <div class="page-title">My Entries</div>
-      <button class="gold-sm" onclick="nav('sc-events')">+ Enter an event</button>
-    </div>
-    <div class="slabel" style="margin-bottom:9px;">Upcoming</div>
-    <div class="entry-card">
-      <div class="entry-hdr">
-        <div class="edate"><div class="emon">May</div><div class="eday">20</div></div>
-        <div class="ediv"></div>
-        <div style="flex:1;"><div class="ename">Mid South Memorial Day Cutting</div><div class="eloc"><i class="ti ti-map-pin" style="font-size:10px;"></i> Memphis, TN</div></div>
-        <span class="pill pill-up">In 3 days</span>
-      </div>
-      <div class="entry-rows">
-        <div class="erow">
-          <div class="echip"><i class="ti ti-horse"></i> Nelliebell</div>
-          <span class="etag">Barrel Racing</span><span class="etag">Cutting</span>
-          <div class="earn"><div class="earn-v" style="color:#B07A18;">$250 entered</div><div class="earn-l">purse growing</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="entry-card">
-      <div class="entry-hdr">
-        <div class="edate"><div class="emon">Jun</div><div class="eday">7</div></div>
-        <div class="ediv"></div>
-        <div style="flex:1;"><div class="ename">Idaho RCHA Classic Derby</div><div class="eloc"><i class="ti ti-map-pin" style="font-size:10px;"></i> Nampa, ID</div></div>
-        <span class="pill pill-op">Open</span>
-      </div>
-      <div class="entry-rows">
-        <div class="erow">
-          <div class="echip"><i class="ti ti-horse"></i> SDP Best of Friends</div>
-          <span class="etag">Reined Cow Horse</span>
-          <div class="earn"><div class="earn-v" style="color:#B07A18;">$250 entered</div><div class="earn-l">purse growing</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="slabel" style="margin-top:18px;margin-bottom:9px;">Past entries — 2026</div>
-    <div class="entry-card">
-      <div class="entry-hdr">
-        <div class="edate"><div class="emon">May</div><div class="eday">8</div></div>
-        <div class="ediv"></div>
-        <div style="flex:1;"><div class="ename">Breeders Invitational</div><div class="eloc"><i class="ti ti-map-pin" style="font-size:10px;"></i> Tulsa, OK</div></div>
-        <span class="pill pill-pa">Completed</span>
-      </div>
-      <div class="entry-rows">
-        <div class="erow">
-          <div class="echip"><i class="ti ti-horse"></i> Nelliebell</div>
-          <span class="etag">Barrel Racing</span>
-          <div class="earn"><div class="earn-v" style="color:#1a6b30;">+12 pts</div><div class="earn-l">Top Offspring</div></div>
-        </div>
-        <div class="erow">
-          <div class="echip"><i class="ti ti-horse"></i> SDP Best of Friends</div>
-          <span class="etag">Reined Cow Horse</span>
-          <div class="earn"><div class="earn-v" style="color:#1a6b30;">+7 pts</div><div class="earn-l">Best of Best</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="entry-card">
-      <div class="entry-hdr">
-        <div class="edate"><div class="emon">Apr</div><div class="eday">19</div></div>
-        <div class="ediv"></div>
-        <div style="flex:1;"><div class="ename">PRCHA Windy City</div><div class="eloc"><i class="ti ti-map-pin" style="font-size:10px;"></i> Lubbock, TX</div></div>
-        <span class="pill pill-pa">Completed</span>
-      </div>
-      <div class="entry-rows">
-        <div class="erow">
-          <div class="echip"><i class="ti ti-horse"></i> SDP Best of Friends</div>
-          <span class="etag">Reined Cow Horse</span>
-          <div class="earn"><div class="earn-v" style="color:#1a6b30;">+4 pts</div><div class="earn-l">Top Offspring</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="note">Need help? Call <a>817-221-0778</a></div>
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back home</button></div>
+  <div class="main">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-size:17px;font-weight:500;color:#2C2A20;">My Entries</div><button class="gold-btn" style="padding:8px 16px;font-size:12px;" onclick="nav('sc-events')">+ Enter an event</button></div>
+    <div class="slabel">Upcoming</div>
+    <div class="my-entries-card"><div class="mec-hdr"><div class="mec-date"><div class="mec-mo">May</div><div class="mec-day">20</div></div><div class="mec-vd"></div><div style="flex:1;"><div class="ec-name">Mid South Memorial Day Cutting</div><div class="ec-loc"><i class="ti ti-map-pin" style="font-size:10px;" aria-hidden="true"></i> Memphis, TN</div></div><span class="pill pill-up">In 3 days</span></div><div class="mec-rows"><div class="mec-row"><div class="mec-chip"><i class="ti ti-horse" aria-hidden="true"></i> Nelliebell</div><span class="etag">Cutting</span><span class="etag">Owner + Rider</span><div style="margin-left:auto;text-align:right;"><div class="earn-v" style="color:#B07A18;">$500 entered</div><div class="earn-l">purse growing</div></div></div><div class="mec-row"><div class="mec-chip"><i class="ti ti-horse" aria-hidden="true"></i> SDP Best of Friends</div><span class="etag">Cutting</span><div style="margin-left:auto;text-align:right;"><div class="earn-v" style="color:#B07A18;">$250 entered</div><div class="earn-l">purse growing</div></div></div></div></div>
+    <div class="slabel" style="margin-top:16px;">Past entries — 2026</div>
+    <div class="my-entries-card"><div class="mec-hdr"><div class="mec-date"><div class="mec-mo">May</div><div class="mec-day">8</div></div><div class="mec-vd"></div><div style="flex:1;"><div class="ec-name">Breeders Invitational</div><div class="ec-loc"><i class="ti ti-map-pin" style="font-size:10px;" aria-hidden="true"></i> Tulsa, OK</div></div><span class="pill pill-pa">Completed</span></div><div class="mec-rows"><div class="mec-row"><div class="mec-chip"><i class="ti ti-horse" aria-hidden="true"></i> Nelliebell</div><span class="etag">Barrel Racing</span><div style="margin-left:auto;text-align:right;"><div class="earn-v" style="color:#1a6b30;">+12 pts</div><div class="earn-l">Top Offspring</div></div></div><div class="mec-row"><div class="mec-chip"><i class="ti ti-horse" aria-hidden="true"></i> SDP Best of Friends</div><span class="etag">Cowhorse</span><div style="margin-left:auto;text-align:right;"><div class="earn-v" style="color:#1a6b30;">+7 pts</div><div class="earn-l">Best of Best</div></div></div></div></div>
+    <div class="note">Need help? <a>817-221-0778</a></div>
   </div>
 </div>
 
 <div id="sc-barn" class="screen">
-  <div class="topbar">
-    <span class="logo">LEGEN<b>D</b>ARY stakes</span>
-    <button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back home</button>
-  </div>
-  <div class="main-pad">
-    <div class="page-header">
-      <div class="page-title">My Barn</div>
-      <button class="gold-sm" onclick="nav('sc-signup3')">+ Add a horse</button>
-    </div>
-    <div class="barn-card">
-      <div class="barn-hdr">
-        <div class="hav"><i class="ti ti-horse"></i></div>
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:500;color:#2C2A20;">Nelliebell</div>
-          <div style="font-size:11px;color:#999;">Mare · 2019 · Sorrel</div>
-        </div>
-        <div class="barn-actions">
-          <div class="act-btn"><i class="ti ti-edit"></i></div>
-          <div class="act-btn"><i class="ti ti-trash"></i></div>
-        </div>
-      </div>
-      <div class="barn-dets">
-        <div><div class="det-l">Sire</div><div class="det-v">Sannman</div></div>
-        <div><div class="det-l">Dam</div><div class="det-v">A Feisty Fling</div></div>
-        <div><div class="det-l">AQHA #</div><div class="det-v">5781234</div></div>
-        <div><div class="det-l">2026 season</div><div class="det-v">8 entries · 45 pts</div></div>
-      </div>
-      <div style="padding:0 14px 4px;"><div class="slabel">Eligible disciplines</div></div>
-      <div class="disc-row">
-        <span class="disc">Barrel Racing</span>
-        <span class="disc">Cutting</span>
-        <span class="disc">Pole Bending</span>
-        <span class="disc locked">Reining (locked)</span>
-        <span class="disc locked">Cowhorse (locked)</span>
-      </div>
-    </div>
-    <div class="barn-card">
-      <div class="barn-hdr">
-        <div class="hav"><i class="ti ti-horse"></i></div>
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:500;color:#2C2A20;">SDP Best of Friends</div>
-          <div style="font-size:11px;color:#999;">Gelding · 2018 · Bay</div>
-        </div>
-        <div class="barn-actions">
-          <div class="act-btn"><i class="ti ti-edit"></i></div>
-          <div class="act-btn"><i class="ti ti-trash"></i></div>
-        </div>
-      </div>
-      <div class="barn-dets">
-        <div><div class="det-l">Sire</div><div class="det-v">Sannman</div></div>
-        <div><div class="det-l">Dam</div><div class="det-v">Lavender Cupcakes</div></div>
-        <div><div class="det-l">AQHA #</div><div class="det-v">5892341</div></div>
-        <div><div class="det-l">2026 season</div><div class="det-v">6 entries · 42 pts</div></div>
-      </div>
-      <div style="padding:0 14px 4px;"><div class="slabel">Eligible disciplines</div></div>
-      <div class="disc-row">
-        <span class="disc">Reined Cow Horse</span>
-        <span class="disc">Cutting</span>
-        <span class="disc">Reining</span>
-        <span class="disc locked">Barrel Racing (locked)</span>
-      </div>
-    </div>
-    <div class="add-horse" onclick="nav('sc-signup3')">
-      <i class="ti ti-circle-plus"></i>
-      <p>Add another horse to your barn</p>
-    </div>
-    <div class="note">Need help? Call <a>817-221-0778</a></div>
+  <div class="topbar"><span class="logo">LEGEN<b>D</b>ARY stakes</span><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back home</button></div>
+  <div class="main">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-size:17px;font-weight:500;color:#2C2A20;">My Barn</div><button class="gold-btn" style="padding:8px 16px;font-size:12px;" onclick="nav('sc-signup3')">+ Add a horse</button></div>
+    <div class="barn-card"><div class="barn-hdr"><div class="hav"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div style="font-size:13px;font-weight:500;color:#2C2A20;">Nelliebell</div><div style="font-size:11px;color:#999;">Mare · 2019 · Sorrel</div></div><div class="barn-actions"><div class="act-btn"><i class="ti ti-edit" aria-hidden="true"></i></div><div class="act-btn"><i class="ti ti-trash" aria-hidden="true"></i></div></div></div><div class="barn-dets"><div><div class="det-l">Sire</div><div class="det-v">Sannman</div></div><div><div class="det-l">Dam</div><div class="det-v">A Feisty Fling</div></div><div><div class="det-l">AQHA #</div><div class="det-v">5781234</div></div><div><div class="det-l">2026 season</div><div class="det-v">8 entries · 45 pts</div></div></div><div style="padding:0 13px 4px;"><div class="slabel">Eligible disciplines</div></div><div class="disc-row2"><span class="disc2">Barrel Racing</span><span class="disc2">Cutting</span><span class="disc2">Pole Bending</span><span class="disc2 locked">Reining (locked)</span></div></div>
+    <div class="barn-card"><div class="barn-hdr"><div class="hav"><i class="ti ti-horse" aria-hidden="true"></i></div><div style="flex:1;"><div style="font-size:13px;font-weight:500;color:#2C2A20;">SDP Best of Friends</div><div style="font-size:11px;color:#999;">Gelding · 2018 · Bay</div></div><div class="barn-actions"><div class="act-btn"><i class="ti ti-edit" aria-hidden="true"></i></div><div class="act-btn"><i class="ti ti-trash" aria-hidden="true"></i></div></div></div><div class="barn-dets"><div><div class="det-l">Sire</div><div class="det-v">Sannman</div></div><div><div class="det-l">Dam</div><div class="det-v">Lavender Cupcakes</div></div><div><div class="det-l">AQHA #</div><div class="det-v">5892341</div></div><div><div class="det-l">2026 season</div><div class="det-v">6 entries · 42 pts</div></div></div><div style="padding:0 13px 4px;"><div class="slabel">Eligible disciplines</div></div><div class="disc-row2"><span class="disc2">Reined Cow Horse</span><span class="disc2">Cutting</span><span class="disc2 locked">Barrel Racing (locked)</span></div></div>
+    <div class="add-horse-card" onclick="nav('sc-signup3')"><i class="ti ti-circle-plus" style="font-size:20px;color:#D0C8B0;display:block;margin-bottom:3px;" aria-hidden="true"></i><p style="font-size:12px;color:#aaa;">Add another horse to your barn</p></div>
+    <div class="note">Need help? <a>817-221-0778</a></div>
   </div>
 </div>
 
 </div>
 
 <script>
+var C={horse:'nell',disc:'cut',tier:'mid',div:null,rider:'own',also:false,cart:[]};
+var divs={cut:{low:['$1k Amateur','$2,000 Novice','$5k Limit Rider'],mid:['$5k Non Pro','$15k Amateur','$25k Non Pro','$25k Novice'],high:['$35k Non Pro','$50k Amateur','$50k Non Pro']},ran:{low:['Ranch Entry Level'],mid:['Ranch Amateur','Ranch Non Pro'],high:['Ranch Open','Ranch Masters']}};
+
 function nav(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  const el=document.getElementById(id);
-  if(el){el.classList.add('active');el.scrollTop=0;}
+  var el=document.getElementById(id);if(el){el.classList.add('active');}
   document.querySelectorAll('.dd').forEach(d=>d.classList.remove('open'));
-  if(id!=='sc-dashboard'){
-    const p=document.getElementById('ai-panel');
-    if(p)p.classList.remove('open');
-  }
+  if(id!=='sc-dashboard'){var p=document.getElementById('ai-panel');if(p)p.classList.remove('open');}
 }
-function toggleDD(id){
-  const dd=document.getElementById(id);
-  if(dd)dd.classList.toggle('open');
-}
-function openAI(){
-  const p=document.getElementById('ai-panel');
-  if(p)p.classList.add('open');
-}
-function closeAI(){
-  const p=document.getElementById('ai-panel');
-  if(p)p.classList.remove('open');
-  const q=document.getElementById('ai-q');
-  const a=document.getElementById('ai-a');
-  const sugs=document.getElementById('ai-sugs');
-  if(q)q.style.display='none';
-  if(a)a.style.display='none';
-  if(sugs)sugs.style.display='flex';
-}
-function aiReply(){
-  const q=document.getElementById('ai-q');
-  const a=document.getElementById('ai-a');
-  const sugs=document.getElementById('ai-sugs');
-  if(q)q.style.display='flex';
-  if(sugs)sugs.style.display='none';
-  setTimeout(()=>{
-    if(a)a.style.display='block';
-    const msgs=document.getElementById('ai-msgs');
-    if(msgs)msgs.scrollTop=999;
-  },1200);
-}
-document.addEventListener('click',function(e){
-  document.querySelectorAll('.dd').forEach(dd=>{
-    if(!dd.contains(e.target)&&!e.target.closest('.menu-btn')){
-      dd.classList.remove('open');
-    }
+function toggleDD(id){var d=document.getElementById(id);if(d)d.classList.toggle('open');}
+function openAI(){var p=document.getElementById('ai-panel');if(p)p.classList.add('open');}
+function closeAI(){var p=document.getElementById('ai-panel');if(p)p.classList.remove('open');document.getElementById('ai-q').style.display='none';document.getElementById('ai-a').style.display='none';document.getElementById('ai-sugs').style.display='flex';}
+function aiReply(){document.getElementById('ai-q').style.display='flex';document.getElementById('ai-sugs').style.display='none';setTimeout(()=>{document.getElementById('ai-a').style.display='block';document.getElementById('ai-msgs').scrollTop=999;},1400);}
+document.addEventListener('click',function(e){document.querySelectorAll('.dd').forEach(d=>{if(!d.contains(e.target)&&!e.target.closest('.menu-btn'))d.classList.remove('open');});});
+
+function renderDivs(){
+  var list=document.getElementById('div-list');if(!list)return;
+  list.innerHTML='';
+  var opts=(divs[C.disc]&&divs[C.disc][C.tier])||[];
+  opts.forEach(function(d){
+    var el=document.createElement('div');
+    el.className='div-opt'+(C.div===d?' sel':'');
+    el.innerHTML='<div class="div-check">'+(C.div===d?'<i class="ti ti-check"></i>':'')+'</div><div class="div-name">'+d+'</div>';
+    el.onclick=function(){C.div=d;renderDivs();updateAdd();};
+    list.appendChild(el);
   });
-});
+}
+function pickH(h){C.horse=h;C.div=null;document.getElementById('hb-nell').className='hbtn'+(h==='nell'?' sel':'');document.getElementById('hb-sdp').className='hbtn'+(h==='sdp'?' sel':'');document.getElementById('hb-nell').querySelector('.sel-dot').innerHTML=h==='nell'?'<i class="ti ti-check"></i>':'';document.getElementById('hb-sdp').querySelector('.sel-dot').innerHTML=h==='sdp'?'<i class="ti ti-check"></i>':'';var ran=document.getElementById('dt-ran');if(h==='sdp'){ran.classList.add('dis');if(C.disc==='ran'){C.disc='cut';document.getElementById('dt-cut').classList.add('sel');ran.classList.remove('sel');}}else{ran.classList.remove('dis');}renderDivs();updateAdd();}
+function pickD(d){if(d==='ran'&&C.horse==='sdp')return;C.disc=d;C.div=null;document.getElementById('dt-cut').classList.toggle('sel',d==='cut');document.getElementById('dt-ran').classList.toggle('sel',d==='ran');renderDivs();updateAdd();}
+function pickT(t,el){C.tier=t;C.div=null;document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');renderDivs();updateAdd();}
+function pickR(r){C.rider=r;document.getElementById('ro-own').classList.toggle('sel',r==='own');document.getElementById('ro-nam').classList.toggle('sel',r==='nam');document.getElementById('also-wrap').style.display=r==='own'?'block':'none';updateAdd();}
+function toggleAlso(){C.also=!C.also;var row=document.getElementById('also-row');var chk=document.getElementById('also-chk');row.classList.toggle('sel',C.also);chk.innerHTML=C.also?'<i class="ti ti-check"></i>':'';}
+function updateAdd(){var ok=!!C.div;var btn=document.getElementById('add-btn');if(!btn)return;btn.disabled=!ok;if(ok){var n=1+(C.also?1:0);document.getElementById('add-lbl').textContent='Add to cart — $'+((n*250).toLocaleString());}else{document.getElementById('add-lbl').textContent='Add to cart — $250';}}
+function addToCart(){if(!C.div)return;var horse=C.horse==='nell'?'Nelliebell':'SDP Best of Friends';C.cart.push({horse,disc:C.disc==='cut'?'Cutting':'Ranch Horse',div:C.div,role:'Owner',rider:'Dale Smith',price:250});if(C.also)C.cart.push({horse,disc:C.disc==='cut'?'Cutting':'Ranch Horse',div:C.div,role:'Rider',rider:'Dale Smith',price:250});renderCart();document.getElementById('add-more').style.display='block';}
+function removeEntry(i){C.cart.splice(i,1);renderCart();if(C.cart.length===0)document.getElementById('add-more').style.display='none';}
+function renderCart(){var wrap=document.getElementById('cart-items');var tot=document.getElementById('cart-total2');var cb=document.getElementById('checkout-btn');if(!wrap)return;wrap.innerHTML='';if(C.cart.length===0){wrap.innerHTML='<div class="empty-cart"><i class="ti ti-shopping-cart" aria-hidden="true"></i><p>No entries yet</p></div>';tot.style.display='none';cb.disabled=true;return;}C.cart.forEach(function(e,i){var d=document.createElement('div');d.className='cart-item2';var tag=e.role==='Owner'?'<span class="rtag rt-o">Owner</span>':'<span class="rtag rt-r">Rider</span>';d.innerHTML='<div style="flex:1;"><div class="ci-h">'+e.horse+'</div><div class="ci-d">'+e.disc+' · '+e.div+'<br>'+tag+' · '+e.rider+'</div></div><div style="display:flex;align-items:center;gap:2px;"><span class="ci-p">$'+e.price+'</span><button class="ci-rm" onclick="removeEntry('+i+')" aria-label="Remove"><i class="ti ti-x"></i></button></div>';wrap.appendChild(d);});var total=C.cart.reduce((s,e)=>s+e.price,0);tot.style.display='flex';document.getElementById('ec').textContent=C.cart.length;document.getElementById('cv').textContent='$'+total.toLocaleString();cb.disabled=false;}
+function resetB(){C.div=null;C.also=false;document.getElementById('also-row').classList.remove('sel');document.getElementById('also-chk').innerHTML='';renderDivs();updateAdd();}
+renderDivs();
 </script>
