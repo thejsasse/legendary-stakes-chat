@@ -96,7 +96,7 @@ select.inp{appearance:none;}
 .nc-t{font-size:12px;font-weight:500;color:#6B4E10;margin-bottom:1px;}.nc-s{font-size:10px;color:#8A6820;}
 .nc.gray{background:#F5F2EA;border-color:#D0C8B0;}
 .nc.gray .nc-ico{background:#C8BFA8;}.nc.gray .nc-t{color:#4A4030;}.nc.gray .nc-s{color:#888;}
-.dd{position:absolute;top:44px;right:0;background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:5px;width:190px;z-index:100;display:none;}
+.dd{position:absolute;top:100%;right:0;background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:5px;width:190px;z-index:100;display:none;margin-top:4px;}
 .dd.open{display:block;}
 .ddi{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;cursor:pointer;font-size:12px;color:#3A3020;}
 .ddi:hover{background:#FEF3D0;color:#6B4E10;}
@@ -129,7 +129,6 @@ select.inp{appearance:none;}
 .lb-you .lb-n{font-weight:500;color:#6B4E10;}.lb-you .lb-r{color:#6B4E10;}.lb-you .lb-p{color:#8A6820;}
 .ai-panel{width:0;flex-shrink:0;border-left:none;display:flex;flex-direction:column;background:#FDFBF6;overflow:hidden;transition:width .3s ease;}
 .ai-panel.open{width:230px;border-left:0.5px solid #E0D9C8;}
-@media (min-width: 769px) { .ai-panel { width: 230px; border-left: 0.5px solid #E0D9C8; } }
 .ai-hdr{padding:10px 12px 8px;border-bottom:0.5px solid #E0D9C8;display:flex;align-items:center;gap:7px;flex-shrink:0;}
 .ai-dot{width:7px;height:7px;border-radius:50%;background:#C49020;}
 .ai-title-text{font-size:12px;font-weight:500;color:#6B4E10;flex:1;}
@@ -820,14 +819,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.4.1</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.4.2</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:200px;max-width:80%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.1</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.2</span>
           </div>
           <div class="split-right-form">
             <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:0.5px solid #E8E0D0;">
@@ -990,7 +989,7 @@ select.inp{appearance:none;}
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:200px;max-width:80%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.1</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.2</span>
           </div>
           <div class="split-right-form">
             <div class="form-title">Create your free account</div>
@@ -1311,56 +1310,7 @@ select.inp{appearance:none;}
         <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 12px;margin-bottom:16px;font-size:11px;color:#1E40AF;line-height:1.5;">
           <strong>While we verify:</strong> You can still browse events. Once your horse is confirmed (1–3 business days), you'll be able to enter and compete immediately.
         </div>
-        <button class="gold-full" onclick="nav('sc-dashboard')">Submit claim — take me to my dashboard</button>
-        
-      </div>
-    </div>
-
-    <div id="sc-success" class="screen">
-      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
-      <div class="screen-scroll" style="background:#fff;padding:32px 28px;">
-        <div style="text-align:center;margin-bottom:28px;">
-          <div style="width:64px;height:64px;background:linear-gradient(135deg,#C49020,#D4AF37);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:16px;box-shadow:0 8px 24px rgba(184,150,12,0.25);">🏆</div>
-          <div style="font-size:24px;font-weight:700;color:#2C2A20;margin-bottom:6px;">Welcome to Legendary Stakes, Dale.</div>
-          <div style="font-size:14px;color:#888;max-width:340px;margin:0 auto;line-height:1.6;">Your account is live. Nelliebell is registered and eligible to compete in <strong style="color:#2C2A20;">10 disciplines</strong> immediately.</div>
-        </div>
-        <!-- What's unlocked -->
-        <div style="background:#F7F4EE;border:0.5px solid #E0D9C8;border-radius:12px;padding:16px;margin-bottom:20px;">
-          <div style="font-size:12px;font-weight:700;color:#2C2A20;margin-bottom:12px;">What's unlocked right now</div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✓</div><div style="font-size:12px;color:#2C2A20;"><strong>700+ events</strong> open to enter across 14 disciplines</div></div>
-            <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✓</div><div style="font-size:12px;color:#2C2A20;"><strong>Real-time leaderboard</strong> tracking your points and purse share</div></div>
-            <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✓</div><div style="font-size:12px;color:#2C2A20;"><strong>Automatic earnings</strong> for sire owner, dam owner, and breeder on every entry</div></div>
-            <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✓</div><div style="font-size:12px;color:#2C2A20;"><strong>Lifetime access</strong> — no annual fees, ever</div></div>
-          </div>
-        </div>
-        <!-- First suggested action -->
-        <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:1.5px solid #C49020;border-radius:12px;padding:14px;margin-bottom:12px;cursor:pointer;" onclick="nav('sc-events')">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:40px;height:40px;background:#C49020;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📅</div>
-            <div style="flex:1;">
-              <div style="font-size:13px;font-weight:700;color:#2C2A20;">Enter your first event</div>
-              <div style="font-size:11px;color:#7A6830;margin-top:2px;">Mid South Cutting · May 20 · Memphis · Nelliebell is eligible</div>
-            </div>
-            <span style="color:#C49020;font-size:18px;">→</span>
-          </div>
-        </div>
-        <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:12px;padding:14px;cursor:pointer;" onclick="nav('sc-dashboard')">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:40px;height:40px;background:#F0EDE4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏠</div>
-            <div style="flex:1;">
-              <div style="font-size:13px;font-weight:700;color:#2C2A20;">Go to my dashboard</div>
-              <div style="font-size:11px;color:#999;margin-top:2px;">See your barn, leaderboard, and season stats</div>
-            </div>
-            <span style="color:#ccc;font-size:18px;">→</span>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div id="sc-dashboard" class="screen">
-      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="icon-btn" aria-label="Notifications" onclick="nav('sc-leaderboard')"><i class="ti ti-bell"></i></button><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-main')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-main"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-main')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+        <div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-main')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-main"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-main')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="body-row">
         <div class="screen-scroll" style="flex:1;padding:20px 22px;background:#F5F2EA;">
           <div class="greeting">Good morning, Dale</div>
@@ -1404,7 +1354,7 @@ select.inp{appearance:none;}
           </div>
           
         </div>
-        <div class="ai-panel" id="ai-panel">
+        <div class="ai-panel open" id="ai-panel">
           <div class="ai-hdr"><div class="ai-dot"></div><span class="ai-title-text">Legendary Assistant</span><button class="ai-close" onclick="closeAI()">✕</button></div>
           <div class="ai-msgs" id="ai-msgs">
             <div class="msg-ai">Hey Dale — I know your horses, entries, and leaderboard position. What's on your mind?</div>
@@ -2085,7 +2035,7 @@ select.inp{appearance:none;}
             </div>
           </div>
           <button onclick="nav('sc-dashboard')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:9px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:16px;"><i class="ti ti-home" style="font-size:14px;"></i> Go to my dashboard</button>
-          <button onclick="nav('sc-dashboard')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:9px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:16px;"><i class="ti ti-home" style="font-size:14px;"></i> Go to my dashboard</button>
+          
           <div class="slabel">Horses you bred — active competitors</div>
           <!-- Horse rows -->
           <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:10px;">
