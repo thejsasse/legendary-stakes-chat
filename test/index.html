@@ -129,6 +129,7 @@ select.inp{appearance:none;}
 .lb-you .lb-n{font-weight:500;color:#6B4E10;}.lb-you .lb-r{color:#6B4E10;}.lb-you .lb-p{color:#8A6820;}
 .ai-panel{width:0;flex-shrink:0;border-left:none;display:flex;flex-direction:column;background:#FDFBF6;overflow:hidden;transition:width .3s ease;}
 .ai-panel.open{width:230px;border-left:0.5px solid #E0D9C8;}
+#sc-dashboard.active .ai-panel:not(.closed){width:230px;border-left:0.5px solid #E0D9C8;}
 .ai-hdr{padding:10px 12px 8px;border-bottom:0.5px solid #E0D9C8;display:flex;align-items:center;gap:7px;flex-shrink:0;}
 .ai-dot{width:7px;height:7px;border-radius:50%;background:#C49020;}
 .ai-title-text{font-size:12px;font-weight:500;color:#6B4E10;flex:1;}
@@ -819,14 +820,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.4.2</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.4.3</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:200px;max-width:80%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.2</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.3</span>
           </div>
           <div class="split-right-form">
             <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:0.5px solid #E8E0D0;">
@@ -989,7 +990,7 @@ select.inp{appearance:none;}
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:200px;max-width:80%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.2</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.3</span>
           </div>
           <div class="split-right-form">
             <div class="form-title">Create your free account</div>
@@ -1354,7 +1355,7 @@ select.inp{appearance:none;}
           </div>
           
         </div>
-        <div class="ai-panel open" id="ai-panel">
+        <div class="ai-panel" id="ai-panel">
           <div class="ai-hdr"><div class="ai-dot"></div><span class="ai-title-text">Legendary Assistant</span><button class="ai-close" onclick="closeAI()">✕</button></div>
           <div class="ai-msgs" id="ai-msgs">
             <div class="msg-ai">Hey Dale — I know your horses, entries, and leaderboard position. What's on your mind?</div>
@@ -2111,8 +2112,8 @@ function nav(id){
   var urlEl=document.getElementById('url-bar');
   if(urlEl&&urlMap[id])urlEl.innerHTML='<i class="ti ti-lock"></i> '+urlMap[id];
 }
-function openAI(){document.getElementById('ai-panel').classList.add('open');var o=document.getElementById('ai-overlay');if(o&&window.innerWidth<=768)o.style.display='block';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='0.35';b.style.cursor='default';b.onclick=null;}}
-function closeAI(){var p=document.getElementById('ai-panel');if(p)p.classList.remove('open');var o=document.getElementById('ai-overlay');if(o)o.style.display='none';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='1';b.style.cursor='pointer';b.style.border='0.5px solid #C8A040';b.onclick=function(){openAI();};}}
+function openAI(){var p=document.getElementById('ai-panel');if(p){p.classList.add('open');p.classList.remove('closed');}var o=document.getElementById('ai-overlay');if(o&&window.innerWidth<=768)o.style.display='block';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='0.35';b.style.cursor='default';b.onclick=null;}}
+function closeAI(){var p=document.getElementById('ai-panel');if(p){p.classList.remove('open');p.classList.add('closed');}var o=document.getElementById('ai-overlay');if(o)o.style.display='none';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='1';b.style.cursor='pointer';b.style.border='0.5px solid #C8A040';b.onclick=function(){openAI();};}}
 function aiReply(){
   var q=document.getElementById('ai-q');var a=document.getElementById('ai-a');var s=document.getElementById('ai-sugs');
   if(q)q.style.display='block';if(a)a.style.display='block';if(s)s.style.display='none';
