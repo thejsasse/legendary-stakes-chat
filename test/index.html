@@ -20,10 +20,10 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .screen{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0;}
 .screen.active{display:flex;}
 .screen-scroll{flex:1;overflow-y:auto;}
-.topbar{background:#111008;border-bottom:0.5px solid #2A2518;padding:8px 16px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;flex-shrink:0;z-index:10;position:relative;min-height:48px;}
+.topbar{background:#111008;border-bottom:0.5px solid #2A2518;padding:10px 16px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;flex-shrink:0;z-index:10;position:relative;min-height:60px;}
 .topbar-left{display:flex;align-items:center;justify-content:flex-start;}
 .topbar-center{display:flex;align-items:center;justify-content:center;}
-.topbar-center img{height:36px;width:auto;}
+.topbar-center img{height:44px;width:auto;}
 .topbar-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;}
 .logo{font-size:13px;font-weight:600;color:#8A6010;}
 .logo b{color:#C49020;font-weight:600;}
@@ -128,6 +128,7 @@ select.inp{appearance:none;}
 .lb-you .lb-n{font-weight:500;color:#6B4E10;}.lb-you .lb-r{color:#6B4E10;}.lb-you .lb-p{color:#8A6820;}
 .ai-panel{width:0;flex-shrink:0;border-left:none;display:flex;flex-direction:column;background:#FDFBF6;overflow:hidden;transition:width .3s ease;}
 .ai-panel.open{width:230px;border-left:0.5px solid #E0D9C8;}
+@media (min-width: 769px) { .ai-panel { width: 230px; border-left: 0.5px solid #E0D9C8; } }
 .ai-hdr{padding:10px 12px 8px;border-bottom:0.5px solid #E0D9C8;display:flex;align-items:center;gap:7px;flex-shrink:0;}
 .ai-dot{width:7px;height:7px;border-radius:50%;background:#C49020;}
 .ai-title-text{font-size:12px;font-weight:500;color:#6B4E10;flex:1;}
@@ -405,7 +406,7 @@ select.inp{appearance:none;}
 
   /* ── TOPBAR ── */
   .topbar { padding: 10px 14px; min-height: 54px; }
-  .topbar-center img { height: 32px; }
+  .topbar-center img { height: 40px; }
   .back-btn { font-size: 14px; gap: 6px; min-height: 44px; padding: 0 4px; }
   .menu-btn { font-size: 13px; padding: 9px 14px; min-height: 44px; border-radius: 8px; }
   .icon-btn { min-width: 44px; min-height: 44px; justify-content: center; font-size: 20px; }
@@ -512,8 +513,13 @@ select.inp{appearance:none;}
     flex-shrink: 0;
   }
   .ai-panel.open {
-    height: 280px;
+    height: 90vh;
     width: 100% !important;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 300;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
   }
   .ai-msgs { font-size: 13px; }
   .msg-ai, .msg-user, .msg-ai2 { font-size: 13px; }
@@ -807,21 +813,21 @@ select.inp{appearance:none;}
   </div>
   <div class="app-frame">
 
-    <div id="sc-login" class="screen">
+    <div id="sc-login" class="screen active">
       <div class="split">
         <div class="split-left">
           <img class="split-left-img" src="https://thejsasse.github.io/legendary-stakes-chat/test/login-hero.png" alt="Cutting horse at NCHA Futurity" /><div class="split-left-overlay"></div>
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.3.3</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.3.4</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:260px;max-width:85%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.3</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.4</span>
           </div>
           <div class="split-right-form">
             <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:0.5px solid #E8E0D0;">
@@ -846,14 +852,132 @@ select.inp{appearance:none;}
               </button>
             </div>
             <div class="divider"><div class="div-line"></div><span class="div-txt">new here?</span><div class="div-line"></div></div>
-            <button class="ghost-full" onclick="nav('sc-signup1')">Create a free account</button>
+            <button class="ghost-full" onclick="nav('sc-onboard-1')">Create a free account</button>
 
           </div>
         </div>
       </div>
     </div>
 
-    <div id="sc-signup1" class="screen active">
+
+    <!-- ONBOARDING SCREEN 1: Why Legendary Stakes -->
+    <div id="sc-onboard-1" class="screen">
+      <div style="height:100%;display:flex;flex-direction:column;background:#111008;overflow-y:auto;">
+        <!-- Progress dots -->
+        <div style="display:flex;justify-content:center;gap:6px;padding:18px 0 0;">
+          <div style="width:28px;height:4px;border-radius:2px;background:#C49020;"></div>
+          <div style="width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,0.25);"></div>
+          <div style="width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,0.25);"></div>
+        </div>
+        <div style="flex:1;padding:24px 28px;display:flex;flex-direction:column;justify-content:center;">
+          <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:220px;max-width:80%;margin:0 auto 32px;display:block;" />
+          <div style="font-size:13px;font-weight:600;color:#C49020;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;text-align:center;">The game has changed</div>
+          <div style="font-size:30px;font-weight:800;color:#F0EDE4;line-height:1.2;margin-bottom:6px;text-align:center;">ONE platform.<br/>Everyone gets paid.</div>
+          <div style="font-size:16px;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:32px;line-height:1.5;">700 events. 14 disciplines. Automatic earnings for owners, riders, breeders, and sire owners — on every entry.</div>
+          <!-- Key stats -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:32px;">
+            <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:14px 8px;">
+              <div style="font-size:22px;font-weight:800;color:#C49020;">700+</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Events per year</div>
+            </div>
+            <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:14px 8px;">
+              <div style="font-size:22px;font-weight:800;color:#C49020;">14</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Disciplines</div>
+            </div>
+            <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:14px 8px;">
+              <div style="font-size:22px;font-weight:800;color:#C49020;">$0</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Annual fees</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:20px 28px 36px;">
+          <button onclick="nav('sc-onboard-2')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">Continue →</button>
+          <button onclick="nav('sc-signup1')" style="width:100%;background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;padding:8px;">Skip intro</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ONBOARDING SCREEN 2: Your Dashboard -->
+    <div id="sc-onboard-2" class="screen">
+      <div style="height:100%;display:flex;flex-direction:column;background:#111008;overflow-y:auto;">
+        <div style="display:flex;justify-content:center;gap:6px;padding:18px 0 0;">
+          <div style="width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,0.25);"></div>
+          <div style="width:28px;height:4px;border-radius:2px;background:#C49020;"></div>
+          <div style="width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,0.25);"></div>
+        </div>
+        <div style="flex:1;padding:24px 28px;">
+          <div style="font-size:13px;font-weight:600;color:#C49020;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">Your Dashboard</div>
+          <div style="font-size:26px;font-weight:800;color:#F0EDE4;line-height:1.2;margin-bottom:6px;">Track every dollar.<br/>In real time.</div>
+          <div style="font-size:15px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.5;">See your ranking, purse share, and season earnings — updated live as competitors enter events.</div>
+          <!-- Mock dashboard card -->
+          <div style="background:#F5F2EA;border-radius:14px;padding:16px;margin-bottom:12px;">
+            <div style="font-size:11px;color:#999;margin-bottom:2px;">Good morning, Dale</div>
+            <div style="font-size:17px;font-weight:700;color:#2C2A20;margin-bottom:10px;">You're sitting 3rd in barrel racing.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div style="background:#fff;border-radius:8px;padding:10px;"><div style="font-size:18px;font-weight:700;color:#C49020;">$1,240</div><div style="font-size:10px;color:#999;">Purses Claimed</div></div>
+              <div style="background:#fff;border-radius:8px;padding:10px;"><div style="font-size:18px;font-weight:700;color:#2C2A20;">87</div><div style="font-size:10px;color:#999;">Points earned</div></div>
+            </div>
+            <div style="background:#FEF3C7;border-radius:8px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#C49020;flex-shrink:0;"></div>
+              <div style="font-size:12px;color:#6B4E10;font-weight:500;">You're 13 pts from 2nd place — enter 2 more events to move up</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;background:rgba(196,144,32,0.12);border-radius:10px;padding:12px;">
+            <i class="ti ti-arrow-up-right" style="color:#C49020;font-size:16px;margin-top:1px;flex-shrink:0;"></i>
+            <div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.5;">Your leaderboard rank updates live — every new entry by a competitor changes the purse distribution.</div>
+          </div>
+        </div>
+        <div style="padding:20px 28px 36px;">
+          <button onclick="nav('sc-onboard-3')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">Continue →</button>
+          <button onclick="nav('sc-signup1')" style="width:100%;background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;padding:8px;">Skip intro</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ONBOARDING SCREEN 3: Your Barn -->
+    <div id="sc-onboard-3" class="screen">
+      <div style="height:100%;display:flex;flex-direction:column;background:#111008;overflow-y:auto;">
+        <div style="display:flex;justify-content:center;gap:6px;padding:18px 0 0;">
+          <div style="width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,0.25);"></div>
+          <div style="width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,0.25);"></div>
+          <div style="width:28px;height:4px;border-radius:2px;background:#C49020;"></div>
+        </div>
+        <div style="flex:1;padding:24px 28px;">
+          <div style="font-size:13px;font-weight:600;color:#C49020;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">Your Barn</div>
+          <div style="font-size:26px;font-weight:800;color:#F0EDE4;line-height:1.2;margin-bottom:6px;">One barn.<br/>Every stakeholder paid.</div>
+          <div style="font-size:15px;color:rgba(255,255,255,0.55);margin-bottom:20px;line-height:1.5;">Add your horses once. Every entry automatically notifies and pays your sire owner, dam owner, and breeder — for life.</div>
+          <!-- Mock barn cards -->
+          <div style="background:#F5F2EA;border-radius:14px;padding:14px;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#fff;border-radius:8px;margin-bottom:6px;">
+              <div style="width:36px;height:36px;background:#F5F2EA;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;">🐴</div>
+              <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#2C2A20;">Nelliebell</div><div style="font-size:11px;color:#999;">Sannman · 10 disciplines</div></div>
+              <span style="background:#DCFCE7;color:#166534;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;">Verified</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#fff;border-radius:8px;">
+              <div style="width:36px;height:36px;background:#F5F2EA;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;">🐎</div>
+              <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:#2C2A20;">SDP Best of Friends</div><div style="font-size:11px;color:#999;">Sannman · 10 disciplines</div></div>
+              <span style="background:#DCFCE7;color:#166534;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;">Verified</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:13px;color:#C49020;font-weight:700;margin-bottom:3px;"><i class="ti ti-coin"></i> $25</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);">Breeder earns per entry</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:13px;color:#C49020;font-weight:700;margin-bottom:3px;"><i class="ti ti-infinity"></i> Lifetime</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);">No annual fees, ever</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:20px 28px 36px;">
+          <button onclick="nav('sc-signup1')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">Create my free account →</button>
+          <button onclick="nav('sc-login')" style="width:100%;background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;padding:8px;">Already have an account? Sign in</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="sc-signup1" class="screen">
       <div class="split">
         <div class="split-left">
           <img class="split-left-img" src="https://thejsasse.github.io/legendary-stakes-chat/test/login-hero.png" alt="Cutting horse at NCHA Futurity" /><div class="split-left-overlay"></div>
@@ -866,7 +990,7 @@ select.inp{appearance:none;}
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:260px;max-width:85%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.3</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.4</span>
           </div>
           <div class="split-right-form">
             <div class="form-title">Create your free account</div>
@@ -1236,7 +1360,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-dashboard" class="screen">
-      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="icon-btn" aria-label="Notifications" onclick="nav('sc-leaderboard')"><i class="ti ti-bell"></i></button><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-main')"><i class="ti ti-menu-2"></i> Account</button><div class="dd" id="dd-main"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-main')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="icon-btn" aria-label="Notifications" onclick="nav('sc-leaderboard')"><i class="ti ti-bell"></i></button><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-main')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-main"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-main')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="body-row">
         <div class="screen-scroll" style="flex:1;padding:20px 22px;background:#F5F2EA;">
           <div class="greeting">Good morning, Dale</div>
@@ -1280,7 +1404,7 @@ select.inp{appearance:none;}
           </div>
           
         </div>
-        <div class="ai-panel open" id="ai-panel">
+        <div class="ai-panel" id="ai-panel">
           <div class="ai-hdr"><div class="ai-dot"></div><span class="ai-title-text">Legendary Assistant</span><button class="ai-close" onclick="closeAI()">✕</button></div>
           <div class="ai-msgs" id="ai-msgs">
             <div class="msg-ai">Hey Dale — I know your horses, entries, and leaderboard position. What's on your mind?</div>
@@ -1298,7 +1422,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-events" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn" onclick="nav('sc-profile')"><i class="ti ti-menu-2"></i> Account</button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn" onclick="nav('sc-profile')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <!-- Header + search -->
         <div style="background:#fff;padding:16px 20px 0;border-bottom:0.5px solid #E0D9C8;">
@@ -1343,7 +1467,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-event-detail" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn"><i class="ti ti-menu-2"></i> Account</button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
       <div class="event-hero" style="align-items:center;">
         <div class="eh-logo"><i class="ti ti-horse"></i></div>
         <div style="flex:1;">
@@ -1380,7 +1504,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-cart" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn"><i class="ti ti-menu-2"></i> Account</button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
       <div class="event-strip">
         <div>
           <div class="es-name">Mid South Memorial Day Cutting</div>
@@ -1405,7 +1529,7 @@ select.inp{appearance:none;}
           <div class="cart-card2"><div class="cart-hdr2">Mid South Memorial Day Cutting</div><div id="cart-items"><div class="empty-cart"><i class="ti ti-shopping-cart"></i><p>No entries yet</p></div></div><div id="cart-total2" style="display:none;" class="cart-total2"><span style="font-size:11px;font-weight:500;color:#2C2A20;"><span id="ec">0</span> entries</span><span style="font-size:13px;font-weight:500;color:#B07A18;" id="cv">$0</span></div></div>
           <div class="credit-notice"><i class="ti ti-coin"></i><span><strong style="color:#7A5010;">$750</strong> credits applied at checkout</span></div>
           <button class="checkout-btn" id="checkout-btn" disabled onclick="nav('sc-review')">Review &amp; pay</button>
-          <button class="add-more" id="add-more" style="display:none;" onclick="resetB()"><i class="ti ti-plus" style="font-size:11px;"></i> Add another entry</button>
+          <button class="add-more" id="add-more" style="display:none;" onclick="resetB();toggleCart();"><i class="ti ti-plus" style="font-size:11px;"></i> Add another entry</button>
           <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:8px;padding:8px 10px;margin-top:9px;"><div style="font-size:11px;font-weight:500;color:#2C2A20;margin-bottom:3px;"><i class="ti ti-bell" style="font-size:12px;color:#C49020;"></i> When you check out</div><div style="font-size:11px;color:#999;line-height:1.5;">Sannman's owner, dam owner, and breeder are notified and can enter their own accounts.</div></div>
           
         </div>
@@ -1413,7 +1537,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-review" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn"><i class="ti ti-menu-2"></i> Account</button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
       <div class="event-strip"><div><div class="es-name">Mid South Memorial Day Cutting</div><div class="es-meta"><i class="ti ti-calendar" style="font-size:11px;"></i> May 20 · Memphis, TN</div></div></div>
       <div class="detail-body">
         <div class="dl">
@@ -1437,7 +1561,7 @@ select.inp{appearance:none;}
 
     <div id="sc-confirm" class="screen">
       <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"></div></div>
-      <div class="success-wrap">
+      <div class="success-wrap" style="padding-top:16px;">
         <div class="sico" style="background:#D4EDDA;"><i class="ti ti-circle-check" style="color:#1a6b30;"></i></div>
         <div class="st">You're entered, Dale.</div>
         <div class="ss">3 entries confirmed for Mid South Memorial Day Cutting on May 20. Your purse share is growing.</div>
@@ -1561,7 +1685,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-barn" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')"><i class="ti ti-menu-2"></i> Account</button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;height:28px;width:auto;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:18px 20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:16px;font-weight:500;color:#2C2A20;">My Barn</div><button class="gold-btn" style="padding:8px 16px;font-size:12px;" onclick="nav('sc-signup3')">+ Add a horse</button></div>
         <div class="alert-banner"><div class="alert-ico"><i class="ti ti-alert-triangle" style="font-size:9px;"></i></div><div><div class="alert-t">1 horse needs ownership verification before payout</div><div class="alert-s">You can still enter events, but winnings are held until ownership is confirmed. Verification takes 1–3 business days.</div></div></div>
@@ -2023,6 +2147,7 @@ select.inp{appearance:none;}
       <button onclick="hideConfirmModal()" style="width:100%;background:none;border:0.5px solid #D0C8B0;border-radius:10px;padding:12px;font-size:13px;color:#888;cursor:pointer;font-family:inherit;">Go back and review</button>
     </div>
   </div>
+  <div id="ai-overlay" onclick="closeAI()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:299;"></div>
   <div class="mobile-help-bar" id="mobile-help">Need help? Call <a href="tel:8172210778">817-221-0778</a></div>
   </div><!-- /app-frame -->
 </div><!-- /browser-chrome -->
@@ -2035,8 +2160,8 @@ function nav(id){
   var urlEl=document.getElementById('url-bar');
   if(urlEl&&urlMap[id])urlEl.innerHTML='<i class="ti ti-lock"></i> '+urlMap[id];
 }
-function openAI(){document.getElementById('ai-panel').classList.add('open');var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='0.35';b.style.cursor='default';b.onclick=null;}}
-function closeAI(){var p=document.getElementById('ai-panel');if(p)p.classList.remove('open');var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='1';b.style.cursor='pointer';b.onclick=function(){openAI();};}}
+function openAI(){document.getElementById('ai-panel').classList.add('open');var o=document.getElementById('ai-overlay');if(o&&window.innerWidth<=768)o.style.display='block';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='0.35';b.style.cursor='default';b.onclick=null;}}
+function closeAI(){var p=document.getElementById('ai-panel');if(p)p.classList.remove('open');var o=document.getElementById('ai-overlay');if(o)o.style.display='none';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='1';b.style.cursor='pointer';b.onclick=function(){openAI();};}}
 function aiReply(){
   var q=document.getElementById('ai-q');var a=document.getElementById('ai-a');var s=document.getElementById('ai-sugs');
   if(q)q.style.display='block';if(a)a.style.display='block';if(s)s.style.display='none';
@@ -2186,7 +2311,7 @@ function hdSimulateSubmit(){
   setTimeout(function(){btn.textContent='✓ Submitted — under review';btn.style.background='#166534';},1200);
 }
 function resetDemo(){
-  nav('sc-signup1');
+  nav('sc-login');
   C={horse:'nell',disc:'cut',tier:'mid',div:null,rider:'own',also:false,cart:[]};
   renderCart();renderDivs();
   var bm=document.getElementById('barn-mine');var bb=document.getElementById('barn-bred');
