@@ -382,6 +382,347 @@ select.inp{appearance:none;}
 .royalty-row{display:flex;justify-content:space-between;font-size:11px;padding:6px 10px;border-bottom:0.5px solid #EEE8D8;}
 .royalty-row:last-child{border-bottom:none;}
 .sire-dash-grid{display:grid;grid-template-columns:minmax(0,1fr) 175px;gap:10px;}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE STYLES — max-width: 768px
+   Target: 375px+ phones, 65+ year old rancher persona
+   Key principles:
+   - Min 16px inputs (prevents iOS zoom)
+   - Min 44px touch targets
+   - Stack all multi-column layouts
+   - Bigger text across the board
+   - Single-column everything
+═══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── CHROME & FRAME ── */
+  .browser-bar { display: none; }
+  .browser-chrome { max-width: 100%; height: 100dvh; }
+  html, body { overflow: hidden; }
+  .app-frame { border-radius: 0; }
+
+  /* ── TOPBAR ── */
+  .topbar { padding: 10px 14px; min-height: 54px; }
+  .topbar-center img { height: 26px; }
+  .back-btn { font-size: 14px; gap: 6px; min-height: 44px; padding: 0 4px; }
+  .menu-btn { font-size: 13px; padding: 9px 14px; min-height: 44px; border-radius: 8px; }
+  .icon-btn { min-width: 44px; min-height: 44px; justify-content: center; font-size: 20px; }
+
+  /* ── LOGIN / SIGNUP SPLIT LAYOUT ── */
+  /* Hide photo panel entirely — full-width form on mobile */
+  .split { flex-direction: column; }
+  .split-left { display: none; }
+  .split-right { width: 100%; flex: 1; }
+  .split-right-top {
+    padding: 20px 20px 16px;
+    min-height: auto;
+  }
+  .split-right-top img { width: 180px; margin-bottom: 10px; }
+  .hero-line-1 { font-size: 28px; }
+  .hero-line-2 { font-size: 28px; }
+  .split-right-form {
+    padding: 18px 20px 24px;
+    justify-content: flex-start;
+  }
+
+  /* ── COPY BLOCK ON LOGIN ── */
+  /* The "Build your legacy" copy — scale down for mobile */
+  .split-right-form > div:first-child > div:nth-child(2),
+  .split-right-form > div:first-child > div:nth-child(3) {
+    font-size: 22px !important;
+  }
+  .split-right-form > div:first-child > div:nth-child(4) {
+    font-size: 16px !important;
+  }
+
+  /* ── FORMS ── */
+  .lbl { font-size: 14px; margin-bottom: 5px; }
+  .inp {
+    font-size: 16px; /* Prevents iOS auto-zoom */
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .gold-full {
+    font-size: 16px;
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    min-height: 52px;
+  }
+  .ghost-full {
+    font-size: 15px;
+    padding: 13px;
+    border-radius: 10px;
+    min-height: 50px;
+  }
+  .form-title { font-size: 20px; }
+  .form-sub { font-size: 14px; }
+  .link-sm { font-size: 14px; }
+  .link-sm a { min-height: 44px; display: inline-flex; align-items: center; }
+  .divider { margin: 14px 0; }
+  .div-txt { font-size: 13px; }
+  .row2 { gap: 10px; }
+
+  /* ── PROGRESS DOTS ── */
+  /* Show dots only — hide text labels on small screens */
+  .prog { margin-bottom: 20px; }
+  .plbl { display: none; }
+  .pdot { width: 28px; height: 28px; font-size: 13px; }
+  .pline { margin: 0 8px; }
+
+  /* ── DASHBOARD ── */
+  .greeting { font-size: 14px; }
+  .headline { font-size: 20px; margin-bottom: 14px; }
+  .nudge { padding: 14px; gap: 12px; }
+  .nudge-ico { width: 30px; height: 30px; font-size: 14px; flex-shrink: 0; }
+
+  /* 4-col metrics → 2x2 grid */
+  .metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 14px;
+  }
+  .metric {
+    padding: 12px 14px;
+    border-right: 0.5px solid #D8D0BC;
+    border-bottom: 0.5px solid #D8D0BC;
+  }
+  .metric:nth-child(2) { border-right: none; }
+  .metric:nth-child(3) { border-bottom: none; }
+  .metric:nth-child(4) { border-right: none; border-bottom: none; }
+  .metric-val { font-size: 22px; }
+  .metric-lbl { font-size: 12px; margin-top: 2px; }
+
+  /* Dashboard two-col → single col */
+  .two-col { grid-template-columns: 1fr; gap: 12px; }
+
+  /* AI panel → bottom sheet */
+  .body-row { flex-direction: column; position: relative; }
+  .ai-panel {
+    width: 100% !important;
+    height: 0;
+    border-left: none;
+    border-top: 0.5px solid #E0D9C8;
+    transition: height .3s ease;
+    flex-shrink: 0;
+  }
+  .ai-panel.open {
+    height: 280px;
+    width: 100% !important;
+  }
+  .ai-msgs { font-size: 13px; }
+  .msg-ai, .msg-user, .msg-ai2 { font-size: 13px; }
+  .sug { font-size: 13px; padding: 8px 10px; min-height: 40px; }
+  .ai-inp { font-size: 16px; padding: 8px 10px; }
+  .ai-send { width: 36px; height: 36px; }
+
+  /* Leaderboard rows */
+  .lb-row { font-size: 13px; padding: 8px 2px; }
+  .lb-r { font-size: 13px; width: 20px; }
+  .lb-p { font-size: 12px; }
+  .lb-e { font-size: 13px; }
+  .hname { font-size: 14px; }
+  .hmeta { font-size: 12px; }
+  .pts { font-size: 12px; padding: 3px 9px; }
+  .browse-btn { font-size: 13px; padding: 10px; min-height: 44px; }
+
+  /* ── EVENTS ── */
+  .ec-name { font-size: 14px; }
+  .ec-loc { font-size: 12px; }
+  .ec-day { font-size: 18px; }
+  .enter-btn {
+    font-size: 13px;
+    padding: 10px 16px;
+    min-height: 44px;
+    border-radius: 8px;
+  }
+  .etag { font-size: 11px; padding: 3px 8px; }
+  .elig-tag { font-size: 11px; padding: 3px 9px; }
+  .pill { font-size: 11px; padding: 3px 9px; }
+
+  /* ── EVENT DETAIL ── */
+  /* Stack left/right detail columns */
+  .detail-body {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .dl { border-right: none; border-bottom: 0.5px solid #E0D9C8; overflow-y: visible; }
+  .dr { overflow-y: visible; }
+  .event-hero { padding: 16px; gap: 12px; }
+  .eh-title { font-size: 17px; }
+  .stat-grid { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .stat-val { font-size: 16px; }
+  .stat-lbl { font-size: 11px; }
+  .disc-grid { grid-template-columns: 1fr; gap: 6px; }
+  .disc-name { font-size: 13px; }
+  .disc-sub { font-size: 12px; }
+  .eb { font-size: 11px; padding: 3px 8px; }
+
+  /* Entry CTA sidebar */
+  .entry-cta { padding: 14px; }
+  .entry-cta button { font-size: 15px !important; padding: 13px !important; min-height: 50px; }
+
+  /* ── CART / REVIEW ── */
+  .er-name { font-size: 14px; }
+  .er-meta { font-size: 12px; }
+  .er-price { font-size: 14px; }
+  .rc-hdr { font-size: 13px; padding: 10px 13px; }
+  .pp-row { font-size: 14px; padding: 8px 0; }
+  .total-row { padding: 12px 14px; }
+  .terms-row { font-size: 13px; gap: 8px; }
+  .terms-row input { width: 18px; height: 18px; margin-top: 1px; }
+  .pay-btn-final { font-size: 16px; padding: 15px; min-height: 54px; }
+  .back-link { font-size: 13px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+  .ci-h { font-size: 13px; }
+  .ci-d { font-size: 12px; }
+  .ci-p { font-size: 13px; }
+  .ci-rm { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .checkout-btn { font-size: 15px; padding: 13px; min-height: 50px; }
+
+  /* Div selection buttons */
+  .div-btn { font-size: 14px !important; padding: 12px !important; min-height: 48px; }
+  #div-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  .tbtn { font-size: 13px !important; padding: 9px 14px !important; min-height: 44px; }
+
+  /* Horse / rider selection */
+  .rider-opt { padding: 12px; }
+  .r-label { font-size: 14px; }
+  .r-sub { font-size: 12px; }
+  .r-radio { width: 18px; height: 18px; }
+  .r-dot { width: 8px; height: 8px; }
+  .also-row { padding: 12px; }
+  .also-chk { width: 18px; height: 18px; }
+  .add-btn { font-size: 15px; padding: 13px; min-height: 50px; }
+
+  /* ── BARN ── */
+  .barn-hdr { padding: 14px; gap: 12px; }
+  .hav { width: 44px; height: 44px; font-size: 20px; }
+  .act-btn { width: 40px; height: 40px; font-size: 16px; border-radius: 8px; }
+  .barn-dets { grid-template-columns: 1fr 1fr; padding: 0 14px 12px; gap: 8px; }
+  .det-l { font-size: 11px; }
+  .det-v { font-size: 13px; }
+  .disc2 { font-size: 11px; padding: 4px 9px; }
+  .vs-btn { font-size: 12px; padding: 8px 14px; min-height: 36px; }
+  .vs-t { font-size: 12px; }
+  .alert-t { font-size: 13px; }
+  .alert-s { font-size: 12px; }
+  .add-horse-card { padding: 20px; }
+  .gold-btn { font-size: 13px; padding: 10px 18px; min-height: 44px; }
+
+  /* ── NAV TABS ── */
+  .ntab { font-size: 14px; padding: 11px 16px; min-height: 44px; }
+  .ntab-ct { font-size: 11px; padding: 2px 8px; }
+  .slabel { font-size: 11px; letter-spacing: 0.6px; }
+
+  /* ── BARN TABS ── */
+  .nav-tabs { overflow-x: auto; }
+
+  /* ── STATUS BADGES ── */
+  .status-badge { font-size: 11px; padding: 3px 9px; }
+
+  /* ── NOTES & HELP ── */
+  .note { font-size: 13px; margin-top: 18px; }
+  .note a { min-height: 44px; display: inline-flex; align-items: center; }
+
+  /* ── HORSE DETAIL ── */
+  .field-lbl { font-size: 11px; }
+  .field-val { font-size: 14px; }
+  .field-val input, .field-val textarea, .field-val select {
+    font-size: 16px; /* Prevent iOS zoom */
+  }
+  .upload-zone { padding: 18px; }
+  .upload-zone p { font-size: 13px; }
+  .upload-zone small { font-size: 12px; }
+  .upload-zone-ico { font-size: 24px; margin-bottom: 6px; }
+  .submit-verify-btn { font-size: 15px; padding: 13px; min-height: 50px; }
+  .vc-t { font-size: 14px; }
+  .vc-s { font-size: 13px; }
+
+  /* ── SIRE DASHBOARD ── */
+  .sire-dash-grid { grid-template-columns: 1fr; }
+  .stat-grid3 { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+
+  /* Offspring table → simplified 2-col on mobile */
+  .ot-cols, .ot-row {
+    grid-template-columns: 1fr auto !important;
+  }
+  /* Hide owner and events cols — show horse name + royalty only */
+  .ot-cols > div:nth-child(2),
+  .ot-cols > div:nth-child(3),
+  .ot-row > div:nth-child(2),
+  .ot-row > div:nth-child(3) {
+    display: none;
+  }
+  .ot-horse { font-size: 13px; }
+  .ot-royalty { font-size: 13px; font-weight: 600; }
+
+  /* ── LEADERBOARD FULL VIEW ── */
+  /* Leaderboard 4-col → keep but bump sizes */
+  .lb-row { gap: 8px; }
+
+  /* ── CONFIRM / SUCCESS ── */
+  .success-wrap { padding: 24px 20px; }
+  .st { font-size: 22px; }
+  .ss { font-size: 15px; }
+  .sico { width: 64px; height: 64px; font-size: 30px; }
+  .nc { max-width: 100%; padding: 14px; min-height: 60px; }
+  .nc-ico { width: 40px; height: 40px; font-size: 18px; }
+  .nc-t { font-size: 14px; }
+  .nc-s { font-size: 12px; }
+
+  /* ── DROPDOWN MENU ── */
+  .dd { width: 220px; }
+  .ddi { font-size: 14px; padding: 10px 12px; min-height: 44px; }
+  .ddi i { font-size: 16px; }
+  .ddanger { font-size: 14px; padding: 10px 12px; min-height: 44px; }
+
+  /* ── HORSE SEARCH RESULTS ── */
+  /* Result rows in sc-signup3 */
+  .screen-scroll > div > div[style*="border:1px solid #E8E0D0"] > div {
+    padding: 14px !important;
+  }
+
+  /* ── BARN SWEEP CHECKBOXES ── */
+  input[type="checkbox"] {
+    width: 20px !important;
+    height: 20px !important;
+    flex-shrink: 0;
+  }
+
+  /* ── GENERAL BUTTON COMFORT ── */
+  button { -webkit-tap-highlight-color: rgba(196,144,32,0.15); }
+
+  /* ── SCROLL BEHAVIOR ── */
+  .screen-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* ── DISCIPLINE FILTER TABS (events) ── */
+  /* Add left padding so first pill isn't flush */
+  [style*="overflow-x: auto"] {
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: 20px;
+  }
+
+}
+
+/* ── VERY SMALL PHONES (320px) ── */
+@media (max-width: 380px) {
+  .split-right-form { padding: 14px 16px 20px; }
+  .hero-line-1, .hero-line-2 { font-size: 24px; }
+  .split-right-top img { width: 150px; }
+  .metric-val { font-size: 18px; }
+  .headline { font-size: 18px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .stat-grid3 { grid-template-columns: 1fr 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -400,7 +741,7 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.1.9</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.2.0</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
@@ -1938,7 +2279,7 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.1.9</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.2.0</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
