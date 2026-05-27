@@ -820,14 +820,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.4.3</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.4.4</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:200px;max-width:80%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.3</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.4</span>
           </div>
           <div class="split-right-form">
             <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:0.5px solid #E8E0D0;">
@@ -990,7 +990,7 @@ select.inp{appearance:none;}
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:200px;max-width:80%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.3</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.4.4</span>
           </div>
           <div class="split-right-form">
             <div class="form-title">Create your free account</div>
@@ -1312,6 +1312,8 @@ select.inp{appearance:none;}
           <strong>While we verify:</strong> You can still browse events. Once your horse is confirmed (1–3 business days), you'll be able to enter and compete immediately.
         </div>
         <div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-main')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-main"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-main')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+    <div id="sc-dashboard" class="screen">
+      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="icon-btn"><i class="ti ti-bell"></i></button><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-main')"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-main"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-main')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-main')"><i class="ti ti-horse"></i> My Barn</div><div class="ddi" onclick="nav('sc-events');toggleDD('dd-main')"><i class="ti ti-list-search"></i> Browse Events</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-main')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-main')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="body-row">
         <div class="screen-scroll" style="flex:1;padding:20px 22px;background:#F5F2EA;">
           <div class="greeting">Good morning, Dale</div>
@@ -1370,7 +1372,7 @@ select.inp{appearance:none;}
           <div class="ai-inp-row"><input class="ai-inp" placeholder="Ask anything..." /><button class="ai-send" onclick="aiReply()"><i class="ti ti-arrow-up" style="font-size:12px;"></i></button></div>
         </div>
       </div>
-    </div>
+    </div><!-- /sc-dashboard -->
 
     <div id="sc-events" class="screen">
       <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" onclick="nav('sc-profile')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
