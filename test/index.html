@@ -23,7 +23,7 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .topbar{background:#111008;border-bottom:0.5px solid #2A2518;padding:8px 16px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;flex-shrink:0;z-index:10;position:relative;min-height:48px;}
 .topbar-left{display:flex;align-items:center;justify-content:flex-start;}
 .topbar-center{display:flex;align-items:center;justify-content:center;}
-.topbar-center img{height:28px;width:auto;}
+.topbar-center img{height:36px;width:auto;}
 .topbar-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;}
 .logo{font-size:13px;font-weight:600;color:#8A6010;}
 .logo b{color:#C49020;font-weight:600;}
@@ -207,6 +207,8 @@ select.inp{appearance:none;}
 .dtab.sel{background:#EDD98A;color:#7A5010;border-color:#C8A040;font-weight:500;}
 .dtab.dis{opacity:.4;cursor:not-allowed;}
 .tier-btns{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.div-btn{padding:6px 14px;border:0.5px solid #D0C8B0;border-radius:6px;font-size:11px;color:#3A3020;cursor:pointer;background:#F5F2EA;font-family:inherit;}
+.div-btn.sel{background:#EDD98A;border-color:#C49020;color:#7A5010;font-weight:500;}
 .tbtn{padding:5px 10px;border:0.5px solid #D0C8B0;border-radius:6px;font-size:11px;color:#888;cursor:pointer;background:#F5F2EA;}
 .tbtn.sel{background:#EDD98A;border-color:#C49020;color:#7A5010;font-weight:500;}
 .tbtn-sub{font-size:10px;color:#aaa;margin-top:1px;}
@@ -270,8 +272,6 @@ select.inp{appearance:none;}
 .pp-row:last-of-type{border-bottom:none;}
 .pp-l{color:#999;}.pp-v{font-weight:500;color:#2C2A20;}.pp-v.green{color:#1a6b30;}
 .total-row{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border:0.5px solid #E0D9C8;border-radius:9px;background:#fff;margin-bottom:10px;}
-.terms-row{display:flex;align-items:flex-start;gap:6px;margin-bottom:10px;font-size:11px;color:#888;}
-.terms-row input{accent-color:#C49020;margin-top:2px;}
 .pay-btn-final{width:100%;background:#C49020;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;}
 .pay-btn-final:disabled{background:#D0C8B0;cursor:not-allowed;}
 .pay-btn-final.zero{background:#1a6b30;}
@@ -315,6 +315,7 @@ select.inp{appearance:none;}
 .alert-t{font-size:12px;font-weight:500;color:#6B4E10;margin-bottom:2px;}
 .alert-s{font-size:11px;color:#8A6820;line-height:1.5;}
 .swipe-hint{display:none;}
+#cart-toggle-btn{display:none;}
 .barn-card.warn{border-color:#E5C060;}
 .barn-card.unverified{border-color:#F0A0A0;}
 .verify-strip{display:flex;align-items:center;gap:8px;padding:8px 13px;border-top:0.5px solid #F0E8D0;background:#FFFBF0;}
@@ -404,7 +405,7 @@ select.inp{appearance:none;}
 
   /* ── TOPBAR ── */
   .topbar { padding: 10px 14px; min-height: 54px; }
-  .topbar-center img { height: 26px; }
+  .topbar-center img { height: 32px; }
   .back-btn { font-size: 14px; gap: 6px; min-height: 44px; padding: 0 4px; }
   .menu-btn { font-size: 13px; padding: 9px 14px; min-height: 44px; border-radius: 8px; }
   .icon-btn { min-width: 44px; min-height: 44px; justify-content: center; font-size: 20px; }
@@ -575,8 +576,6 @@ select.inp{appearance:none;}
   .rc-hdr { font-size: 13px; padding: 10px 13px; }
   .pp-row { font-size: 14px; padding: 8px 0; }
   .total-row { padding: 12px 14px; }
-  .terms-row { font-size: 13px; gap: 8px; }
-  .terms-row input { width: 18px; height: 18px; margin-top: 1px; }
   .pay-btn-final { font-size: 16px; padding: 15px; min-height: 54px; }
   .back-link { font-size: 13px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
   .ci-h { font-size: 13px; }
@@ -716,6 +715,7 @@ select.inp{appearance:none;}
   #sc-login .mobile-login-logo,
   #sc-signup1 .mobile-login-logo { display: block; margin-bottom: 0; }
   #sc-login .hero-line-1, #sc-login .hero-line-2,
+  #sc-signup1 .hero-line-1, #sc-signup1 .hero-line-2 { display: none; }
   #sc-login .split-right-top,
   #sc-signup1 .split-right-top { min-height: 100px; padding: 20px; }
 
@@ -814,14 +814,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.3.0</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.3.2</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:260px;max-width:85%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.0</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.2</span>
           </div>
           <div class="split-right-form">
             <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:0.5px solid #E8E0D0;">
@@ -866,7 +866,7 @@ select.inp{appearance:none;}
             <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:260px;max-width:85%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
-            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.0</span>
+            <span class="version-tag" style="position:absolute;bottom:8px;right:12px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.5px;">v0.3.2</span>
           </div>
           <div class="split-right-form">
             <div class="form-title">Create your free account</div>
@@ -1097,34 +1097,41 @@ select.inp{appearance:none;}
         <!-- Horse carousel — swipeable on mobile, grid on desktop -->
         <div class="barn-success-carousel" style="margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;display:flex;justify-content:center;">
           <div style="display:flex;gap:8px;min-width:min-content;padding:2px;">
+            <!-- Existing horse -->
             <div style="border:1px solid #E8E0D0;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;">
               <div style="font-size:30px;margin-bottom:6px;">🐴</div>
               <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:auto;padding-bottom:8px;">Nelliebell</div>
               <span style="font-size:10px;background:#FEF3C7;color:#92400E;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;">10 disc.</span>
             </div>
+            <!-- Existing horse -->
             <div style="border:1px solid #E8E0D0;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;">
               <div style="font-size:30px;margin-bottom:6px;">🐎</div>
               <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:auto;padding-bottom:8px;">SDP Best of Friends</div>
               <span style="font-size:10px;background:#FEF3C7;color:#92400E;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;">10 disc.</span>
             </div>
-            <div style="border:1px solid #E8E0D0;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;">
-              <div style="font-size:30px;margin-bottom:6px;">🐴</div>
-              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:auto;padding-bottom:8px;">Honey Run Lady</div>
+            <!-- New horses — highlighted -->
+            <div style="border:2px solid #C49020;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;background:#FFFCF0;">
+              <div style="font-size:30px;margin-bottom:4px;">🐴</div>
+              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:4px;">Honey Run Lady</div>
+              <span style="font-size:9px;background:#C49020;color:#fff;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;margin-bottom:4px;">New</span>
               <span style="font-size:10px;background:#FEF3C7;color:#92400E;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;">8 disc.</span>
             </div>
-            <div style="border:1px solid #E8E0D0;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;">
-              <div style="font-size:30px;margin-bottom:6px;">🐎</div>
-              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:auto;padding-bottom:8px;">Cactus Rose</div>
+            <div style="border:2px solid #C49020;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;background:#FFFCF0;">
+              <div style="font-size:30px;margin-bottom:4px;">🐎</div>
+              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:4px;">Cactus Rose</div>
+              <span style="font-size:9px;background:#C49020;color:#fff;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;margin-bottom:4px;">New</span>
               <span style="font-size:10px;background:#FEF3C7;color:#92400E;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;">7 disc.</span>
             </div>
-            <div style="border:1px solid #E8E0D0;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;opacity:.6;">
-              <div style="font-size:30px;margin-bottom:6px;">🐴</div>
-              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:auto;padding-bottom:8px;">Red River Rocket</div>
+            <div style="border:2px solid #C49020;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;background:#FFFCF0;">
+              <div style="font-size:30px;margin-bottom:4px;">🐴</div>
+              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:4px;">Red River Rocket</div>
+              <span style="font-size:9px;background:#C49020;color:#fff;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;margin-bottom:4px;">New</span>
               <span style="font-size:10px;background:#FEF3C7;color:#92400E;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;">8 disc.</span>
             </div>
-            <div style="border:1px solid #E8E0D0;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;opacity:.4;">
-              <div style="font-size:30px;margin-bottom:6px;">🐎</div>
-              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:auto;padding-bottom:8px;">Smart N Smoky</div>
+            <div style="border:2px solid #C49020;border-radius:10px;padding:12px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;width:120px;flex-shrink:0;background:#FFFCF0;">
+              <div style="font-size:30px;margin-bottom:4px;">🐎</div>
+              <div style="font-size:11px;font-weight:700;color:#2C2A20;margin-bottom:4px;">Smart N Smoky</div>
+              <span style="font-size:9px;background:#C49020;color:#fff;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap;margin-bottom:4px;">New</span>
               <span style="font-size:10px;background:#FEF3C7;color:#92400E;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;">6 disc.</span>
             </div>
           </div>
@@ -1364,7 +1371,7 @@ select.inp{appearance:none;}
           
         </div>
         <div class="dr">
-          <div class="entry-cta"><div class="ep">$250 <span style="font-size:12px;font-weight:400;color:#999;">per entry</span></div><div class="es2">Each horse + division + role is a separate entry.</div><button style="width:100%;background:#C49020;color:#fff;border:none;border-radius:8px;padding:10px;font-size:12px;font-weight:500;cursor:pointer;" onclick="nav('sc-cart')">Start entering this event</button><div class="cred-row"><i class="ti ti-coin"></i> <strong style="color:#7A5010;">$750</strong> in credits — covers 3 entries</div></div>
+          <div class="entry-cta"><div class="ep">$250 <span style="font-size:12px;font-weight:400;color:#999;">per entry</span></div><div class="es2">Each horse + division + role is a separate entry.</div><div class="cred-row"><i class="ti ti-coin"></i> <strong style="color:#7A5010;">$750</strong> in credits — covers 3 entries</div></div>
           <div class="notify-card2"><div class="nt2"><i class="ti ti-bell"></i> Others can earn here too</div><div style="font-size:11px;color:#8A6820;line-height:1.5;">Sire, dam owner, and breeder notified when you enter.</div><div class="ntags"><span class="ntag nt-s">Sire owner</span><span class="ntag nt-d">Dam owner</span><span class="ntag nt-b">Breeder</span></div></div>
           <div class="slabel">Purse breakdown — cutting</div>
           <div class="purse-bar"><div class="purse-row"><span class="purse-role">Horse owner</span><span class="purse-amt">~$14,200</span></div><div class="purse-row"><span class="purse-role">Rider</span><span class="purse-amt">~$12,800</span></div><div class="purse-row"><span class="purse-role">Sire owner</span><span class="purse-amt">~$9,400</span></div><div class="purse-row"><span class="purse-role">Dam owner</span><span class="purse-amt">~$6,400</span></div><div class="purse-row"><span class="purse-role">Breeder</span><span class="purse-amt">~$5,400</span></div></div>
@@ -1395,7 +1402,7 @@ select.inp{appearance:none;}
           <button class="add-btn" id="add-btn" onclick="addToCart()" disabled><i class="ti ti-plus"></i> <span id="add-lbl">Add to cart — $250</span></button>
         </div>
         <div class="er" id="cart-panel">
-          <div class="slabel">Your cart</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><span class="slabel" style="margin-bottom:0;">Your cart</span><span id="cart-count-label" style="font-size:11px;color:#B07A18;font-weight:600;display:none;"></span></div>
           <div class="cart-card2"><div class="cart-hdr2">Mid South Memorial Day Cutting</div><div id="cart-items"><div class="empty-cart"><i class="ti ti-shopping-cart"></i><p>No entries yet</p></div></div><div id="cart-total2" style="display:none;" class="cart-total2"><span style="font-size:11px;font-weight:500;color:#2C2A20;"><span id="ec">0</span> entries</span><span style="font-size:13px;font-weight:500;color:#B07A18;" id="cv">$0</span></div></div>
           <div class="credit-notice"><i class="ti ti-coin"></i><span><strong style="color:#7A5010;">$750</strong> credits applied at checkout</span></div>
           <button class="checkout-btn" id="checkout-btn" disabled onclick="nav('sc-review')">Review &amp; pay</button>
@@ -1416,8 +1423,7 @@ select.inp{appearance:none;}
           <div class="slabel">Payment</div>
           <div class="pay-panel"><div class="pp-row"><span class="pp-l">Subtotal (3 entries)</span><span class="pp-v">$750</span></div><div class="pp-row"><span class="pp-l">Credits applied</span><span class="pp-v green">−$750</span></div></div>
           <div class="total-row"><span style="font-size:13px;font-weight:500;color:#2C2A20;">Total due today</span><span style="font-size:17px;font-weight:500;color:#B07A18;">$0.00</span></div>
-          <div class="terms-row"><input type="checkbox" id="terms" onchange="document.getElementById('pay-final').disabled=!this.checked;" style="accent-color:#C49020;" /><span>I agree to the <a style="color:#B07A18;cursor:pointer;">terms and conditions</a></span></div>
-          <button class="pay-btn-final zero" id="pay-final" disabled onclick="nav('sc-confirm')">Confirm — $0.00 due</button>
+          <button class="pay-btn-final zero" id="pay-final" onclick="showConfirmModal()">Confirm — $0.00 due</button>
           <a class="back-link" onclick="nav('sc-cart')">← Go back and edit entries</a>
           
         </div>
@@ -1997,6 +2003,27 @@ select.inp{appearance:none;}
       </div>
     </div><!-- /sc-breeder-barn -->
 
+
+  <!-- CART TOAST -->
+  <div id="cart-toast" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(20px);background:#2C2A20;color:#fff;padding:11px 20px;border-radius:99px;font-size:13px;font-weight:500;z-index:400;opacity:0;transition:opacity .25s ease, transform .25s ease;pointer-events:none;white-space:nowrap;display:flex;align-items:center;gap:8px;">
+    <i class="ti ti-circle-check" style="color:#4ADE80;font-size:16px;"></i>
+    Entry added to cart!
+  </div>
+  <!-- CONFIRMATION MODAL -->
+  <div id="confirm-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:#fff;border-radius:16px;padding:28px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="width:52px;height:52px;background:#EDD98A;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;"><i class="ti ti-shopping-cart" style="color:#7A5010;"></i></div>
+        <div style="font-size:18px;font-weight:700;color:#2C2A20;margin-bottom:6px;">Confirm your entries</div>
+        <div style="font-size:13px;color:#888;line-height:1.5;">You're about to confirm <strong style="color:#2C2A20;" id="modal-entry-count">3 entries</strong> for the Mid South Memorial Day Cutting for <strong style="color:#C49020;" id="modal-total">$0.00</strong>.</div>
+      </div>
+      <div style="background:#F7F4EE;border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:12px;color:#6B4E10;line-height:1.5;">
+        Your entries are locked in immediately and your purse share starts growing. Sannman's owner, dam owner, and breeder will be notified.
+      </div>
+      <button onclick="nav('sc-confirm');hideConfirmModal();" style="width:100%;background:#1a6b30;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:8px;">Yes, confirm my entries</button>
+      <button onclick="hideConfirmModal()" style="width:100%;background:none;border:0.5px solid #D0C8B0;border-radius:10px;padding:12px;font-size:13px;color:#888;cursor:pointer;font-family:inherit;">Go back and review</button>
+    </div>
+  </div>
   </div><!-- /app-frame -->
 </div><!-- /browser-chrome -->
 <script>
@@ -2045,6 +2072,21 @@ var divs={
   cut:{lo:['$3k Youth','$2k Green Horse'],mid:['$15k Amateur','$7.5k Non Pro','$25k Non Pro'],hi:['$50k Open','$35k Limited Open']},
   ran:{lo:['$2k Youth','$1k Green Horse'],mid:['$10k Amateur','$5k Non Pro'],hi:['$30k Open']}
 };
+function showToast(msg){
+  var t=document.getElementById('cart-toast');
+  if(!t)return;
+  t.querySelector('i').nextSibling.textContent=' '+(msg||'Entry added to cart!');
+  t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
+  setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)';},2200);
+}
+function showConfirmModal(){
+  var m=document.getElementById('confirm-modal');
+  if(m){m.style.display='flex';}
+}
+function hideConfirmModal(){
+  var m=document.getElementById('confirm-modal');
+  if(m){m.style.display='none';}
+}
 function renderDivs(){
   var wrap=document.getElementById('div-grid');if(!wrap)return;
   wrap.innerHTML='';
@@ -2101,6 +2143,7 @@ function addToCart(){
   C.cart.push({horse:horse,disc:C.disc==='cut'?'Cutting':'Ranch Horse',div:C.div,role:'Owner',rider:'Dale Smith',price:250});
   if(C.also)C.cart.push({horse:horse,disc:C.disc==='cut'?'Cutting':'Ranch Horse',div:C.div,role:'Rider',rider:'Dale Smith',price:250});
   renderCart();document.getElementById('add-more').style.display='block';
+  showToast('Entry added to cart!');
 }
 function removeEntry(i){C.cart.splice(i,1);renderCart();if(C.cart.length===0)document.getElementById('add-more').style.display='none';}
 function renderCart(){
@@ -2121,6 +2164,7 @@ function renderCart(){
   document.getElementById('ec').textContent=C.cart.length;
   document.getElementById('cv').textContent='$'+total.toLocaleString();
   var badge=document.getElementById('cart-badge');if(badge)badge.textContent=C.cart.length;
+  var cl=document.getElementById('cart-count-label');if(cl){cl.textContent=C.cart.length>0?C.cart.length+' entr'+(C.cart.length===1?'y':'ies')+' added':'';cl.style.display=C.cart.length>0?'block':'none';}
   if(cb)cb.disabled=false;
 }
 function toggleCart(){
@@ -2157,8 +2201,8 @@ function resetDemo(){
   if(uz)uz.style.display='block';if(up)up.style.display='none';
   if(sb){sb.disabled=true;sb.textContent='Submit for verification';sb.style.background='';}
   closeAI();
-  var terms=document.getElementById('terms');var pf=document.getElementById('pay-final');
-  if(terms)terms.checked=false;if(pf)pf.disabled=true;
+  var pf=document.getElementById('pay-final');
+  if(pf)pf.disabled=false;
 }
 renderDivs();
 renderCart();
