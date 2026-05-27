@@ -46,6 +46,7 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .split-right{flex:1;display:flex;flex-direction:column;overflow-y:auto;}
 .split-right-top{background:#111008;padding:26px 32px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;min-height:160px;}
 .split-right-top img{width:220px;max-width:100%;display:block;margin-bottom:14px;}
+.mobile-login-logo{display:none !important;}
 .hero-line-1{font-size:42px;font-weight:900;color:#F0EDE4;letter-spacing:.5px;text-transform:uppercase;line-height:1.1;display:block;text-align:center;}
 .hero-line-2{font-size:42px;font-weight:900;color:#C49020;letter-spacing:.5px;text-transform:uppercase;line-height:1.1;display:block;margin-top:2px;text-align:center;}
 .split-right-form{flex:1;background:#fff;padding:20px 32px 18px;display:flex;flex-direction:column;justify-content:center;}
@@ -716,9 +717,14 @@ select.inp{appearance:none;}
   .back-btn { max-width: 80px; overflow: hidden; white-space: nowrap; text-overflow: clip; }
 
   /* ── LOGIN MOBILE — swap hero text for large logo ── */
-  .mobile-login-logo { display: block !important; }
-  .hero-line-1, .hero-line-2 { display: none; }
-  .split-right-top { min-height: 120px; padding: 24px 20px; }
+  /* Login only: swap hero text for logo */
+  #sc-login .mobile-login-logo { display: block !important; margin-bottom: 0; }
+  #sc-login .hero-line-1, #sc-login .hero-line-2 { display: none; }
+  #sc-login .split-right-top { min-height: 120px; padding: 24px 20px; }
+  /* Signup1: swap hero text for logo on mobile */
+  #sc-signup1 .mobile-login-logo { display: block !important; margin-bottom: 0; }
+  #sc-signup1 .hero-line-1, #sc-signup1 .hero-line-2 { display: none; }
+  #sc-signup1 .split-right-top { min-height: 120px; padding: 24px 20px; }
 
   /* ── EVENT DETAIL — show mobile CTA, hide desktop right panel ── */
   .mobile-entry-cta { display: block !important; }
@@ -807,18 +813,18 @@ select.inp{appearance:none;}
   </div>
   <div class="app-frame">
 
-    <div id="sc-login" class="screen active">
+    <div id="sc-login" class="screen">
       <div class="split">
         <div class="split-left">
           <img class="split-left-img" src="https://thejsasse.github.io/legendary-stakes-chat/test/login-hero.png" alt="Cutting horse at NCHA Futurity" /><div class="split-left-overlay"></div>
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.2.3</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.2.5</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
-            <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="display:none;width:260px;max-width:85%;margin-bottom:0;" />
+            <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:260px;max-width:85%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
           </div>
@@ -846,23 +852,24 @@ select.inp{appearance:none;}
             </div>
             <div class="divider"><div class="div-line"></div><span class="div-txt">new here?</span><div class="div-line"></div></div>
             <button class="ghost-full" onclick="nav('sc-signup1')">Create a free account</button>
-            <div class="note" style="margin-top:10px;">Need help? Call <a href="tel:8172210778">817-221-0778</a></div>
+            <div style="font-size:10px;color:#ccc;text-align:center;margin-top:8px;" class="version-tag">v0.2.5</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="sc-signup1" class="screen">
+    <div id="sc-signup1" class="screen active">
       <div class="split">
         <div class="split-left">
           <img class="split-left-img" src="https://thejsasse.github.io/legendary-stakes-chat/test/login-hero.png" alt="Cutting horse at NCHA Futurity" /><div class="split-left-overlay"></div>
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;"><div class="s-badge">Free to join</div><div class="s-h">Takes 2 minutes.</div><div class="s-p">No card needed. Free for horses by enrolled stallions.</div></div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;">v0.2.5</div>
         </div>
         <div class="split-right">
           <div class="split-right-top">
+            <img class="mobile-login-logo" src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:260px;max-width:85%;margin-bottom:0;" />
             <span class="hero-line-1">It's a great day</span>
             <span class="hero-line-2">to be legendary</span>
           </div>
@@ -886,7 +893,6 @@ select.inp{appearance:none;}
             <label class="lbl">Confirm password</label><input class="inp" type="password" placeholder="••••••••" />
             <button class="gold-full" onclick="nav('sc-signup2')">Continue</button>
             <div class="link-sm">Already have an account? <a onclick="nav('sc-login')">Sign in</a></div>
-            <div class="note" style="margin-top:10px;">Need help? Call <a href="tel:8172210778">817-221-0778</a></div>
           </div>
         </div>
       </div>
@@ -2141,7 +2147,7 @@ function hdSimulateSubmit(){
   setTimeout(function(){btn.textContent='✓ Submitted — under review';btn.style.background='#166534';},1200);
 }
 function resetDemo(){
-  nav('sc-login');
+  nav('sc-signup1');
   C={horse:'nell',disc:'cut',tier:'mid',div:null,rider:'own',also:false,cart:[]};
   renderCart();renderDivs();
   var bm=document.getElementById('barn-mine');var bb=document.getElementById('barn-bred');
