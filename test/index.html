@@ -19,7 +19,7 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .app-frame{flex:1;overflow:hidden;background:#F5F2EA;display:flex;flex-direction:column;}
 .screen{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0;}
 .screen.active{display:flex;}
-.screen-scroll{flex:1;overflow-y:auto;overflow-x:hidden;}
+.screen-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:52px;}
 .topbar{background:#111008;border-bottom:0.5px solid #2A2518;padding:16px 20px;display:grid;grid-template-columns:90px 1fr 90px;align-items:center;flex-shrink:0;position:relative;min-height:96px;overflow:visible;}
 .topbar-left{display:flex;align-items:center;justify-content:flex-start;}
 .topbar-center{display:flex;align-items:center;justify-content:center;}
@@ -765,7 +765,8 @@ select.inp{appearance:none;}
   .mobile-help-bar {
     display: block;
     position: fixed;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 1160px;
     background: #fff;
     border-top: 0.5px solid #E0D9C8;
     padding: 10px 20px;
@@ -825,6 +826,10 @@ select.inp{appearance:none;}
 .msg-act-btn{font-size:12px;font-weight:600;color:#fff;background:#C49020;border:none;border-radius:7px;padding:7px 16px;cursor:pointer;font-family:inherit;}
 .msg-act-btn:hover{background:#A87A18;}
 
+
+.desktop-help{display:none;text-align:center;padding:20px 0 8px;font-size:12px;color:#aaa;}
+.desktop-help a{color:#B07A18;text-decoration:none;}
+@media(min-width:769px){.desktop-help{display:block;}}
 </style>
 </head>
 <body>
@@ -843,14 +848,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.6.5</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.6.6</div>
         </div>
         <div class="split-right">
           <div class="topbar" style="border-bottom:none;">
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.5</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.6</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -912,7 +917,7 @@ select.inp{appearance:none;}
             </div>
           </div>
         </div>
-        <div style="padding:20px 28px 36px;">
+        <div style="padding:20px 28px 80px;">
           <button onclick="nav('sc-onboard-2')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">Continue →</button>
           <button onclick="nav('sc-signup1')" style="width:100%;background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;padding:8px;">Skip intro</button>
         </div>
@@ -965,7 +970,7 @@ select.inp{appearance:none;}
             <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5;">Tap the menu icon in the top right whenever you need to navigate.</div>
           </div>
         </div>
-        <div style="padding:20px 28px 36px;">
+        <div style="padding:20px 28px 80px;">
           <button onclick="nav('sc-onboard-3')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">Continue →</button>
           <button onclick="nav('sc-signup1')" style="width:100%;background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;padding:8px;">Skip intro</button>
         </div>
@@ -1006,7 +1011,7 @@ select.inp{appearance:none;}
             </div>
           </div>
         </div>
-        <div style="padding:20px 28px 36px;">
+        <div style="padding:20px 28px 80px;">
           <button onclick="nav('sc-signup1')" style="width:100%;background:#C49020;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;">Create my free account →</button>
           <button onclick="nav('sc-login')" style="width:100%;background:none;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;padding:8px;">Already have an account? Sign in</button>
         </div>
@@ -1026,7 +1031,7 @@ select.inp{appearance:none;}
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.5</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.6</span>
             </div>
           </div>
           <div class="split-right-form">
