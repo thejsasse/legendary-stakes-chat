@@ -27,7 +27,7 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .topbar-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;}
 .logo{font-size:13px;font-weight:600;color:#8A6010;}
 .logo b{color:#C49020;font-weight:600;}
-.menu-btn{background:#EDD98A;border:none;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;color:#6B4E10;cursor:pointer;display:flex;align-items:center;gap:5px;}
+.menu-btn{background:#EDD98A;border:none;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;color:#6B4E10;cursor:pointer;display:flex;align-items:center;gap:5px;position:relative;}
 .back-btn{background:none;border:none;font-size:12px;color:#C49020;cursor:pointer;display:flex;align-items:center;gap:4px;order:-1;margin-right:auto;}
 .icon-btn{background:none;border:none;color:#999;cursor:pointer;padding:3px;font-size:17px;display:flex;align-items:center;}
 .top-right{display:flex;align-items:center;gap:8px;}
@@ -797,6 +797,29 @@ select.inp{appearance:none;}
   .stat-grid3 { grid-template-columns: 1fr 1fr; }
 }
 
+
+.msg-badge{display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:5px;vertical-align:middle;flex-shrink:0;}
+.menu-badge{position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:none;}
+.nav-badge{display:block !important;}
+.msg-item{background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;margin-bottom:8px;overflow:hidden;cursor:pointer;transition:box-shadow .15s;}
+.msg-item:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+.msg-item.unread{border-left:3px solid #C49020;}
+.msg-item.msg-action{border-left-color:#E03030;}
+.msg-item.msg-good{border-left-color:#16A34A;}
+.msg-preview{padding:12px 14px;display:flex;gap:10px;align-items:flex-start;}
+.msg-ico{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.msg-ico.action{background:#FEE2E2;color:#E03030;}
+.msg-ico.good{background:#DCFCE7;color:#16A34A;}
+.msg-ico.info{background:#FEF3C7;color:#B07A18;}
+.msg-title{font-size:13px;font-weight:600;color:#2C2A20;margin-bottom:2px;}
+.msg-sub{font-size:11px;color:#888;line-height:1.5;}
+.msg-time{font-size:10px;color:#bbb;margin-left:auto;flex-shrink:0;}
+.msg-unread-dot{width:7px;height:7px;background:#C49020;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.msg-expanded{padding:0 14px 12px 56px;font-size:12px;color:#555;line-height:1.6;display:none;border-top:0.5px solid #F0EDE4;}
+.msg-actions{display:flex;gap:8px;margin-top:8px;}
+.msg-del{font-size:11px;color:#E03030;background:none;border:0.5px solid #FECACA;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;}
+.msg-act-btn{font-size:11px;color:#fff;background:#C49020;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;}
+
 </style>
 </head>
 <body>
@@ -815,14 +838,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.5.9</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.6.0</div>
         </div>
         <div class="split-right">
           <div class="topbar" style="border-bottom:none;">
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.5.9</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.0</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -998,7 +1021,7 @@ select.inp{appearance:none;}
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.5.9</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.0</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1324,9 +1347,9 @@ select.inp{appearance:none;}
         <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 12px;margin-bottom:16px;font-size:11px;color:#1E40AF;line-height:1.5;">
           <strong>While we verify:</strong> You can still browse events. Once your horse is confirmed (1–3 business days), you'll be able to enter and compete immediately.
         </div>
-        <div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-horse-claim')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-horse-claim"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-horse-claim')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-horse-claim')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-horse-claim')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-horse-claim')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+        <div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-horse-claim')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="toggleDD('dd-horse-claim')" style="padding:8px 10px;">"></span></button><div class="dd" id="dd-horse-claim"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-horse-claim')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-horse-claim')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-horse-claim');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span class="msg-badge" id="badge-dd-horse-claim" style="display:inline-block;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-horse-claim')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-horse-claim')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
     <div id="sc-dashboard" class="screen">
-      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-dashboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-dashboard"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-dashboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-dashboard')"><i class="ti ti-horse"></i> My Barn</div><div class="ddi" onclick="nav('sc-events');toggleDD('dd-dashboard')"><i class="ti ti-list-search"></i> Browse Events</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-dashboard')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-dashboard')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-dashboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="toggleDD('dd-dashboard')">"></span></button><div class="dd" id="dd-dashboard"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-dashboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-dashboard')"><i class="ti ti-horse"></i> My Barn</div><div class="ddi" onclick="nav('sc-events');toggleDD('dd-dashboard')"><i class="ti ti-list-search"></i> Browse Events</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-dashboard');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span class="msg-badge" id="badge-dd-dashboard" style="display:inline-block;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-dashboard')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-dashboard')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="body-row">
         <div class="screen-scroll" style="flex:1;padding:20px 22px;background:#F5F2EA;">
           <div class="greeting">Good morning, Dale</div>
@@ -1388,7 +1411,7 @@ select.inp{appearance:none;}
     </div><!-- /sc-dashboard -->
 
     <div id="sc-events" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" onclick="nav('sc-profile')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" onclick="nav('sc-profile')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="nav('sc-profile')" style="padding:8px 10px;">"></span></button></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <!-- Header + search -->
         <div style="background:#fff;padding:16px 20px 0;border-bottom:0.5px solid #E0D9C8;">
@@ -1433,7 +1456,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-event-detail" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" style="padding:8px 10px;">"></span></button></div></div>
       <div class="event-hero" style="align-items:center;">
         <div class="eh-logo"><i class="ti ti-horse"></i></div>
         <div style="flex:1;">
@@ -1470,7 +1493,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-cart" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" style="padding:8px 10px;">"></span></button></div></div>
       <div class="event-strip">
         <div>
           <div class="es-name">Mid South Memorial Day Cutting</div>
@@ -1503,7 +1526,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-review" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" style="padding:8px 10px;">"></span></button></div></div>
       <div class="event-strip"><div><div class="es-name">Mid South Memorial Day Cutting</div><div class="es-meta"><i class="ti ti-calendar" style="font-size:11px;"></i> May 20 · Memphis, TN</div></div></div>
       <div class="detail-body">
         <div class="dl">
@@ -1545,7 +1568,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-entries" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div><div style="display:none"><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-entries')"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-entries"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-entries')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-entries')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-entries')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-entries')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div><div style="display:none"><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-entries')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="toggleDD('dd-entries')">"></span></button><div class="dd" id="dd-entries"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-entries')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-entries')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-entries')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-entries');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span class="msg-badge nav-badge" style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-entries')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <div style="background:#fff;padding:16px 20px 0;border-bottom:0.5px solid #E0D9C8;">
           <div style="font-size:17px;font-weight:600;color:#2C2A20;margin-bottom:12px;">My Entries</div>
@@ -1651,7 +1674,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-barn" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="toggleDD('dd-barn')" style="padding:8px 10px;">"></span></button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-barn');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span class="msg-badge" id="badge-dd-barn" style="display:inline-block;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:18px 20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:16px;font-weight:500;color:#2C2A20;">My Barn</div><button class="gold-btn" style="padding:8px 16px;font-size:12px;" onclick="nav('sc-signup3')">+ Add a horse</button></div>
         <div class="alert-banner"><div class="alert-ico"><i class="ti ti-alert-triangle" style="font-size:9px;"></i></div><div><div class="alert-t">1 horse needs ownership verification before payout</div><div class="alert-s">You can still enter events, but winnings are held until ownership is confirmed. Verification takes 1–3 business days.</div></div></div>
@@ -1885,7 +1908,7 @@ select.inp{appearance:none;}
 
     <!-- PROFILE / SETTINGS -->
     <div id="sc-profile" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-profile')"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-profile"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-profile')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-profile')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-profile')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-profile')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-profile')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="toggleDD('dd-profile')">"></span></button><div class="dd" id="dd-profile"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-profile')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-profile')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-profile')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-profile');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span class="msg-badge nav-badge" style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-profile')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <!-- Profile header -->
         <div style="background:#111008;padding:24px 20px;display:flex;align-items:center;gap:14px;">
@@ -1982,7 +2005,7 @@ select.inp{appearance:none;}
 
     <!-- LEADERBOARD — full view -->
     <div id="sc-leaderboard" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-leaderboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-leaderboard"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-leaderboard')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-leaderboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-leaderboard')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-leaderboard')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-leaderboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="toggleDD('dd-leaderboard')">"></span></button><div class="dd" id="dd-leaderboard"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-leaderboard')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-leaderboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-leaderboard')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-leaderboard');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span class="msg-badge nav-badge" style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-leaderboard')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <div style="background:#fff;padding:16px 20px 0;border-bottom:0.5px solid #E0D9C8;">
           <div style="font-size:17px;font-weight:600;color:#2C2A20;margin-bottom:12px;">Leaderboard</div>
@@ -2057,7 +2080,7 @@ select.inp{appearance:none;}
 
     <!-- BREEDER BARN -->
     <div id="sc-breeder-barn" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-breeder-barn')"><i class="ti ti-menu-2" style="font-size:18px;"></i></button><div class="dd" id="dd-breeder-barn"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-breeder-barn')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-breeder-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-breeder-barn')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-breeder-barn')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-breeder-barn')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="menu-badge" id="menu-badge-<button class="menu-btn" onclick="toggleDD('dd-breeder-barn')">"></span></button><div class="dd" id="dd-breeder-barn"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-breeder-barn')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-breeder-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-breeder-barn')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-breeder-barn');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span class="msg-badge nav-badge" style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-breeder-barn')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <!-- Hero earnings banner -->
         <div style="background:linear-gradient(135deg,#1A1200,#2C1E00);padding:20px;border-bottom:0.5px solid #3A2A00;">
@@ -2142,6 +2165,130 @@ select.inp{appearance:none;}
       <button onclick="hideConfirmModal()" style="width:100%;background:none;border:0.5px solid #D0C8B0;border-radius:10px;padding:12px;font-size:13px;color:#888;cursor:pointer;font-family:inherit;">Go back and review</button>
     </div>
   </div>
+
+    <!-- MESSAGE CENTER -->
+    <div id="sc-message-center" class="screen">
+      <div class="topbar">
+        <div class="topbar-left"><button class="back-btn" onclick="history.back();if(!document.referrer)nav('sc-dashboard');"><i class="ti ti-arrow-left"></i> Back</button></div>
+        <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
+        <div class="topbar-right"></div>
+      </div>
+      <div class="screen-scroll" style="background:#F5F2EA;padding:18px 20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="font-size:18px;font-weight:600;color:#2C2A20;">Message Center</div>
+          <button onclick="markMessagesRead()" style="font-size:11px;color:#B07A18;background:none;border:none;cursor:pointer;font-family:inherit;">Mark all read</button>
+        </div>
+
+        <!-- Action required -->
+        <div class="msg-item msg-action unread" id="msg-1" onclick="toggleMsg('msg-1')">
+          <div class="msg-preview">
+            <div class="msg-ico action"><i class="ti ti-alert-circle"></i></div>
+            <div style="flex:1;min-width:0;">
+              <div class="msg-title">Nelliebell needs ownership verification</div>
+              <div class="msg-sub">Your winnings are held until ownership is confirmed. Verification takes 1–3 days.</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span class="msg-time">2h ago</span>
+              <div class="msg-unread-dot"></div>
+            </div>
+          </div>
+          <div class="msg-expanded" id="msg-1-body">
+            We noticed Nelliebell doesn't have verified ownership yet. You can still enter events, but any purse winnings will be held until we confirm ownership via AQHA records. This usually takes 1–3 business days after you submit your papers.
+            <div class="msg-actions">
+              <button class="msg-act-btn" onclick="nav('sc-horse-detail');toggleMsg('msg-1')">Verify now →</button>
+              <button class="msg-del" onclick="deleteMsg('msg-1')">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Good news -->
+        <div class="msg-item msg-good unread" id="msg-2" onclick="toggleMsg('msg-2')">
+          <div class="msg-preview">
+            <div class="msg-ico good"><i class="ti ti-trophy"></i></div>
+            <div style="flex:1;min-width:0;">
+              <div class="msg-title">You claimed a purse! $180 earned</div>
+              <div class="msg-sub">Rio Grande Spring Cutting · Nelliebell · Cutting · Owner</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span class="msg-time">1d ago</span>
+              <div class="msg-unread-dot"></div>
+            </div>
+          </div>
+          <div class="msg-expanded" id="msg-2-body">
+            Congratulations! Results are posted for the Rio Grande Spring Cutting. Nelliebell placed and earned $180 in purse share as Owner. This will be applied to your year-end payout. You're now sitting 3rd overall in Barrel Racing.
+            <div class="msg-actions">
+              <button class="msg-act-btn" onclick="nav('sc-entries')">View my entries →</button>
+              <button class="msg-del" onclick="deleteMsg('msg-2')">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Good news 2 -->
+        <div class="msg-item msg-good" id="msg-3" onclick="toggleMsg('msg-3')">
+          <div class="msg-preview">
+            <div class="msg-ico good"><i class="ti ti-coin"></i></div>
+            <div style="flex:1;min-width:0;">
+              <div class="msg-title">Sire royalty earned — $25</div>
+              <div class="msg-sub">SDP Best of Friends entered the West Texas Cutting Classic</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span class="msg-time">2d ago</span>
+            </div>
+          </div>
+          <div class="msg-expanded" id="msg-3-body">
+            One of SDP Best of Friends' offspring — Poco Gold Digger, owned by K. Martinez — was entered in the West Texas Cutting Classic. As sire owner you automatically earned a $25 royalty. This has been added to your season royalties total.
+            <div class="msg-actions">
+              <button class="msg-act-btn" onclick="nav('sc-sire-dash')">View Sire Dashboard →</button>
+              <button class="msg-del" onclick="deleteMsg('msg-3')">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Informational -->
+        <div class="msg-item" id="msg-4" onclick="toggleMsg('msg-4')">
+          <div class="msg-preview">
+            <div class="msg-ico info"><i class="ti ti-calendar-event"></i></div>
+            <div style="flex:1;min-width:0;">
+              <div class="msg-title">Entry closes in 4 days — Mid South Cutting</div>
+              <div class="msg-sub">May 20 · Memphis, TN · Nelliebell &amp; SDP eligible</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span class="msg-time">3d ago</span>
+            </div>
+          </div>
+          <div class="msg-expanded" id="msg-4-body">
+            Don't miss the Mid South Memorial Day Cutting on May 20 in Memphis, TN. Entry closes May 19 — just 4 days away. Both Nelliebell and SDP Best of Friends are eligible. Your $750 in credits covers 3 entries at no additional cost.
+            <div class="msg-actions">
+              <button class="msg-act-btn" onclick="nav('sc-event-detail')">Enter now →</button>
+              <button class="msg-del" onclick="deleteMsg('msg-4')">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Informational 2 -->
+        <div class="msg-item" id="msg-5" onclick="toggleMsg('msg-5')">
+          <div class="msg-preview">
+            <div class="msg-ico info"><i class="ti ti-speakerphone"></i></div>
+            <div style="flex:1;min-width:0;">
+              <div class="msg-title">Season update — $300,000 projected purse</div>
+              <div class="msg-sub">88 enrolled sires · 700+ events this season</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span class="msg-time">5d ago</span>
+            </div>
+          </div>
+          <div class="msg-expanded" id="msg-5-body">
+            The 2026 Legendary Stakes season is off to a record start. With 88 enrolled sires and over 700 events scheduled, the projected year-end purse pool has reached $300,000. Every entry you make grows your share. Keep competing — the leaderboard updates in real time.
+            <div class="msg-actions">
+              <button class="msg-del" onclick="deleteMsg('msg-5')">Delete</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
   <div id="ai-overlay" onclick="closeAI()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:299;"></div>
   <div class="mobile-help-bar" id="mobile-help">Need help? Call <a href="tel:8172210778">817-221-0778</a></div>
   </div><!-- /app-frame -->
@@ -2192,6 +2339,33 @@ var divs={
   cut:{lo:['$3k Youth','$2k Green Horse'],mid:['$15k Amateur','$7.5k Non Pro','$25k Non Pro'],hi:['$50k Open','$35k Limited Open']},
   ran:{lo:['$2k Youth','$1k Green Horse'],mid:['$10k Amateur','$5k Non Pro'],hi:['$30k Open']}
 };
+
+var _msgsRead = false;
+function markMessagesRead(){
+  _msgsRead = true;
+  // Hide all unread dots in messages
+  document.querySelectorAll('.msg-unread-dot').forEach(function(d){d.style.display='none';});
+  document.querySelectorAll('.msg-item').forEach(function(m){m.classList.remove('unread');});
+  // Hide all nav badges
+  document.querySelectorAll('.nav-badge, .msg-badge').forEach(function(b){b.style.display='none';});
+}
+function toggleMsg(id){
+  var body = document.getElementById(id+'-body');
+  if(!body) return;
+  var isOpen = body.style.display === 'block';
+  // Close all
+  document.querySelectorAll('.msg-expanded').forEach(function(e){e.style.display='none';});
+  if(!isOpen) body.style.display = 'block';
+  // Mark as read visually
+  var item = document.getElementById(id);
+  if(item){item.classList.remove('unread');var dot=item.querySelector('.msg-unread-dot');if(dot)dot.style.display='none';}
+}
+function deleteMsg(id){
+  var item = document.getElementById(id);
+  if(item){item.style.opacity='0';item.style.transform='translateX(40px)';item.style.transition='all .25s';setTimeout(function(){item.remove();},250);}
+  event.stopPropagation();
+}
+
 function showToast(msg){
   var t=document.getElementById('cart-toast');
   if(!t)return;
