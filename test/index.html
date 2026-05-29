@@ -496,8 +496,9 @@ select.inp{appearance:none;}
     border-bottom: 0.5px solid #D8D0BC;
   }
   .metric:nth-child(2) { border-right: none; padding-left: 14px; }
-  .metric:nth-child(3) { border-bottom: none; padding-left: 0; }
-  .metric:nth-child(4) { border-right: none; border-bottom: none; padding-left: 14px; }
+  .metric:nth-child(3) { padding-left: 0; }
+  .metric:nth-child(4) { border-right: none; padding-left: 14px; }
+  .metric:nth-child(5) { border-bottom: none; padding-left: 0; border-right: 0.5px solid #D8D0BC; }
   .metric-val { font-size: 22px; }
   .metric-lbl { font-size: 12px; margin-top: 2px; }
 
@@ -832,14 +833,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.6.9</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.7.0</div>
         </div>
         <div class="split-right">
           <div class="topbar" style="border-bottom:none;">
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.9</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.0</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1015,7 +1016,7 @@ select.inp{appearance:none;}
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.6.9</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.0</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1365,15 +1366,26 @@ select.inp{appearance:none;}
             <div class="metric"><div class="metric-val">14</div><div class="metric-lbl">Entries this year</div></div>
             <div class="metric"><div class="metric-val">87</div><div class="metric-lbl">Points earned</div></div>
             <div class="metric"><div class="metric-val gold">$1,240</div><div class="metric-lbl">Purses Claimed</div></div>
+            <div class="metric"><div class="metric-val gold">$2,105</div><div class="metric-lbl">Sire Royalties</div></div>
             <div class="metric"><div class="metric-val gold">$4,800</div><div class="metric-lbl">Projected year-end</div></div>
           </div>
           <div class="two-col">
             <div>
               <div class="slabel">My Horses</div>
               <div class="card">
-                <div class="horse-row"><div class="hico"><i class="ti ti-horse"></i></div><div style="flex:1;"><div class="hname">SDP Best of Friends</div><div class="hmeta">Sannman · Cowhorse · 6 entries</div></div><span class="pts">42 pts</span></div>
-                <div class="horse-row"><div class="hico"><i class="ti ti-horse"></i></div><div style="flex:1;"><div class="hname">Nelliebell</div><div class="hmeta">Sannman · Barrel · 8 entries</div></div><span class="pts gray">45 pts</span></div>
-                <button class="browse-btn" onclick="nav('sc-events')">Browse open events to enter</button>
+                <div class="horse-row" onclick="nav('sc-horse-detail-sdp')" style="cursor:pointer;">
+                  <div class="hico"><i class="ti ti-horse"></i></div>
+                  <div style="flex:1;"><div class="hname">SDP Best of Friends</div><div class="hmeta">Sannman · Cowhorse · 6 entries</div></div>
+                  <span class="pts">42 pts</span>
+                  <button onclick="nav('sc-event-detail');event.stopPropagation();" style="margin-left:8px;background:#C49020;color:#fff;border:none;border-radius:6px;padding:3px 9px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Enter →</button>
+                </div>
+                <div class="horse-row" onclick="nav('sc-horse-detail')" style="cursor:pointer;">
+                  <div class="hico"><i class="ti ti-horse"></i></div>
+                  <div style="flex:1;"><div class="hname">Nelliebell</div><div class="hmeta">Sannman · Barrel · 8 entries</div></div>
+                  <span class="pts gray">45 pts</span>
+                  <button onclick="nav('sc-event-detail');event.stopPropagation();" style="margin-left:8px;background:#C49020;color:#fff;border:none;border-radius:6px;padding:3px 9px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Enter →</button>
+                </div>
+                <button class="browse-btn" onclick="nav('sc-events')">Browse all open events</button>
               </div>
             </div>
             <div>
@@ -1387,12 +1399,76 @@ select.inp{appearance:none;}
               </div>
             </div>
           </div>
-          
+
+          <!-- ── CLOSING SOON ── -->
+          <div class="slabel" style="margin-top:18px;margin-bottom:8px;">Entry closing soon</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+            <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="nav('sc-event-detail')">
+              <div style="text-align:center;min-width:36px;"><div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;">May</div><div style="font-size:20px;font-weight:700;color:#C49020;line-height:1;">20</div></div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:600;color:#2C2A20;margin-bottom:2px;">Mid South Memorial Day Cutting</div>
+                <div style="font-size:11px;color:#999;">Memphis, TN · Closes May 19</div>
+              </div>
+              <span style="font-size:10px;background:#FEF3C7;color:#92400E;font-weight:600;padding:3px 8px;border-radius:8px;white-space:nowrap;">4 days left</span>
+              <i class="ti ti-chevron-right" style="color:#D0C8B0;font-size:14px;flex-shrink:0;"></i>
+            </div>
+            <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="nav('sc-event-detail')">
+              <div style="text-align:center;min-width:36px;"><div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;">May</div><div style="font-size:20px;font-weight:700;color:#2C2A20;line-height:1;">28</div></div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:600;color:#2C2A20;margin-bottom:2px;">Texas Summer Barrel Bash</div>
+                <div style="font-size:11px;color:#999;">Fort Worth, TX · Closes May 25</div>
+              </div>
+              <span style="font-size:10px;background:#F5F2EA;color:#888;font-weight:600;padding:3px 8px;border-radius:8px;white-space:nowrap;">11 days left</span>
+              <i class="ti ti-chevron-right" style="color:#D0C8B0;font-size:14px;flex-shrink:0;"></i>
+            </div>
+          </div>
+
+          <!-- ── RECENT ACTIVITY ── -->
+          <div class="slabel" style="margin-bottom:8px;">Recent activity</div>
+          <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:18px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:0.5px solid #F0EDE4;">
+              <div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-coin" style="color:#16A34A;font-size:12px;"></i></div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Sire royalty earned — $25</div><div style="font-size:11px;color:#888;">SDP offspring entered West Texas Cutting Classic</div></div>
+              <span style="font-size:10px;color:#bbb;">2d ago</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:0.5px solid #F0EDE4;" onclick="nav('sc-entries')" style="cursor:pointer;">
+              <div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-trophy" style="color:#16A34A;font-size:12px;"></i></div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Results posted — $180 purse share earned</div><div style="font-size:11px;color:#888;">Rio Grande Spring Cutting · Nelliebell · Owner</div></div>
+              <span style="font-size:10px;color:#bbb;">3d ago</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:0.5px solid #F0EDE4;">
+              <div style="width:28px;height:28px;background:#FEF3C7;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-calendar-event" style="color:#B07A18;font-size:12px;"></i></div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Entry confirmed — Texas Summer Barrel Bash</div><div style="font-size:11px;color:#888;">Nelliebell · Barrel Racing · Owner/Rider</div></div>
+              <span style="font-size:10px;color:#bbb;">5d ago</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;">
+              <div style="width:28px;height:28px;background:#FEE2E2;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-alert-circle" style="color:#DC2626;font-size:12px;"></i></div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Ownership verification needed</div><div style="font-size:11px;color:#888;">Nelliebell · Submit AQHA papers to unlock payouts</div></div>
+              <span style="font-size:10px;color:#bbb;">1w ago</span>
+            </div>
+          </div>
+
+          <!-- ── SIRE + BREEDER SUMMARY ── -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+            <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;padding:12px 14px;cursor:pointer;" onclick="nav('sc-sire-dash')">
+              <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Sire Owner</div>
+              <div style="font-size:18px;font-weight:700;color:#C49020;margin-bottom:1px;">$2,105</div>
+              <div style="font-size:11px;color:#888;margin-bottom:8px;">Royalties · 47 offspring entries</div>
+              <div style="font-size:11px;color:#C49020;font-weight:600;">View Sire Dashboard →</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;padding:12px 14px;cursor:pointer;" onclick="nav('sc-breeder-barn')">
+              <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Breeder</div>
+              <div style="font-size:18px;font-weight:700;color:#C49020;margin-bottom:1px;">$575</div>
+              <div style="font-size:11px;color:#888;margin-bottom:8px;">Earned · 12 horses competing</div>
+              <div style="font-size:11px;color:#C49020;font-weight:600;">View Breeder Barn →</div>
+            </div>
+          </div>
+
         </div>
         <div class="ai-panel" id="ai-panel">
           <div class="ai-hdr"><div class="ai-dot"></div><span class="ai-title-text">Legendary Assistant</span><button class="ai-close" onclick="closeAI()">✕</button></div>
           <div class="ai-msgs" id="ai-msgs">
-            <div class="msg-ai">Hey Dale — I know your horses, entries, and leaderboard position. What's on your mind?</div>
+            <div class="msg-ai">Hey Dale, what can we do for you today? Need any help with event entry or locating performance results?</div>
             <div class="msg-user" id="ai-q" style="display:none;">How does the purse grow with more entries?</div>
             <div class="msg-ai2" id="ai-a" style="display:none;">Every $250 entry grows the annual purse pool. Your share is based on your year-end rank — so more entries means more points AND a bigger pool. Two more Nelliebell entries could push you past Donna R. — roughly $1,300 more.</div>
           </div>
