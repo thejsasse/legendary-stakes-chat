@@ -110,11 +110,12 @@ select.inp{appearance:none;}
 .headline{font-size:18px;font-weight:500;color:#2C2A20;margin-bottom:13px;}
 .nudge{background:#FEF3D0;border:0.5px solid #E5C060;border-radius:10px;padding:11px 13px;margin-bottom:13px;display:flex;align-items:flex-start;gap:10px;}
 .nudge-ico{width:24px;height:24px;border-radius:50%;background:#C49020;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;flex-shrink:0;}
-.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-bottom:14px;padding-bottom:14px;border-bottom:0.5px solid #D8D0BC;}
-.metric{padding:0 18px;border-right:0.5px solid #D8D0BC;}
+.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-bottom:14px;padding-bottom:14px;border-bottom:0.5px solid #D8D0BC;}
+.metric{padding:0 16px;border-right:0.5px solid #D8D0BC;min-width:0;overflow:hidden;}
 .metric:first-child{padding-left:0;}.metric:last-child{border-right:none;padding-right:0;}
-.metric-val{font-size:19px;font-weight:500;color:#2C2A20;}.metric-val.gold{color:#B07A18;}
-.metric-lbl{font-size:10px;color:#999;margin-top:1px;}
+.metric-val{font-size:17px;font-weight:500;color:#2C2A20;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.metric-val.gold{color:#B07A18;}
+.metric-lbl{font-size:10px;color:#999;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.metric-sub{font-size:12px;font-weight:500;color:#B07A18;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .two-col{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:11px;}
 .horse-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:0.5px solid #EEE8D8;}
 .horse-row:last-of-type{border-bottom:none;margin-bottom:5px;}
@@ -482,25 +483,28 @@ select.inp{appearance:none;}
   .nudge { padding: 14px; gap: 12px; }
   .nudge-ico { width: 30px; height: 30px; font-size: 14px; flex-shrink: 0; }
 
-  /* 4-col metrics → 2x2 grid */
+  /* 5-col metrics → 2+3 on mobile using flex wrap */
   .metrics {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0;
     border-bottom: none;
     padding-bottom: 0;
     margin-bottom: 14px;
   }
   .metric {
+    flex: 1 1 45%;
     padding: 12px 14px 12px 0;
     border-right: 0.5px solid #D8D0BC;
     border-bottom: 0.5px solid #D8D0BC;
+    min-width: 0;
   }
   .metric:nth-child(2) { border-right: none; padding-left: 14px; }
-  .metric:nth-child(3) { padding-left: 0; }
   .metric:nth-child(4) { border-right: none; padding-left: 14px; }
-  .metric:nth-child(5) { border-bottom: none; padding-left: 0; border-right: 0.5px solid #D8D0BC; }
-  .metric-val { font-size: 22px; }
+  .metric:nth-child(5) { border-bottom: none; padding-left: 0; border-right: none; flex: 1 1 100%; border-top: none; }
+  .metric-val { font-size: 20px; }
   .metric-lbl { font-size: 12px; margin-top: 2px; }
+  .metric-sub { font-size: 13px; }
 
   /* Dashboard two-col → single col */
   .two-col { grid-template-columns: 1fr; gap: 12px; }
@@ -761,7 +765,7 @@ select.inp{appearance:none;}
   .screen-scroll::after {
     content: '';
     display: block;
-    height: 52px; /* space for sticky bar */
+    height: 72px; /* space for sticky bar + safe zone */
   }
   /* mobile-help-bar handled by base CSS */
 
@@ -833,14 +837,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.7.0</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.7.1</div>
         </div>
         <div class="split-right">
           <div class="topbar" style="border-bottom:none;">
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.0</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.1</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1016,7 +1020,7 @@ select.inp{appearance:none;}
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.0</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.1</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1348,7 +1352,7 @@ select.inp{appearance:none;}
     <div id="sc-dashboard" class="screen">
       <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-dashboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-dashboard"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-dashboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-dashboard')"><i class="ti ti-horse"></i> My Barn</div><div class="ddi" onclick="nav('sc-events');toggleDD('dd-dashboard')"><i class="ti ti-list-search"></i> Browse Events</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-dashboard');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-dashboard')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-dashboard')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="body-row">
-        <div class="screen-scroll" style="flex:1;padding:20px 22px;background:#F5F2EA;">
+        <div class="screen-scroll" style="flex:1;padding:20px 22px 88px;background:#F5F2EA;">
           <div class="greeting">Good morning, Dale</div>
           <div class="headline">You're sitting 3rd in barrel racing.</div>
           <div class="nudge">
@@ -1365,13 +1369,13 @@ select.inp{appearance:none;}
           <div class="metrics">
             <div class="metric"><div class="metric-val">14</div><div class="metric-lbl">Entries this year</div></div>
             <div class="metric"><div class="metric-val">87</div><div class="metric-lbl">Points earned</div></div>
-            <div class="metric"><div class="metric-val gold">$1,240</div><div class="metric-lbl">Purses Claimed</div></div>
-            <div class="metric"><div class="metric-val gold">$2,105</div><div class="metric-lbl">Sire Royalties</div></div>
+            <div class="metric"><div class="metric-val gold">$1,240</div><div class="metric-lbl">Purses claimed</div></div>
+            <div class="metric"><div class="metric-val gold">$2,105</div><div class="metric-lbl">Sire royalties</div></div>
             <div class="metric"><div class="metric-val gold">$4,800</div><div class="metric-lbl">Projected year-end</div></div>
           </div>
           <div class="two-col">
             <div>
-              <div class="slabel">My Horses</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><div class="slabel" style="margin-bottom:0;">My Horses</div><span style="font-size:11px;color:#C49020;cursor:pointer;font-weight:500;" onclick="nav('sc-barn')">View all →</span></div>
               <div class="card">
                 <div class="horse-row" onclick="nav('sc-horse-detail-sdp')" style="cursor:pointer;">
                   <div class="hico"><i class="ti ti-horse"></i></div>
@@ -1385,7 +1389,6 @@ select.inp{appearance:none;}
                   <span class="pts gray">45 pts</span>
                   <button onclick="nav('sc-event-detail');event.stopPropagation();" style="margin-left:8px;background:#C49020;color:#fff;border:none;border-radius:6px;padding:3px 9px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Enter →</button>
                 </div>
-                <button class="browse-btn" onclick="nav('sc-events')">Browse all open events</button>
               </div>
             </div>
             <div>
@@ -1401,7 +1404,7 @@ select.inp{appearance:none;}
           </div>
 
           <!-- ── CLOSING SOON ── -->
-          <div class="slabel" style="margin-top:18px;margin-bottom:8px;">Entry closing soon</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px;margin-bottom:8px;"><div class="slabel" style="margin-bottom:0;">Entry closing soon</div><span style="font-size:11px;color:#C49020;cursor:pointer;font-weight:500;" onclick="nav('sc-events')">View all →</span></div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
             <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="nav('sc-event-detail')">
               <div style="text-align:center;min-width:36px;"><div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;">May</div><div style="font-size:20px;font-weight:700;color:#C49020;line-height:1;">20</div></div>
@@ -1424,7 +1427,7 @@ select.inp{appearance:none;}
           </div>
 
           <!-- ── RECENT ACTIVITY ── -->
-          <div class="slabel" style="margin-bottom:8px;">Recent activity</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div class="slabel" style="margin-bottom:0;">Recent activity</div><span style="font-size:11px;color:#C49020;cursor:pointer;font-weight:500;" onclick="nav('sc-message-center');markMessagesRead()">View all →</span></div>
           <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:18px;">
             <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:0.5px solid #F0EDE4;">
               <div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-coin" style="color:#16A34A;font-size:12px;"></i></div>
@@ -1449,7 +1452,8 @@ select.inp{appearance:none;}
           </div>
 
           <!-- ── SIRE + BREEDER SUMMARY ── -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div class="slabel" style="margin-bottom:0;">Earnings by role</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;">
             <div style="background:#fff;border:1px solid #E0D9C8;border-radius:10px;padding:12px 14px;cursor:pointer;" onclick="nav('sc-sire-dash')">
               <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Sire Owner</div>
               <div style="font-size:18px;font-weight:700;color:#C49020;margin-bottom:1px;">$2,105</div>
