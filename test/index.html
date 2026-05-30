@@ -17,10 +17,11 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .browser-url{flex:1;background:#3C3C3C;border-radius:6px;padding:5px 12px;font-size:12px;color:#aaa;display:flex;align-items:center;gap:6px;}
 .browser-url i{font-size:13px;color:#6FCF97;}
 .app-frame{flex:1;overflow:hidden;background:#F5F2EA;display:flex;flex-direction:column;}
-.screen{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0;}
+.app-content{display:flex;flex-direction:row;flex:1;overflow:hidden;min-height:0;}
+.screen{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0;position:relative;}
 .screen.active{display:flex;}
 .screen-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:52px;}
-.topbar{background:#111008;border-bottom:0.5px solid #2A2518;padding:16px 20px;display:grid;grid-template-columns:90px 1fr 90px;align-items:center;flex-shrink:0;position:relative;min-height:96px;overflow:visible;}
+.topbar{background:#111008;border-bottom:0.5px solid #2A2518;padding:16px 20px;display:grid;grid-template-columns:90px 1fr 90px;align-items:center;flex-shrink:0;position:relative;z-index:10;min-height:96px;overflow:visible;}
 .topbar-left{display:flex;align-items:center;justify-content:flex-start;}
 .topbar-center{display:flex;align-items:center;justify-content:center;}
 .topbar-center img{height:auto;width:330px;max-width:70%;}
@@ -39,6 +40,36 @@ body{display:flex;justify-content:center;align-items:stretch;}
 .card{background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;}
 .note{font-size:11px;color:#ccc;text-align:center;margin-top:14px;}
 .mobile-help-bar{display:block;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:1160px;background:#fff;border-top:0.5px solid #E0D9C8;padding:10px 20px;text-align:center;font-size:13px;color:#aaa;z-index:100;}
+/* ── HORSE PROFILE: sub-header, toggle, tabs ── */
+.hp-subhdr{background:#1A1208;padding:12px 20px 0;flex-shrink:0;}
+.hp-subhdr-inner{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:10px;gap:12px;}
+.hp-photo-wrap{flex-shrink:0;position:relative;width:64px;height:64px;}
+.hp-photo{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1.5px solid rgba(255,255,255,0.15);display:block;}
+.hp-photo-btn{position:absolute;bottom:-4px;right:-4px;width:20px;height:20px;background:#C49020;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;}
+.hp-meta{flex:1;min-width:0;}
+.hp-horse-name{font-size:15px;font-weight:600;color:#F0EDE4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hp-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+.hp-enrolled{font-size:10px;color:rgba(255,255,255,0.55);margin-top:5px;}
+.hp-toggle{display:flex;gap:0;background:#2C2214;border-radius:8px;padding:3px;flex-shrink:0;}
+.hp-tog-btn{background:none;border:none;padding:5px 14px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);border-radius:6px;cursor:pointer;font-family:inherit;transition:all .15s;}
+.hp-tog-btn.active{background:#C49020;color:#fff;}
+.hp-tabs{display:flex;gap:0;border-bottom:0.5px solid #E0D9C8;background:#fff;overflow-x:auto;flex-shrink:0;width:100%;-webkit-overflow-scrolling:touch;scrollbar-width:none;box-sizing:border-box;}
+.hp-tabs::-webkit-scrollbar{display:none;}
+.hp-tab{padding:10px 16px;font-size:11px;font-weight:500;color:#999;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;flex-shrink:0;}
+.hp-tab.active{color:#C49020;border-bottom-color:#C49020;}
+.hp-tab:hover:not(.active){color:#555;}
+.hp-panel{display:none;flex-direction:column;flex:1;overflow:hidden;}
+.hp-panel.active{display:flex;}
+.hp-panel-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:18px 20px 88px;}
+.hp-coming{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:#aaa;}
+.hp-coming i{font-size:36px;margin-bottom:10px;color:#D0C8B0;}
+.hp-coming-t{font-size:13px;font-weight:500;color:#888;margin-bottom:4px;}
+.hp-coming-s{font-size:11px;color:#bbb;line-height:1.5;}
+/* ── DISCIPLINE EXPANDER ── */
+.disc-locked-rows{display:none;}
+.disc-locked-rows.open{display:block;}
+.disc-show-all{padding:8px 12px;text-align:center;font-size:11px;color:#B07A18;cursor:pointer;border-top:0.5px solid #E0D9C8;background:#FDFBF6;}
+.disc-show-all:hover{background:#F7F4EE;}
 .note a{color:#B07A18;text-decoration:none;cursor:pointer;}
 .split{display:flex;flex:1;overflow:hidden;}
 .split-left{width:40%;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;position:relative;flex-shrink:0;overflow:hidden;}
@@ -129,7 +160,7 @@ select.inp{appearance:none;}
 .lb-r{width:13px;color:#aaa;}.lb-n{flex:1;color:#4A4030;}.lb-p{color:#aaa;min-width:42px;}.lb-e{color:#B07A18;font-weight:500;min-width:40px;text-align:right;}
 .lb-you{background:#EDD98A;border-radius:5px;margin:0 -4px;padding:5px 4px;}
 .lb-you .lb-n{font-weight:500;color:#6B4E10;}.lb-you .lb-r{color:#6B4E10;}.lb-you .lb-p{color:#8A6820;}
-.ai-panel{width:0;flex-shrink:0;border-left:none;display:flex;flex-direction:column;background:#FDFBF6;overflow:hidden;transition:width .3s ease;}
+.ai-panel{width:0;flex-shrink:0;border-left:none;display:flex;flex-direction:column;background:#FDFBF6;overflow:hidden;transition:width .25s ease;}
 .ai-panel.open{width:230px;border-left:0.5px solid #E0D9C8;}
 #sc-dashboard.active .ai-panel:not(.closed){width:230px;border-left:0.5px solid #E0D9C8;}
 .ai-hdr{padding:10px 12px 8px;border-bottom:0.5px solid #E0D9C8;display:flex;align-items:center;gap:7px;flex-shrink:0;}
@@ -309,8 +340,8 @@ select.inp{appearance:none;}
 .mec-chip{display:flex;align-items:center;gap:4px;font-size:11px;color:#3A3020;font-weight:500;}
 .mec-chip i{font-size:11px;color:#C49020;}
 .earn-v{font-size:11px;font-weight:500;}.earn-l{font-size:10px;color:#aaa;}
-.nav-tabs{display:flex;gap:0;border-bottom:0.5px solid #D8D0BC;margin-bottom:14px;}
-.ntab{padding:8px 14px;font-size:12px;color:#888;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;}
+.nav-tabs{display:flex;gap:0;border-bottom:0.5px solid #D8D0BC;margin-bottom:14px;width:100%;}
+.ntab{padding:8px 14px;font-size:12px;color:#888;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;display:flex;align-items:center;gap:4px;}
 .ntab.sel{color:#B07A18;border-bottom-color:#C49020;font-weight:500;}
 .ntab-ct{background:#EDD98A;color:#7A5010;border-radius:99px;padding:1px 6px;font-size:10px;margin-left:3px;}
 .ntab-ct.gray{background:#EEE8D8;color:#888;}
@@ -509,15 +540,15 @@ select.inp{appearance:none;}
   /* Dashboard two-col → single col */
   .two-col { grid-template-columns: 1fr; gap: 12px; }
 
-  /* AI panel → bottom sheet */
-  .body-row { flex-direction: column; position: relative; }
+  /* AI panel → bottom sheet on mobile */
+  .app-content { flex-direction: column; }
   .ai-panel {
     width: 100% !important;
     height: 0;
-    border-left: none;
+    border-left: none !important;
     border-top: 0.5px solid #E0D9C8;
-    transition: height .3s ease;
     flex-shrink: 0;
+    transition: height .3s ease;
   }
   .ai-panel.open {
     height: 90vh;
@@ -728,9 +759,14 @@ select.inp{appearance:none;}
 
   /* ── EVENT DETAIL — show mobile CTA, hide desktop right panel ── */
   .mobile-entry-cta { display: block !important; }
-  .detail-body .dr { display: none; }
+  /* Only hide .dr on event detail screen, not horse profile tabs */
+  #sc-event-detail .detail-body .dr { display: none; }
   /* Also hide desktop Enter Event btn from hero — show mobile version only */
   .eh-enter-btn { display: none; }
+  /* Horse profile tab detail-body: stack dl then dr */
+  .hp-panel-scroll .detail-body { display: flex; flex-direction: column; }
+  .hp-panel-scroll .dl { border-right: none; border-bottom: 0.5px solid #E0D9C8; }
+  .hp-panel-scroll .dr { display: block; }
 
   /* ── CART PANEL — slide-in from right on mobile ── */
   #cart-panel {
@@ -757,6 +793,10 @@ select.inp{appearance:none;}
   }
   .el { border-right: none !important; }
 
+  /* ── HORSE PROFILE HEADER on mobile ── */
+  .hp-subhdr-inner { flex-wrap: wrap; }
+  .hp-toggle { margin-top: 4px; }
+  .hp-tab { padding: 9px 12px; font-size: 10px; }
   /* ── STICKY HELP FOOTER on mobile ── */
   .note {
     position: static;
@@ -819,6 +859,22 @@ select.inp{appearance:none;}
 .desktop-help{display:none;text-align:center;padding:20px 0 8px;font-size:12px;color:#aaa;}
 .desktop-help a{color:#B07A18;text-decoration:none;}
 @media(min-width:769px){.desktop-help{display:block;}}
+
+/* ── AI FLOAT BUTTON (horse profile screens) ── */
+.ai-float{position:absolute;bottom:72px;right:16px;z-index:50;display:none;}
+.screen.active .ai-float{display:block;}
+.ai-float-btn{background:#C49020;color:#fff;border:none;border-radius:24px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 3px 12px rgba(0,0,0,0.25);font-family:inherit;white-space:nowrap;}
+.ai-float-btn i{font-size:14px;}
+/* Contextual AI chips inside tabs */
+.ai-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;padding-top:12px;border-top:0.5px solid #E0D9C8;}
+.ai-chip{background:#FEF3C7;border:0.5px solid #E5C060;border-radius:20px;padding:5px 11px;font-size:11px;color:#6B4E10;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;}
+.ai-chip:hover{background:#FDEEA0;}
+.ai-chip i{font-size:11px;color:#C49020;}
+/* ── EVENT LOG EXPAND ── */
+.el-extra-rows{display:none;}
+.el-extra-rows.open{display:contents;}
+.el-view-all{text-align:center;font-size:11px;color:#B07A18;cursor:pointer;padding:7px 0 8px;border-top:0.5px solid #F0EBE0;}
+.el-view-all:hover{color:#8A5C10;}
 </style>
 </head>
 <body>
@@ -829,6 +885,7 @@ select.inp{appearance:none;}
     <div style="width:60px;"></div>
   </div>
   <div class="app-frame">
+  <div class="app-content">
 
     <div id="sc-login" class="screen">
       <div class="split">
@@ -837,14 +894,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.7.1</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.8.3</div>
         </div>
         <div class="split-right">
           <div class="topbar" style="border-bottom:none;">
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.1</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.3</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1020,7 +1077,7 @@ select.inp{appearance:none;}
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.7.1</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.3</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1379,7 +1436,7 @@ select.inp{appearance:none;}
               <div class="card">
                 <div class="horse-row" onclick="nav('sc-horse-detail-sdp')" style="cursor:pointer;">
                   <div class="hico"><i class="ti ti-horse"></i></div>
-                  <div style="flex:1;"><div class="hname">SDP Best of Friends</div><div class="hmeta">Sannman · Cowhorse · 6 entries</div></div>
+                  <div style="flex:1;"><div class="hname">SDP Best of Friends</div><div class="hmeta">Sannman · Reined Cow Horse · 6 entries</div></div>
                   <span class="pts">42 pts</span>
                   <button onclick="nav('sc-event-detail');event.stopPropagation();" style="margin-left:8px;background:#C49020;color:#fff;border:none;border-radius:6px;padding:3px 9px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Enter →</button>
                 </div>
@@ -1434,7 +1491,7 @@ select.inp{appearance:none;}
               <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Sire royalty earned — $25</div><div style="font-size:11px;color:#888;">SDP offspring entered West Texas Cutting Classic</div></div>
               <span style="font-size:10px;color:#bbb;">2d ago</span>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:0.5px solid #F0EDE4;" onclick="nav('sc-entries')" style="cursor:pointer;">
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:0.5px solid #F0EDE4;cursor:pointer;" onclick="nav('sc-entries')">
               <div style="width:28px;height:28px;background:#DCFCE7;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-trophy" style="color:#16A34A;font-size:12px;"></i></div>
               <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Results posted — $180 purse share earned</div><div style="font-size:11px;color:#888;">Rio Grande Spring Cutting · Nelliebell · Owner</div></div>
               <span style="font-size:10px;color:#bbb;">3d ago</span>
@@ -1444,7 +1501,7 @@ select.inp{appearance:none;}
               <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Entry confirmed — Texas Summer Barrel Bash</div><div style="font-size:11px;color:#888;">Nelliebell · Barrel Racing · Owner/Rider</div></div>
               <span style="font-size:10px;color:#bbb;">5d ago</span>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;" onclick="nav('sc-horse-detail')">
               <div style="width:28px;height:28px;background:#FEE2E2;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-alert-circle" style="color:#DC2626;font-size:12px;"></i></div>
               <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Ownership verification needed</div><div style="font-size:11px;color:#888;">Nelliebell · Submit AQHA papers to unlock payouts</div></div>
               <span style="font-size:10px;color:#bbb;">1w ago</span>
@@ -1468,20 +1525,6 @@ select.inp{appearance:none;}
             </div>
           </div>
 
-        </div>
-        <div class="ai-panel" id="ai-panel">
-          <div class="ai-hdr"><div class="ai-dot"></div><span class="ai-title-text">Legendary Assistant</span><button class="ai-close" onclick="closeAI()">✕</button></div>
-          <div class="ai-msgs" id="ai-msgs">
-            <div class="msg-ai">Hey Dale, what can we do for you today? Need any help with event entry or locating performance results?</div>
-            <div class="msg-user" id="ai-q" style="display:none;">How does the purse grow with more entries?</div>
-            <div class="msg-ai2" id="ai-a" style="display:none;">Every $250 entry grows the annual purse pool. Your share is based on your year-end rank — so more entries means more points AND a bigger pool. Two more Nelliebell entries could push you past Donna R. — roughly $1,300 more.</div>
-          </div>
-          <div class="ai-sugs" id="ai-sugs">
-            <button class="sug" onclick="aiReply()">How does the purse grow with more entries?</button>
-            <button class="sug">What events is Nelliebell eligible for?</button>
-            <button class="sug">How are year-end payouts calculated?</button>
-          </div>
-          <div class="ai-inp-row"><input class="ai-inp" placeholder="Ask anything..." /><button class="ai-send" onclick="aiReply()"><i class="ti ti-arrow-up" style="font-size:12px;"></i></button></div>
         </div>
       </div>
     </div><!-- /sc-dashboard -->
@@ -1735,7 +1778,7 @@ select.inp{appearance:none;}
               <div style="text-align:right;"><span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:2px 7px;border-radius:8px;">Results posted</span><div style="font-size:12px;font-weight:600;color:#C49020;margin-top:3px;">+14 pts · $210</div></div>
             </div>
             <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
-              <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Lone Star Reined Cow Horse</div><div style="font-size:10px;color:#999;margin-top:2px;">Mar 15 · Waco, TX · SDP Best of Friends · Cowhorse · Owner</div></div>
+              <div style="flex:1;"><div style="font-size:12px;font-weight:600;color:#2C2A20;">Lone Star Reined Cow Horse</div><div style="font-size:10px;color:#999;margin-top:2px;">Mar 15 · Waco, TX · SDP Best of Friends · Reined Cow Horse · Owner</div></div>
               <div style="text-align:right;"><span style="font-size:10px;background:#DCFCE7;color:#166534;font-weight:700;padding:2px 7px;border-radius:8px;">Results posted</span><div style="font-size:12px;font-weight:600;color:#C49020;margin-top:3px;">+18 pts · $270</div></div>
             </div>
             <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;opacity:.7;">
@@ -1761,7 +1804,7 @@ select.inp{appearance:none;}
         <div id="barn-mine">
           <div class="barn-card" onclick="nav('sc-horse-detail-sdp')" style="cursor:pointer;">
             <div class="barn-hdr" style="min-height:68px;">
-              <div class="hav"><i class="ti ti-horse"></i></div>
+              <div class="hav" style="background:none;border:none;padding:0;overflow:hidden;border-radius:8px;width:44px;height:44px;flex-shrink:0;"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/default-horse.png" style="width:44px;height:44px;object-fit:cover;border-radius:8px;display:block;" /></div>
               <div style="flex:1;min-width:0;">
                 <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:3px;">
                   <span style="font-size:13px;font-weight:600;color:#2C2A20;">SDP Best of Friends</span>
@@ -1778,7 +1821,7 @@ select.inp{appearance:none;}
           </div>
           <div class="barn-card unverified" onclick="nav('sc-horse-detail')" style="cursor:pointer;">
             <div class="barn-hdr" style="min-height:68px;">
-              <div class="hav"><i class="ti ti-horse"></i></div>
+              <div class="hav" style="background:none;border:none;padding:0;overflow:hidden;border-radius:8px;width:44px;height:44px;flex-shrink:0;"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/default-horse.png" style="width:44px;height:44px;object-fit:cover;border-radius:8px;display:block;" /></div>
               <div style="flex:1;min-width:0;">
                 <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:2px;">
                   <span style="font-size:13px;font-weight:600;color:#2C2A20;">Nelliebell</span>
@@ -1794,7 +1837,7 @@ select.inp{appearance:none;}
             </div>
             <div style="margin:8px 0 0;padding:8px 10px;background:#FEF2F2;border-radius:7px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
               <div style="display:flex;align-items:center;gap:6px;"><i class="ti ti-alert-circle" style="color:#C05050;font-size:13px;"></i><span style="font-size:11px;color:#C05050;font-weight:500;">Ownership not verified — earnings held</span></div>
-              <span style="font-size:11px;color:#C49020;font-weight:600;white-space:nowrap;">Verify →</span>
+              <span style="font-size:11px;color:#C49020;font-weight:600;white-space:nowrap;cursor:pointer;" onclick="nav('sc-horse-detail');event.stopPropagation();">Verify →</span>
             </div>
           </div>
           <div class="add-horse-card" onclick="nav('sc-signup3')"><i class="ti ti-circle-plus" style="font-size:20px;color:#D0C8B0;display:block;margin-bottom:3px;"></i><p style="font-size:12px;color:#aaa;">Add another horse to your barn</p></div>
@@ -1812,45 +1855,329 @@ select.inp{appearance:none;}
 
     <div id="sc-horse-detail" class="screen">
       <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
-      <div class="detail-body">
-        <div class="dl">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;"><div><div style="font-size:16px;font-weight:500;color:#2C2A20;">Nelliebell</div><div style="display:flex;align-items:center;gap:5px;margin-top:3px;"><span class="status-badge sb-unverified"><i class="ti ti-alert-circle" style="font-size:9px;"></i> Not verified</span><span style="font-size:10px;color:#aaa;">Enrolled May 2026</span></div></div><button class="gold-btn" style="font-size:11px;padding:6px 12px;">Save changes</button></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px;">
-            <div class="stat-card"><div class="stat-val">3rd</div><div class="stat-lbl">Leaderboard rank</div></div>
-            <div class="stat-card"><div class="stat-val gold">$1,240</div><div class="stat-lbl">Season earnings</div></div>
+      <!-- Horse sub-header -->
+      <div class="hp-subhdr">
+        <div class="hp-subhdr-inner">
+          <div class="hp-photo-wrap">
+            <img class="hp-photo" src="https://thejsasse.github.io/legendary-stakes-chat/test/default-horse.png" alt="Nelliebell" />
+            <button class="hp-photo-btn" title="Update photo"><i class="ti ti-camera" style="font-size:9px;"></i></button>
           </div>
-          <div class="slabel">Horse details</div>
-          <div class="field-group">
-            <div class="field-row full"><div class="field-cell"><div class="field-lbl">Name</div><div class="field-val"><input value="Nelliebell" /></div></div></div>
-            <div class="field-row"><div class="field-cell"><div class="field-lbl">Dam</div><div class="field-val"><input value="A Feisty Fling" /></div></div><div class="field-cell"><div class="field-lbl">Sire</div><div class="field-val"><input value="Sannman" /></div></div></div>
-            <div class="field-row"><div class="field-cell"><div class="field-lbl">Color</div><div class="field-val"><input value="Sorrel" /></div></div><div class="field-cell"><div class="field-lbl">Sex</div><div class="field-val"><select><option>Mare</option><option>Gelding</option><option>Stallion</option></select></div></div></div>
-            <div class="field-row"><div class="field-cell"><div class="field-lbl">Status</div><div class="field-val"><input value="Alive" /></div></div><div class="field-cell"><div class="field-lbl">Year of birth</div><div class="field-val"><input value="2019" /></div></div></div>
-            <div class="field-row full"><div class="field-cell"><div class="field-lbl">AQHA / APHA #</div><div class="field-val"><input placeholder="Add registration number to help verify" /></div></div></div>
-            <div class="field-row full"><div class="field-cell"><div class="field-lbl">Description (optional)</div><div class="field-val"><textarea rows="2" placeholder="Notes about this horse..."></textarea></div></div></div>
+          <div class="hp-meta">
+            <div class="hp-horse-name">Nelliebell</div>
+            <div class="hp-badges"><span class="status-badge sb-unverified"><i class="ti ti-alert-circle" style="font-size:9px;"></i> Not verified</span></div>
+            <div class="hp-enrolled">Enrolled May 2026</div>
           </div>
-          <div class="slabel">Eligible disciplines</div>
-          <div class="disc-row2" style="padding:0 0 12px;"><span class="disc2">Barrel Racing</span><span class="disc2">Cutting</span><span class="disc2">Pole Bending</span><span class="disc2 locked">Reining (locked)</span></div>
-          
         </div>
-        <div class="dr">
-          <div class="verify-card red">
-            <div class="vc-t red"><i class="ti ti-shield-off" style="font-size:13px;"></i> Ownership not verified</div>
-            <div class="vc-s red">You can enter events now, but winnings are held until you prove ownership. If verification fails, entry fees are forfeited.</div>
-            <div class="upload-zone" id="hd-upload-zone" onclick="hdSimulateUpload()"><i class="ti ti-upload upload-zone-ico"></i><p>Upload AQHA papers or bill of sale</p><small>PDF, JPG, PNG — max 10MB</small></div>
-            <div id="hd-uploaded" style="display:none;"><div class="uploaded-file"><i class="ti ti-file-text" style="font-size:14px;color:#C49020;"></i><span class="uf-name">AQHA_Nelliebell_papers.pdf</span><span class="uf-size">1.4 MB</span></div></div>
-            <button class="submit-verify-btn" id="hd-submit-btn" disabled onclick="hdSimulateSubmit()">Submit for verification</button>
-          </div>
-          <div class="warn-notice"><i class="ti ti-lock" style="font-size:12px;margin-right:5px;"></i><strong style="color:#7A1A1A;">Payout hold policy:</strong> Unverified horses can compete and earn points, but all winnings are frozen until verification is complete. False ownership claims result in entry fee forfeiture.</div>
-          <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:8px;padding:9px 11px;margin-top:9px;">
-            <div style="font-size:11px;font-weight:500;color:#2C2A20;margin-bottom:5px;">Acceptable documents</div>
-            <div style="font-size:11px;color:#888;line-height:1.8;">
-              <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>AQHA / APHA registration papers</div>
-              <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>Bill of sale with seller signature</div>
-              <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>Transfer of ownership form</div>
-              <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>Lease agreement (if applicable)</div>
+      </div>
+      <!-- Tab bar -->
+      <div class="hp-tabs" id="hd-tabs">
+        <div class="hp-tab active" onclick="hpTab('hd','overview')">Overview</div>
+        <div class="hp-tab" onclick="hpTab('hd','eventlog')">Event Log</div>
+        <div class="hp-tab" onclick="hpTab('hd','eligibility')">Eligibility</div>
+        <div class="hp-tab" onclick="hpTab('hd','rankings')">Rankings</div>
+        <div class="hp-tab" onclick="hpTab('hd','stats')">Stats</div>
+        <div class="hp-tab" onclick="hpTab('hd','pedigree')">Pedigree</div>
+      </div>
+      <!-- OVERVIEW panel — existing content -->
+      <div class="hp-panel active" id="hd-panel-overview">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;"><div><div style="font-size:14px;font-weight:500;color:#2C2A20;">Horse details</div></div><button class="gold-btn" style="font-size:11px;padding:6px 12px;">Save changes</button></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px;">
+                <div class="stat-card"><div class="stat-val">3rd</div><div class="stat-lbl">Leaderboard rank</div></div>
+                <div class="stat-card"><div class="stat-val gold">$1,240</div><div class="stat-lbl">Season earnings</div></div>
+              </div>
+              <div class="slabel">Identity</div>
+              <div class="field-group">
+                <div class="field-row full"><div class="field-cell"><div class="field-lbl">Name</div><div class="field-val"><input value="Nelliebell" /></div></div></div>
+                <div class="field-row"><div class="field-cell"><div class="field-lbl">Dam</div><div class="field-val"><input value="A Feisty Fling" /></div></div><div class="field-cell"><div class="field-lbl">Sire</div><div class="field-val"><input value="Sannman" /></div></div></div>
+                <div class="field-row"><div class="field-cell"><div class="field-lbl">Color</div><div class="field-val"><input value="Sorrel" /></div></div><div class="field-cell"><div class="field-lbl">Sex</div><div class="field-val"><select><option>Mare</option><option>Gelding</option><option>Stallion</option></select></div></div></div>
+                <div class="field-row"><div class="field-cell"><div class="field-lbl">Status</div><div class="field-val"><input value="Alive" /></div></div><div class="field-cell"><div class="field-lbl">Year of birth</div><div class="field-val"><input value="2019" /></div></div></div>
+                <div class="field-row full"><div class="field-cell"><div class="field-lbl">AQHA / APHA #</div><div class="field-val"><input placeholder="Add registration number to help verify" /></div></div></div>
+                <div class="field-row full"><div class="field-cell"><div class="field-lbl">Description (optional)</div><div class="field-val"><textarea rows="2" placeholder="Notes about this horse..."></textarea></div></div></div>
+              </div>
+              <div class="slabel">Eligible disciplines</div>
+              <div class="disc-row2" style="padding:0 0 12px;"><span class="disc2">Barrel Racing</span><span class="disc2">Cutting</span><span class="disc2">Pole Bending</span><span class="disc2 locked">Reining (locked)</span></div>
+            </div>
+            <div class="dr">
+              <div class="verify-card red">
+                <div class="vc-t red"><i class="ti ti-shield-off" style="font-size:13px;"></i> Ownership not verified</div>
+                <div class="vc-s red">You can enter events now, but winnings are held until you prove ownership. If verification fails, entry fees are forfeited.</div>
+                <div class="upload-zone" id="hd-upload-zone" onclick="hdSimulateUpload()"><i class="ti ti-upload upload-zone-ico"></i><p>Upload AQHA papers or bill of sale</p><small>PDF, JPG, PNG — max 10MB</small></div>
+                <div id="hd-uploaded" style="display:none;"><div class="uploaded-file"><i class="ti ti-file-text" style="font-size:14px;color:#C49020;"></i><span class="uf-name">AQHA_Nelliebell_papers.pdf</span><span class="uf-size">1.4 MB</span></div></div>
+                <button class="submit-verify-btn" id="hd-submit-btn" disabled onclick="hdSimulateSubmit()">Submit for verification</button>
+              </div>
+              <div class="warn-notice"><i class="ti ti-lock" style="font-size:12px;margin-right:5px;"></i><strong style="color:#7A1A1A;">Payout hold policy:</strong> Unverified horses can compete and earn points, but all winnings are frozen until verification is complete. False ownership claims result in entry fee forfeiture.</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:8px;padding:9px 11px;margin-top:9px;">
+                <div style="font-size:11px;font-weight:500;color:#2C2A20;margin-bottom:5px;">Acceptable documents</div>
+                <div style="font-size:11px;color:#888;line-height:1.8;">
+                  <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>AQHA / APHA registration papers</div>
+                  <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>Bill of sale with seller signature</div>
+                  <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>Transfer of ownership form</div>
+                  <div><i class="ti ti-check" style="font-size:10px;color:#1a6b30;margin-right:4px;"></i>Lease agreement (if applicable)</div>
+                </div>
+              </div>
             </div>
           </div>
-          
+        </div>
+      </div>
+      <!-- PLACEHOLDER panels -->
+      <div class="hp-panel" id="hd-panel-eventlog">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">LS Event History</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Date</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Event</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Place</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Earnings</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">May 3, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Rio Grande Spring Cutting</div><div style="font-size:10px;color:#aaa;">Barrel Racing · Open</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">2nd</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$180</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">Apr 19, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">West Texas Cutting Classic</div><div style="font-size:10px;color:#aaa;">Barrel Racing · Open</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">5th</div>
+                  <div style="font-size:12px;color:#aaa;text-align:right;">—</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">Apr 5, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Lone Star Spring Futurity</div><div style="font-size:10px;color:#aaa;">Cutting · Open</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">3rd</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$95</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">Mar 22, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Mid South Memorial Cutting</div><div style="font-size:10px;color:#aaa;">Barrel Racing · Amateur</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">1st</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$350</div>
+                </div>
+              </div>
+              <div style="text-align:center;font-size:11px;color:#B07A18;cursor:pointer;padding:4px 0 8px;">View all 8 entries →</div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Season summary</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div><div style="font-size:18px;font-weight:700;color:#2C2A20;">8</div><div style="font-size:10px;color:#aaa;">LS Entries</div></div>
+                  <div><div style="font-size:18px;font-weight:700;color:#B07A18;">$1,240</div><div style="font-size:10px;color:#aaa;">LS Earnings</div></div>
+                  <div><div style="font-size:18px;font-weight:700;color:#2C2A20;">45</div><div style="font-size:10px;color:#aaa;">Points</div></div>
+                  <div><div style="font-size:18px;font-weight:700;color:#2C2A20;">3rd</div><div style="font-size:10px;color:#aaa;">Season rank</div></div>
+                </div>
+              </div>
+              <div class="slabel">Best finish</div>
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:12px;font-weight:600;color:#6B4E10;">🏆 1st place</div>
+                <div style="font-size:11px;color:#8A6820;margin-top:2px;">Mid South Memorial Cutting · Mar 22</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="hd-panel-eligibility">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:10px;padding:11px 13px;margin-bottom:14px;">
+                <div style="font-size:11px;font-weight:600;color:#6B4E10;margin-bottom:3px;"><i class="ti ti-info-circle" style="font-size:11px;"></i> How eligibility works</div>
+                <div style="font-size:11px;color:#8A6820;line-height:1.6;">Nelliebell is sired by Sannman, an enrolled Legendary Stakes stallion. Each discipline must be unlocked separately by the sire owner. Once a discipline is unlocked, all of Sannman's offspring — including Nelliebell — can compete for LS purses in that discipline.</div>
+              </div>
+              <div class="slabel">Discipline status</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;">
+                <div style="display:grid;grid-template-columns:1fr auto;gap:0;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">LS Status</div>
+                </div>
+                <!-- Unlocked disciplines -->
+                <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;font-weight:500;">Barrel Racing</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;">Eligible</span></div>
+                <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;font-weight:500;">Cutting</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;">Eligible</span></div>
+                <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;align-items:center;"><span style="font-size:12px;color:#2C2A20;font-weight:500;">Pole Bending</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;">Eligible</span></div>
+                <!-- Locked disciplines — hidden until expanded -->
+                <div class="disc-locked-rows" id="hd-locked-discs">
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Reining</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Ranch Horse</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Reined Cow Horse</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Breakaway Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heading</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heeling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Ranch Rodeo</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Steer Wrestling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Tie-Down Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Western Pleasure</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Sorting</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                </div>
+                <div class="disc-show-all" onclick="showAllDisc('hd-locked-discs', this)">Show all 14 disciplines →</div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Unlock more disciplines</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="font-size:12px;font-weight:500;color:#2C2A20;margin-bottom:4px;">Want Nelliebell competing in more disciplines?</div>
+                <div style="font-size:11px;color:#888;line-height:1.5;margin-bottom:10px;">Contact the sire owner to request additional discipline unlocks, or unlock them yourself as a horse owner once that feature launches.</div>
+                <button class="gold-btn" style="width:100%;font-size:11px;padding:8px;">Contact Sire Owner →</button>
+              </div>
+              <div style="background:#F7F4EE;border:0.5px solid #E0D9C8;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Sire enrollment</div>
+                <div style="font-size:12px;font-weight:500;color:#2C2A20;">Sannman</div>
+                <div style="font-size:11px;color:#B07A18;margin-top:1px;">✓ Legendary Stakes enrolled</div>
+                <div style="font-size:10px;color:#aaa;margin-top:3px;">781 enrolled offspring · 10 disciplines active</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="hd-panel-rankings">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">RPI Components</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px;">
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">74.2</div><div class="stat-lbl">Normalized Performance</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.14</div><div class="stat-lbl">Field Strength Index</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">0.92</div><div class="stat-lbl">Age Class Multiplier</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">+2.1</div><div class="stat-lbl">Rider Skill Adjustment</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">0.88</div><div class="stat-lbl">Event Prestige Coefficient</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">0.97</div><div class="stat-lbl">Decay Weight</div></div>
+              </div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;">
+                <div style="font-size:11px;font-weight:600;color:#2C2A20;margin-bottom:5px;">About RPI</div>
+                <div style="font-size:11px;color:#888;line-height:1.6;">The Relative Performance Index measures competitive performance relative to field strength and event history. A higher RPI reflects consistent performance against strong competition across multiple events.</div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">LS Season Standing</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:14px;margin-bottom:10px;text-align:center;">
+                <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Current Season Rank</div>
+                <div style="font-size:36px;font-weight:700;color:#C49020;line-height:1;">#3</div>
+                <div style="font-size:11px;color:#888;margin-top:4px;">out of 48 horses · Barrel Racing</div>
+              </div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">8</div><div style="font-size:10px;color:#aaa;">Events</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#B07A18;">$1,240</div><div style="font-size:10px;color:#aaa;">Earnings</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">45</div><div style="font-size:10px;color:#aaa;">Points</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">82.4</div><div style="font-size:10px;color:#aaa;">RPI Score</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="hd-panel-stats">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">LS Stats by Discipline</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+                <div style="display:grid;grid-template-columns:1fr 50px 50px 50px 70px;gap:0;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Starts</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Best</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Win%</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Earnings</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 50px 50px 50px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:12px;font-weight:500;color:#2C2A20;">Barrel Racing</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">6</div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">1st</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">17%</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$980</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 50px 50px 50px 70px;padding:9px 12px;align-items:center;">
+                  <div style="font-size:12px;font-weight:500;color:#2C2A20;">Cutting</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">2</div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">3rd</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">0%</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$260</div>
+                </div>
+              </div>
+              <div class="slabel">LS Career Summary</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+                <div class="stat-card"><div class="stat-val">8</div><div class="stat-lbl">Career entries</div></div>
+                <div class="stat-card"><div class="stat-val gold">$1,240</div><div class="stat-lbl">Career earnings</div></div>
+                <div class="stat-card"><div class="stat-val">1st</div><div class="stat-lbl">Best placing</div></div>
+                <div class="stat-card"><div class="stat-val">2</div><div class="stat-lbl">Disciplines</div></div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Points breakdown</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid #F0EBE0;"><span style="font-size:11px;color:#888;">Entry points (8 × 4)</span><span style="font-size:12px;font-weight:500;color:#2C2A20;">32</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid #F0EBE0;"><span style="font-size:11px;color:#888;">Top sire offspring</span><span style="font-size:12px;font-weight:500;color:#2C2A20;">6</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid #F0EBE0;"><span style="font-size:11px;color:#888;">Best of the best</span><span style="font-size:12px;font-weight:500;color:#2C2A20;">4</span></div>
+                <div style="display:flex;justify-content:space-between;padding:8px 0 0;"><span style="font-size:12px;font-weight:600;color:#2C2A20;">Total</span><span style="font-size:14px;font-weight:700;color:#C49020;">45 pts</span></div>
+              </div>
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:3px;">Projected year-end</div>
+                <div style="font-size:18px;font-weight:700;color:#C49020;">$4,800</div>
+                <div style="font-size:10px;color:#8A6820;margin-top:1px;">Based on current pace · 14 events projected</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="hd-panel-pedigree">
+        <div class="hp-panel-scroll">
+          <div style="padding:0 0 8px;">
+            <div class="slabel">Pedigree Tree</div>
+            <!-- Pedigree tree: 3 columns — horse | parents | grandparents -->
+            <div style="overflow-x:auto;">
+              <div style="display:grid;grid-template-columns:140px 160px 180px;gap:0;min-width:480px;align-items:center;padding:8px 0;">
+                <!-- Col 1: Horse -->
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;">
+                  <div style="background:#111008;border:1.5px solid #C49020;border-radius:8px;padding:9px 12px;text-align:center;width:100%;">
+                    <div style="font-size:9px;color:#C49020;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Horse</div>
+                    <div style="font-size:12px;font-weight:600;color:#F0EDE4;">Nelliebell</div>
+                  </div>
+                </div>
+                <!-- Col 2: Parents -->
+                <div style="display:flex;flex-direction:column;gap:24px;padding:0 8px;">
+                  <!-- Sire -->
+                  <div style="background:#FEF3C7;border:1px solid #E5C060;border-radius:8px;padding:8px 10px;">
+                    <div style="font-size:9px;color:#8A6820;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px;">Sire ★</div>
+                    <div style="font-size:12px;font-weight:600;color:#2C2A20;">Sannman</div>
+                    <div style="font-size:9px;color:#B07A18;margin-top:1px;">LS Enrolled</div>
+                  </div>
+                  <!-- Dam -->
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:8px;padding:8px 10px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px;">Dam</div>
+                    <div style="font-size:12px;font-weight:600;color:#2C2A20;">A Feisty Fling</div>
+                  </div>
+                </div>
+                <!-- Col 3: Grandparents -->
+                <div style="display:flex;flex-direction:column;gap:8px;padding:0 8px;">
+                  <!-- Sire's Sire -->
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Sire's Sire</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Smart Aristocrat</div>
+                  </div>
+                  <!-- Sire's Dam -->
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Sire's Dam</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Sannas Lena</div>
+                  </div>
+                  <!-- Dam's Sire -->
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Dam's Sire</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Fiestas Peppy</div>
+                  </div>
+                  <!-- Dam's Dam -->
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Dam's Dam</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Fling Me A Dually</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:10px;color:#aaa;margin-top:8px;padding:0 2px;">★ = LS Enrolled Sire</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1858,91 +2185,921 @@ select.inp{appearance:none;}
     <!-- HORSE DETAIL: SDP Best of Friends (verified, sire enrolled) -->
     <div id="sc-horse-detail-sdp" class="screen">
       <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
-      <div class="detail-body">
-        <div class="dl">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;"><div><div style="font-size:16px;font-weight:500;color:#2C2A20;">SDP Best of Friends</div><div style="display:flex;align-items:center;gap:5px;margin-top:3px;"><span class="status-badge sb-verified"><i class="ti ti-circle-check" style="font-size:9px;"></i> Verified</span><span class="status-badge sb-sire">Legendary Stallion</span><span style="font-size:10px;color:#aaa;">Enrolled Jan 2026</span></div></div><button class="gold-btn" style="font-size:11px;padding:6px 12px;">Save changes</button></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px;">
-            <div class="stat-card"><div class="stat-val">42</div><div class="stat-lbl">Points this season</div></div>
-            <div class="stat-card"><div class="stat-val gold">$16,075</div><div class="stat-lbl">Season earnings</div></div>
+      <!-- Horse sub-header with Individual/As Sire toggle -->
+      <div class="hp-subhdr">
+        <div class="hp-subhdr-inner">
+          <div class="hp-photo-wrap">
+            <img class="hp-photo" src="https://thejsasse.github.io/legendary-stakes-chat/test/default-horse.png" alt="SDP Best of Friends" />
+            <button class="hp-photo-btn" title="Update photo"><i class="ti ti-camera" style="font-size:9px;"></i></button>
           </div>
-          <div class="slabel">Horse details</div>
-          <div class="field-group">
-            <div class="field-row full"><div class="field-cell"><div class="field-lbl">Name</div><div class="field-val"><input value="SDP Best of Friends" /></div></div></div>
-            <div class="field-row"><div class="field-cell"><div class="field-lbl">Dam</div><div class="field-val"><input value="Best Of Luck" /></div></div><div class="field-cell"><div class="field-lbl">Sire</div><div class="field-val"><input value="Sannman" /></div></div></div>
-            <div class="field-row"><div class="field-cell"><div class="field-lbl">Color</div><div class="field-val"><input value="Bay" /></div></div><div class="field-cell"><div class="field-lbl">Sex</div><div class="field-val"><select><option>Gelding</option><option>Mare</option><option>Stallion</option></select></div></div></div>
-            <div class="field-row"><div class="field-cell"><div class="field-lbl">Status</div><div class="field-val"><input value="Alive" /></div></div><div class="field-cell"><div class="field-lbl">Year of birth</div><div class="field-val"><input value="2018" /></div></div></div>
-            <div class="field-row full"><div class="field-cell"><div class="field-lbl">AQHA / APHA #</div><div class="field-val"><input value="5892341" /></div></div></div>
-            <div class="field-row full"><div class="field-cell"><div class="field-lbl">Description (optional)</div><div class="field-val"><textarea rows="2" placeholder="Notes about this horse..."></textarea></div></div></div>
+          <div class="hp-meta">
+            <div class="hp-horse-name">SDP Best of Friends</div>
+            <div class="hp-badges"><span class="status-badge sb-verified"><i class="ti ti-circle-check" style="font-size:9px;"></i> Verified</span><span class="status-badge sb-sire">Legendary Stallion</span></div>
+            <div class="hp-enrolled">Enrolled Jan 2026</div>
           </div>
-          <div class="slabel">Eligible disciplines</div>
-          <div class="disc-row2" style="padding:0 0 12px;"><span class="disc2">Cutting</span><span class="disc2">Cowhorse</span><span class="disc2">Ranch Horse</span><span class="disc2">Reining</span><span class="disc2 locked">Barrel Racing (locked)</span></div>
-          
+          <div class="hp-toggle">
+            <button class="hp-tog-btn active" id="sdp-tog-individual" onclick="sdpToggle('individual')">Individual</button>
+            <button class="hp-tog-btn" id="sdp-tog-sire" onclick="sdpToggle('sire')">As Sire</button>
+          </div>
         </div>
-        <div class="dr">
-          <!-- Verified status card -->
-          <div class="verify-card" style="background:#F0FDF4;border:1px solid #86EFAC;">
-            <div class="vc-t" style="color:#166534;"><i class="ti ti-shield-check" style="font-size:13px;"></i> Ownership verified</div>
-            <div class="vc-s" style="color:#166534;opacity:.8;">Ownership confirmed via AQHA registration papers. Earnings are paid out at season end.</div>
-            <div style="margin-top:10px;padding:9px 11px;background:#fff;border:0.5px solid #86EFAC;border-radius:7px;font-size:11px;color:#555;line-height:1.6;">
-              <div style="font-weight:600;color:#2C2A20;margin-bottom:3px;">Royalties paid this season</div>
-              <div style="font-size:18px;font-weight:700;color:#C49020;">$2,105</div>
-              <div style="font-size:10px;color:#aaa;margin-top:1px;">From 47 offspring entries across 10 disciplines</div>
+      </div>
+      <!-- Tab bar — Individual mode -->
+      <div class="hp-tabs" id="sdp-tabs">
+        <div class="hp-tab active" onclick="hpTab('sdp','overview')">Overview</div>
+        <div class="hp-tab" onclick="hpTab('sdp','eventlog')">Event Log</div>
+        <div class="hp-tab" onclick="hpTab('sdp','eligibility')">Eligibility</div>
+        <div class="hp-tab" onclick="hpTab('sdp','rankings')">Rankings</div>
+        <div class="hp-tab" onclick="hpTab('sdp','stats')">Stats</div>
+        <div class="hp-tab" onclick="hpTab('sdp','pedigree')">Pedigree</div>
+      </div>
+      <!-- Tab bar — As Sire mode -->
+      <div class="hp-tabs" id="sdp-tabs-sire" style="display:none;">
+        <div class="hp-tab active" onclick="hpSireTab('sire-overview')">Overview</div>
+        <div class="hp-tab" onclick="hpSireTab('sire-offlog')">Offspring Log</div>
+        <div class="hp-tab" onclick="hpSireTab('sire-offelig')">Offspring Eligibility</div>
+        <div class="hp-tab" onclick="hpSireTab('sire-offstats')">Offspring Stats</div>
+        <div class="hp-tab" onclick="hpSireTab('sire-standings')">Sire Standings</div>
+        <div class="hp-tab" onclick="hpSireTab('sire-owner')">Sire Owner</div>
+      </div>
+      <!-- ── INDIVIDUAL PANELS ── -->
+      <!-- OVERVIEW -->
+      <div class="hp-panel active" id="sdp-panel-overview">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;"><div style="font-size:14px;font-weight:500;color:#2C2A20;">Horse details</div><button class="gold-btn" style="font-size:11px;padding:6px 12px;">Save changes</button></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px;">
+                <div class="stat-card"><div class="stat-val">42</div><div class="stat-lbl">Points this season</div></div>
+                <div class="stat-card"><div class="stat-val gold">$16,075</div><div class="stat-lbl">Season earnings</div></div>
+              </div>
+              <div class="slabel">Identity</div>
+              <div class="field-group">
+                <div class="field-row full"><div class="field-cell"><div class="field-lbl">Name</div><div class="field-val"><input value="SDP Best of Friends" /></div></div></div>
+                <div class="field-row"><div class="field-cell"><div class="field-lbl">Dam</div><div class="field-val"><input value="Best Of Luck" /></div></div><div class="field-cell"><div class="field-lbl">Sire</div><div class="field-val"><input value="Sannman" /></div></div></div>
+                <div class="field-row"><div class="field-cell"><div class="field-lbl">Color</div><div class="field-val"><input value="Bay" /></div></div><div class="field-cell"><div class="field-lbl">Sex</div><div class="field-val"><select><option>Gelding</option><option>Mare</option><option>Stallion</option></select></div></div></div>
+                <div class="field-row"><div class="field-cell"><div class="field-lbl">Status</div><div class="field-val"><input value="Alive" /></div></div><div class="field-cell"><div class="field-lbl">Year of birth</div><div class="field-val"><input value="2018" /></div></div></div>
+                <div class="field-row full"><div class="field-cell"><div class="field-lbl">AQHA / APHA #</div><div class="field-val"><input value="5892341" /></div></div></div>
+                <div class="field-row full"><div class="field-cell"><div class="field-lbl">Description (optional)</div><div class="field-val"><textarea rows="2" placeholder="Notes about this horse..."></textarea></div></div></div>
+              </div>
+              <div class="slabel">Eligible disciplines</div>
+              <div class="disc-row2" style="padding:0 0 12px;"><span class="disc2">Cutting</span><span class="disc2">Reined Cow Horse</span><span class="disc2">Ranch Horse</span><span class="disc2">Reining</span><span class="disc2 locked">Barrel Racing (locked)</span></div>
+            </div>
+            <div class="dr">
+              <div class="verify-card" style="background:#F0FDF4;border:1px solid #86EFAC;">
+                <div class="vc-t" style="color:#166534;"><i class="ti ti-shield-check" style="font-size:13px;"></i> Ownership verified</div>
+                <div class="vc-s" style="color:#166534;opacity:.8;">Ownership confirmed via AQHA registration papers. Earnings are paid out at season end.</div>
+                <div style="margin-top:10px;padding:9px 11px;background:#fff;border:0.5px solid #86EFAC;border-radius:7px;font-size:11px;color:#555;line-height:1.6;">
+                  <div style="font-weight:600;color:#2C2A20;margin-bottom:3px;">Royalties paid this season</div>
+                  <div style="font-size:18px;font-weight:700;color:#C49020;">$2,105</div>
+                  <div style="font-size:10px;color:#aaa;margin-top:1px;">From 47 offspring entries across 10 disciplines</div>
+                </div>
+              </div>
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:9px 11px;margin-top:9px;">
+                <div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:5px;"><i class="ti ti-trophy" style="font-size:11px;"></i> This horse is a Legendary Stallion</div>
+                <div style="font-size:11px;color:#8A6820;line-height:1.6;">SDP Best of Friends has 781 enrolled offspring competing across 10 disciplines. You earn royalties on every entry they make — for the life of their competition career.</div>
+                <button class="gold-btn" style="width:100%;margin-top:8px;font-size:11px;padding:7px;" onclick="sdpToggle('sire')">View As Sire →</button>
+              </div>
             </div>
           </div>
-          <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:9px 11px;margin-top:9px;">
-            <div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:5px;"><i class="ti ti-trophy" style="font-size:11px;"></i> This horse is a Legendary Stallion</div>
-            <div style="font-size:11px;color:#8A6820;line-height:1.6;">SDP Best of Friends has 781 enrolled offspring competing across 10 disciplines. You earn royalties on every entry they make — for the life of their competition career.</div>
-            <button class="gold-btn" style="width:100%;margin-top:8px;font-size:11px;padding:7px;" onclick="nav('sc-sire-dash')">View Sire Dashboard →</button>
+        </div>
+      </div>
+      <!-- Individual placeholder panels -->
+      <div class="hp-panel" id="sdp-panel-eventlog">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">LS Event History</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Date</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Event</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Place</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Earnings</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">May 10, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Mid South Memorial Cutting</div><div style="font-size:10px;color:#aaa;">Cutting · Open</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">1st</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$4,200</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">Apr 26, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Lone Star Cowhorse Classic</div><div style="font-size:10px;color:#aaa;">Reined Cow Horse · Open</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">2nd</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$3,100</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">Apr 12, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">West Texas Ranch Horse</div><div style="font-size:10px;color:#aaa;">Ranch Horse · Open</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">3rd</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$1,850</div>
+                </div>
+                <div style="display:grid;grid-template-columns:80px 1fr 60px 70px;gap:0;padding:9px 12px;align-items:center;">
+                  <div style="font-size:10px;color:#aaa;">Mar 28, 2026</div>
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Rio Grande Spring Cutting</div><div style="font-size:10px;color:#aaa;">Cutting · Open</div></div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">1st</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$4,800</div>
+                </div>
+              </div>
+              <div style="text-align:center;font-size:11px;color:#B07A18;cursor:pointer;padding:4px 0 8px;">View all 14 entries →</div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Season summary</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div><div style="font-size:18px;font-weight:700;color:#2C2A20;">14</div><div style="font-size:10px;color:#aaa;">LS Entries</div></div>
+                  <div><div style="font-size:18px;font-weight:700;color:#B07A18;">$16,075</div><div style="font-size:10px;color:#aaa;">LS Earnings</div></div>
+                  <div><div style="font-size:18px;font-weight:700;color:#2C2A20;">42</div><div style="font-size:10px;color:#aaa;">Points</div></div>
+                  <div><div style="font-size:18px;font-weight:700;color:#2C2A20;">1st</div><div style="font-size:10px;color:#aaa;">Best finish</div></div>
+                </div>
+              </div>
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:12px;font-weight:600;color:#6B4E10;">🏆 Top earner — Sannman offspring</div>
+                <div style="font-size:11px;color:#8A6820;margin-top:2px;">Highest-earning Sannman offspring in 2026</div>
+              </div>
+            </div>
           </div>
-          
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-eligibility">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div style="background:#DCFCE7;border:0.5px solid #86EFAC;border-radius:10px;padding:11px 13px;margin-bottom:14px;">
+                <div style="font-size:11px;font-weight:600;color:#166534;margin-bottom:3px;"><i class="ti ti-circle-check" style="font-size:11px;"></i> Eligible to compete</div>
+                <div style="font-size:11px;color:#166534;opacity:.85;line-height:1.6;">SDP Best of Friends is sired by Sannman, an enrolled LS stallion with 10 disciplines active. SDP is eligible to enter LS events in all unlocked disciplines immediately.</div>
+              </div>
+              <div class="slabel">Discipline status</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;">
+                <div style="display:grid;grid-template-columns:1fr auto;gap:0;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">LS Status</div>
+                </div>
+                <!-- Unlocked disciplines -->
+                <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;font-weight:500;">Cutting</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;">Eligible</span></div>
+                <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;font-weight:500;">Reined Cow Horse</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;">Eligible</span></div>
+                <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;font-weight:500;">Ranch Horse</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;">Eligible</span></div>
+                <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;align-items:center;"><span style="font-size:12px;color:#2C2A20;font-weight:500;">Reining</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;">Eligible</span></div>
+                <!-- Locked disciplines — hidden until expanded -->
+                <div class="disc-locked-rows" id="sdp-locked-discs">
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Barrel Racing</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Pole Bending</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Breakaway Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heading</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heeling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Ranch Rodeo</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Steer Wrestling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Tie-Down Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Western Pleasure</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                  <div style="display:grid;grid-template-columns:1fr auto;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Sorting</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;">Locked</span></div>
+                </div>
+                <div class="disc-show-all" onclick="showAllDisc('sdp-locked-discs', this)">Show all 14 disciplines →</div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Unlock more disciplines</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="font-size:12px;font-weight:500;color:#2C2A20;margin-bottom:4px;">4 disciplines still locked</div>
+                <div style="font-size:11px;color:#888;line-height:1.5;margin-bottom:10px;">As sire owner you can unlock additional disciplines for $15,000 each. The first unlock grants a second discipline free.</div>
+                <button class="gold-btn" style="width:100%;font-size:11px;padding:8px;" onclick="sdpToggle('sire')">Manage in Sire Dashboard →</button>
+              </div>
+              <div style="background:#F7F4EE;border:0.5px solid #E0D9C8;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Sire enrollment</div>
+                <div style="font-size:12px;font-weight:500;color:#2C2A20;">Sannman</div>
+                <div style="font-size:11px;color:#B07A18;margin-top:1px;">✓ Legendary Stakes enrolled</div>
+                <div style="font-size:10px;color:#aaa;margin-top:3px;">781 enrolled offspring · 10 disciplines active</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-rankings">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">RPI Components</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px;">
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">91.8</div><div class="stat-lbl">Normalized Performance</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.31</div><div class="stat-lbl">Field Strength Index</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.05</div><div class="stat-lbl">Age Class Multiplier</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">+3.4</div><div class="stat-lbl">Rider Skill Adjustment</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">0.95</div><div class="stat-lbl">Event Prestige Coefficient</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.00</div><div class="stat-lbl">Decay Weight</div></div>
+              </div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;">
+                <div style="font-size:11px;font-weight:600;color:#2C2A20;margin-bottom:5px;">About RPI</div>
+                <div style="font-size:11px;color:#888;line-height:1.6;">The Relative Performance Index measures competitive performance relative to field strength and event history. A higher RPI reflects consistent performance against strong competition across multiple events.</div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">LS Season Standing</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:14px;margin-bottom:10px;text-align:center;">
+                <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Current Season Rank</div>
+                <div style="font-size:36px;font-weight:700;color:#C49020;line-height:1;">#1</div>
+                <div style="font-size:11px;color:#888;margin-top:4px;">out of 62 horses · Cutting</div>
+              </div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">14</div><div style="font-size:10px;color:#aaa;">Events</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#B07A18;">$16,075</div><div style="font-size:10px;color:#aaa;">Earnings</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">42</div><div style="font-size:10px;color:#aaa;">Points</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">96.2</div><div style="font-size:10px;color:#aaa;">RPI Score</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-stats">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">LS Stats by Discipline</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+                <div style="display:grid;grid-template-columns:1fr 50px 50px 50px 70px;gap:0;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Starts</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Best</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Win%</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Earnings</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 50px 50px 50px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:12px;font-weight:500;color:#2C2A20;">Cutting</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">8</div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">1st</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">25%</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$11,200</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 50px 50px 50px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div style="font-size:12px;font-weight:500;color:#2C2A20;">Reined Cow Horse</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">4</div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">2nd</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">0%</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$3,100</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 50px 50px 50px 70px;padding:9px 12px;align-items:center;">
+                  <div style="font-size:12px;font-weight:500;color:#2C2A20;">Ranch Horse</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">2</div>
+                  <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">3rd</div>
+                  <div style="font-size:12px;color:#2C2A20;text-align:center;">0%</div>
+                  <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$1,775</div>
+                </div>
+              </div>
+              <div class="slabel">LS Career Summary</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+                <div class="stat-card"><div class="stat-val">14</div><div class="stat-lbl">Career entries</div></div>
+                <div class="stat-card"><div class="stat-val gold">$16,075</div><div class="stat-lbl">Career earnings</div></div>
+                <div class="stat-card"><div class="stat-val">1st</div><div class="stat-lbl">Best placing</div></div>
+                <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Disciplines</div></div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Points breakdown</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid #F0EBE0;"><span style="font-size:11px;color:#888;">Entry points (14 × 4)</span><span style="font-size:12px;font-weight:500;color:#2C2A20;">28</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid #F0EBE0;"><span style="font-size:11px;color:#888;">Top sire offspring</span><span style="font-size:12px;font-weight:500;color:#2C2A20;">9</span></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid #F0EBE0;"><span style="font-size:11px;color:#888;">Best of the best</span><span style="font-size:12px;font-weight:500;color:#2C2A20;">5</span></div>
+                <div style="display:flex;justify-content:space-between;padding:8px 0 0;"><span style="font-size:12px;font-weight:600;color:#2C2A20;">Total</span><span style="font-size:14px;font-weight:700;color:#C49020;">42 pts</span></div>
+              </div>
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:3px;">Top earner — Sannman offspring</div>
+                <div style="font-size:18px;font-weight:700;color:#C49020;">$16,075</div>
+                <div style="font-size:10px;color:#8A6820;margin-top:1px;">Highest-earning Sannman offspring in 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-pedigree">
+        <div class="hp-panel-scroll">
+          <div style="padding:0 0 8px;">
+            <div class="slabel">Pedigree Tree</div>
+            <div style="overflow-x:auto;">
+              <div style="display:grid;grid-template-columns:140px 160px 180px;gap:0;min-width:480px;align-items:center;padding:8px 0;">
+                <!-- Col 1: Horse -->
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;">
+                  <div style="background:#111008;border:1.5px solid #C49020;border-radius:8px;padding:9px 12px;text-align:center;width:100%;">
+                    <div style="font-size:9px;color:#C49020;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Horse</div>
+                    <div style="font-size:12px;font-weight:600;color:#F0EDE4;">SDP Best of Friends</div>
+                  </div>
+                </div>
+                <!-- Col 2: Parents -->
+                <div style="display:flex;flex-direction:column;gap:24px;padding:0 8px;">
+                  <div style="background:#FEF3C7;border:1px solid #E5C060;border-radius:8px;padding:8px 10px;">
+                    <div style="font-size:9px;color:#8A6820;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px;">Sire ★</div>
+                    <div style="font-size:12px;font-weight:600;color:#2C2A20;">Sannman</div>
+                    <div style="font-size:9px;color:#B07A18;margin-top:1px;">LS Enrolled</div>
+                  </div>
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:8px;padding:8px 10px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px;">Dam</div>
+                    <div style="font-size:12px;font-weight:600;color:#2C2A20;">Best Of Luck</div>
+                  </div>
+                </div>
+                <!-- Col 3: Grandparents -->
+                <div style="display:flex;flex-direction:column;gap:8px;padding:0 8px;">
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Sire's Sire</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Smart Aristocrat</div>
+                  </div>
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Sire's Dam</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Sannas Lena</div>
+                  </div>
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Dam's Sire</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Peppy San Badger</div>
+                  </div>
+                  <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:6px;padding:6px 9px;">
+                    <div style="font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;">Dam's Dam</div>
+                    <div style="font-size:11px;font-weight:500;color:#2C2A20;">Lucky Buck</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:10px;color:#aaa;margin-top:8px;padding:0 2px;">★ = LS Enrolled Sire</div>
+          </div>
+        </div>
+      </div>
+      <!-- ── AS SIRE PANELS ── -->
+      <div class="hp-panel" id="sdp-panel-sire-overview">
+        <div class="hp-panel-scroll">
+          <div class="stat-grid3" style="margin-bottom:14px;">
+            <div class="stat-card"><div class="stat-val">781</div><div class="stat-lbl">Enrolled offspring</div></div>
+            <div class="stat-card"><div class="stat-val gold">$2,105</div><div class="stat-lbl">2026 royalties</div></div>
+            <div class="stat-card"><div class="stat-val">47</div><div class="stat-lbl">Offspring entries</div></div>
+          </div>
+          <div class="sire-dash-grid">
+            <div>
+              <div class="slabel">Top offspring — 2026</div>
+              <div class="offspring-table">
+                <div class="ot-cols"><div class="ot-col-lbl">Horse</div><div class="ot-col-lbl">Owner</div><div class="ot-col-lbl">Events</div><div class="ot-col-lbl">Royalties</div></div>
+                <div class="ot-row"><div><div class="ot-horse">SDP Best of Friends</div><div style="font-size:10px;color:#aaa;">Gelding · 2018</div></div><div class="ot-owner">Dale Smith</div><div class="ot-events">14</div><div class="ot-royalty">$350</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Smoky Gold Dust</div><div style="font-size:10px;color:#aaa;">Gelding · 2020</div></div><div class="ot-owner">Kelli Marsh</div><div class="ot-events">11</div><div class="ot-royalty">$275</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Nelliebell</div><div style="font-size:10px;color:#aaa;">Mare · 2019</div></div><div class="ot-owner">Dale Smith</div><div class="ot-events">8</div><div class="ot-royalty">$200</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Twisted Pine</div><div style="font-size:10px;color:#aaa;">Gelding · 2019</div></div><div class="ot-owner">Donna Reeves</div><div class="ot-events">8</div><div class="ot-royalty">$200</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Red River Roan</div><div style="font-size:10px;color:#aaa;">Mare · 2021</div></div><div class="ot-owner">Travis Boyd</div><div class="ot-events">6</div><div class="ot-royalty">$150</div></div>
+                <div style="padding:7px 13px;border-top:0.5px solid #E0D9C8;background:#FDFBF6;text-align:center;font-size:11px;color:#B07A18;cursor:pointer;" onclick="sdpToggle('sire');hpSireTab('sire-offlog')">View all 781 offspring →</div>
+              </div>
+            </div>
+            <div>
+              <div class="slabel">LS earnings by discipline</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:10px;">
+                <div style="display:grid;grid-template-columns:1fr 50px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;"><div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div><div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Entries</div><div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalties</div></div>
+                <div style="display:grid;grid-template-columns:1fr 50px 70px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;">Cutting</span><span style="font-size:11px;text-align:center;color:#888;">18</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$612</span></div>
+                <div style="display:grid;grid-template-columns:1fr 50px 70px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;">Reined Cow Horse</span><span style="font-size:11px;text-align:center;color:#888;">14</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$543</span></div>
+                <div style="display:grid;grid-template-columns:1fr 50px 70px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;">Barrel Racing</span><span style="font-size:11px;text-align:center;color:#888;">10</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$398</span></div>
+                <div style="display:grid;grid-template-columns:1fr 50px 70px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#2C2A20;">Reining</span><span style="font-size:11px;text-align:center;color:#888;">5</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$221</span></div>
+                <div style="display:grid;grid-template-columns:1fr 50px 70px;padding:8px 12px;align-items:center;"><span style="font-size:12px;color:#2C2A20;">Ranch Horse</span><span style="font-size:11px;text-align:center;color:#888;">4</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$131</span></div>
+              </div>
+              <div class="slabel">Royalty summary</div>
+              <div class="royalty-card">
+                <div class="royalty-row"><span style="color:#999;">This month</span><span style="color:#B07A18;font-weight:500;">$350</span></div>
+                <div class="royalty-row"><span style="color:#999;">2026 YTD</span><span style="color:#B07A18;font-weight:500;">$2,105</span></div>
+                <div class="royalty-row"><span style="color:#999;">All time</span><span style="color:#B07A18;font-weight:500;">$4,380</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-sire-offlog">
+        <div class="hp-panel-scroll">
+          <div class="slabel">Recent offspring events — LS</div>
+          <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;gap:0;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Offspring</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Event</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Place</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalty</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">SDP Best of Friends</div>
+              <div><div style="font-size:11px;color:#555;">Mid South Memorial Cutting</div><div style="font-size:10px;color:#aaa;">Cutting · May 10</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">1st</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">Smoky Gold Dust</div>
+              <div><div style="font-size:11px;color:#555;">Lone Star Cowhorse Classic</div><div style="font-size:10px;color:#aaa;">Reined Cow Horse · Apr 26</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">3rd</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">Nelliebell</div>
+              <div><div style="font-size:11px;color:#555;">Rio Grande Spring Cutting</div><div style="font-size:10px;color:#aaa;">Barrel Racing · May 3</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">2nd</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">Twisted Pine</div>
+              <div><div style="font-size:11px;color:#555;">West Texas Ranch Horse</div><div style="font-size:10px;color:#aaa;">Ranch Horse · Apr 12</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">5th</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+          </div>
+          <div style="text-align:center;font-size:11px;color:#B07A18;cursor:pointer;padding:4px 0 8px;">View all 47 offspring entries →</div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-sire-offelig">
+        <div class="hp-panel-scroll">
+          <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:10px;padding:11px 13px;margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:600;color:#6B4E10;margin-bottom:3px;"><i class="ti ti-info-circle" style="font-size:11px;"></i> Sannman offspring eligibility</div>
+            <div style="font-size:11px;color:#8A6820;line-height:1.6;">Every horse sired by Sannman is eligible to enter LS-compatible events in the disciplines marked Eligible below. Unlocking a discipline grants all 781 enrolled offspring access — forever.</div>
+          </div>
+          <div class="slabel">Discipline eligibility — all offspring</div>
+          <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Status</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Earnings</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Cutting</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$612</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Reined Cow Horse</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$543</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Barrel Racing</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$398</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Reining</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$221</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Ranch Horse</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$131</span></div>
+            <!-- Locked disciplines expander -->
+            <div class="disc-locked-rows" id="sdp-sire-locked-discs">
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Pole Bending</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Breakaway Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heading</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heeling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Ranch Rodeo</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Steer Wrestling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Tie-Down Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Western Pleasure</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Sorting</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+            </div>
+            <div class="disc-show-all" onclick="showAllDisc('sdp-sire-locked-discs', this)">Show all 14 disciplines →</div>
+          </div>
+          <button class="gold-btn" style="width:100%;font-size:11px;padding:9px;">+ Unlock a discipline — $15,000</button>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-sire-offstats">
+        <div class="hp-panel-scroll">
+          <div class="slabel">LS offspring stats by discipline</div>
+          <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Entries</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Best</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Avg</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Points</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalties</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <span style="font-size:11px;font-weight:500;color:#2C2A20;">Cutting</span>
+              <span style="font-size:11px;color:#555;text-align:center;">18</span>
+              <span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">1st</span>
+              <span style="font-size:11px;color:#555;text-align:center;">4.2</span>
+              <span style="font-size:11px;color:#555;text-align:center;">72</span>
+              <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$612</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <span style="font-size:11px;font-weight:500;color:#2C2A20;">Reined Cow Horse</span>
+              <span style="font-size:11px;color:#555;text-align:center;">14</span>
+              <span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">2nd</span>
+              <span style="font-size:11px;color:#555;text-align:center;">5.8</span>
+              <span style="font-size:11px;color:#555;text-align:center;">56</span>
+              <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$543</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <span style="font-size:11px;font-weight:500;color:#2C2A20;">Barrel Racing</span>
+              <span style="font-size:11px;color:#555;text-align:center;">10</span>
+              <span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">1st</span>
+              <span style="font-size:11px;color:#555;text-align:center;">3.9</span>
+              <span style="font-size:11px;color:#555;text-align:center;">40</span>
+              <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$398</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <span style="font-size:11px;font-weight:500;color:#2C2A20;">Reining</span>
+              <span style="font-size:11px;color:#555;text-align:center;">5</span>
+              <span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">3rd</span>
+              <span style="font-size:11px;color:#555;text-align:center;">6.4</span>
+              <span style="font-size:11px;color:#555;text-align:center;">20</span>
+              <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$221</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;align-items:center;">
+              <span style="font-size:11px;font-weight:500;color:#2C2A20;">Ranch Horse</span>
+              <span style="font-size:11px;color:#555;text-align:center;">4</span>
+              <span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">3rd</span>
+              <span style="font-size:11px;color:#555;text-align:center;">5.5</span>
+              <span style="font-size:11px;color:#555;text-align:center;">16</span>
+              <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$131</span>
+            </div>
+          </div>
+          <div class="slabel">All-time sire career summary</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;">
+            <div class="stat-card"><div class="stat-val">781</div><div class="stat-lbl">Enrolled offspring</div></div>
+            <div class="stat-card"><div class="stat-val">51</div><div class="stat-lbl">Total LS entries</div></div>
+            <div class="stat-card"><div class="stat-val gold">$4,380</div><div class="stat-lbl">All-time royalties</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-sire-standings">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">RPI — Sire rankings</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px;">
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">88.4</div><div class="stat-lbl">Normalized Performance</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.22</div><div class="stat-lbl">Field Strength Index</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.08</div><div class="stat-lbl">Age Class Multiplier</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">+2.8</div><div class="stat-lbl">Rider Skill Adjustment</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">0.94</div><div class="stat-lbl">Event Prestige Coefficient</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.00</div><div class="stat-lbl">Decay Weight</div></div>
+              </div>
+              <div class="slabel">Sire leaderboard — 2026</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;">
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">#</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Sire</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Entries</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalties</div>
+                </div>
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;background:#FFFBF0;">
+                  <span style="font-size:13px;font-weight:700;color:#C49020;">1</span>
+                  <div><div style="font-size:12px;font-weight:600;color:#2C2A20;">Sannman</div><div style="font-size:10px;color:#B07A18;">You own this sire</div></div>
+                  <span style="font-size:12px;color:#555;text-align:center;">47</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$2,105</span>
+                </div>
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <span style="font-size:13px;font-weight:700;color:#888;">2</span>
+                  <div><div style="font-size:12px;color:#2C2A20;">Cats Royal Boon</div></div>
+                  <span style="font-size:12px;color:#555;text-align:center;">36</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$1,842</span>
+                </div>
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:9px 12px;align-items:center;">
+                  <span style="font-size:13px;font-weight:700;color:#888;">3</span>
+                  <div><div style="font-size:12px;color:#2C2A20;">TR Illuminator Cash</div></div>
+                  <span style="font-size:12px;color:#555;text-align:center;">28</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$1,340</span>
+                </div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Your sire standing</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:14px;margin-bottom:10px;text-align:center;">
+                <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Current Sire Rank</div>
+                <div style="font-size:36px;font-weight:700;color:#C49020;line-height:1;">#1</div>
+                <div style="font-size:11px;color:#888;margin-top:4px;">out of 88 enrolled sires</div>
+              </div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">781</div><div style="font-size:10px;color:#aaa;">Offspring</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#B07A18;">$2,105</div><div style="font-size:10px;color:#aaa;">2026 royalties</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">47</div><div style="font-size:10px;color:#aaa;">Entries</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">93.1</div><div style="font-size:10px;color:#aaa;">Sire RPI</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sdp-panel-sire-owner">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div style="background:#DCFCE7;border:0.5px solid #86EFAC;border-radius:10px;padding:11px 13px;margin-bottom:14px;">
+                <div style="font-size:11px;font-weight:600;color:#166534;margin-bottom:2px;"><i class="ti ti-user-check" style="font-size:11px;"></i> Verified sire owner</div>
+                <div style="font-size:11px;color:#166534;opacity:.85;">Dale Smith · Ownership confirmed. Royalties are calculated in real time and paid out at season end.</div>
+              </div>
+              <div class="slabel">Royalty detail — 2026</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Event</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Date</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalty</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Mid South Memorial Cutting</div><div style="font-size:10px;color:#aaa;">SDP Best of Friends · 1st</div></div>
+                  <span style="font-size:10px;color:#aaa;text-align:center;">May 10</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Lone Star Cowhorse Classic</div><div style="font-size:10px;color:#aaa;">Smoky Gold Dust · 3rd</div></div>
+                  <span style="font-size:10px;color:#aaa;text-align:center;">Apr 26</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Rio Grande Spring Cutting</div><div style="font-size:10px;color:#aaa;">Nelliebell · 2nd</div></div>
+                  <span style="font-size:10px;color:#aaa;text-align:center;">May 3</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;align-items:center;">
+                  <div><div style="font-size:11px;font-weight:500;color:#2C2A20;">West Texas Ranch Horse</div><div style="font-size:10px;color:#aaa;">Twisted Pine · 5th</div></div>
+                  <span style="font-size:10px;color:#aaa;text-align:center;">Apr 12</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</span>
+                </div>
+              </div>
+              <div style="text-align:center;font-size:11px;color:#B07A18;cursor:pointer;padding:4px 0 8px;">View all 47 royalty transactions →</div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Payout summary</div>
+              <div class="royalty-card" style="margin-bottom:10px;">
+                <div class="royalty-row"><span style="color:#999;">This month</span><span style="color:#B07A18;font-weight:500;">$350</span></div>
+                <div class="royalty-row"><span style="color:#999;">2026 YTD</span><span style="color:#B07A18;font-weight:500;">$2,105</span></div>
+                <div class="royalty-row"><span style="color:#999;">All time</span><span style="color:#B07A18;font-weight:500;">$4,380</span></div>
+              </div>
+              <div class="slabel">Payout schedule</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:8px;padding:11px 13px;margin-bottom:10px;">
+                <div style="font-size:11px;color:#888;line-height:1.7;">
+                  <div>📅 <strong style="color:#2C2A20;">Dec 31, 2026</strong> — Season close</div>
+                  <div>📋 <strong style="color:#2C2A20;">Jan 1–31, 2027</strong> — Audit period</div>
+                  <div>💰 <strong style="color:#2C2A20;">Feb 2027</strong> — Payout issued</div>
+                </div>
+              </div>
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:2px;">Projected 2026 payout</div>
+                <div style="font-size:20px;font-weight:700;color:#C49020;">$8,400</div>
+                <div style="font-size:10px;color:#8A6820;margin-top:1px;">Based on current pace · 47 entries so far</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
 
     <div id="sc-sire-dash" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
-      <div class="screen-scroll" style="background:#F5F2EA;padding:18px 20px;">
-        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;"><div style="width:42px;height:42px;border-radius:8px;background:#2C2214;border:0.5px solid #5A4828;display:flex;align-items:center;justify-content:center;font-size:18px;color:#C49020;flex-shrink:0;"><i class="ti ti-horse"></i></div><div><div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.6px;margin-bottom:1px;">Stallion Dashboard</div><div style="font-size:16px;font-weight:500;color:#2C2A20;">SDP Best of Friends</div><div style="display:flex;gap:5px;margin-top:3px;"><span class="status-badge sb-sire">Legendary Stallion</span><span class="status-badge sb-verified"><i class="ti ti-circle-check" style="font-size:9px;"></i> Verified</span></div></div></div>
-        <div class="stat-grid3">
-          <div class="stat-card"><div class="stat-val">781</div><div class="stat-lbl">Enrolled offspring</div></div>
-          <div class="stat-card"><div class="stat-val gold">$2,105</div><div class="stat-lbl">Royalties collected</div></div>
-          <div class="stat-card"><div class="stat-val">47</div><div class="stat-lbl">Offspring event entries</div></div>
-        </div>
-        <div class="sire-dash-grid">
-          <div>
-            <div class="offspring-table">
-              <div class="ot-hdr"><span class="ot-hdr-t">Offspring <span style="color:#aaa;font-weight:400;">(781)</span></span><select style="border:0.5px solid #D0C8B0;border-radius:5px;padding:3px 6px;font-size:10px;color:#666;background:#fff;outline:none;"><option>2026 season</option><option>2025 season</option><option>All time</option></select></div>
-              <div class="ot-cols"><div class="ot-col-lbl">Horse</div><div class="ot-col-lbl">Owner</div><div class="ot-col-lbl">Events</div><div class="ot-col-lbl">Royalties</div></div>
-              <div class="ot-row"><div><div class="ot-horse">SDP Best of Friends</div><div style="font-size:10px;color:#aaa;">Gelding · 2018</div></div><div class="ot-owner">Dale Smith</div><div class="ot-events">14</div><div class="ot-royalty">$350</div></div>
-              <div class="ot-row"><div><div class="ot-horse">Nelliebell</div><div style="font-size:10px;color:#aaa;">Mare · 2019</div></div><div class="ot-owner">Dale Smith</div><div class="ot-events">8</div><div class="ot-royalty">$200</div></div>
-              <div class="ot-row"><div><div class="ot-horse">Smoky Gold Dust</div><div style="font-size:10px;color:#aaa;">Gelding · 2020</div></div><div class="ot-owner">Kelli Marsh</div><div class="ot-events">11</div><div class="ot-royalty">$275</div></div>
-              <div class="ot-row"><div><div class="ot-horse">Red River Roan</div><div style="font-size:10px;color:#aaa;">Mare · 2021</div></div><div class="ot-owner">Travis Boyd</div><div class="ot-events">6</div><div class="ot-royalty">$150</div></div>
-              <div class="ot-row"><div><div class="ot-horse">Twisted Pine</div><div style="font-size:10px;color:#aaa;">Gelding · 2019</div></div><div class="ot-owner">Donna Reeves</div><div class="ot-events">8</div><div class="ot-royalty">$200</div></div>
-              <div style="padding:7px 13px;border-top:0.5px solid #E0D9C8;background:#FDFBF6;text-align:center;font-size:11px;color:#B07A18;cursor:pointer;">View all 781 offspring →</div>
-            </div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-horse-detail-sdp')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
+      <!-- Sire sub-header -->
+      <div class="hp-subhdr">
+        <div class="hp-subhdr-inner">
+          <div class="hp-photo-wrap">
+            <img class="hp-photo" src="https://thejsasse.github.io/legendary-stakes-chat/test/default-horse.png" alt="SDP Best of Friends" />
           </div>
-          <div>
-            <div class="slabel">Disciplines unlocked</div>
-            <div class="disc-unlock-card">
-              <div class="du-hdr"><span>10 of 14 unlocked</span><span style="font-size:10px;color:#B07A18;cursor:pointer;">+ Unlock more</span></div>
-              <div class="du-row"><span class="du-name">Cutting</span><span class="du-earn">$612</span><span class="du-badge">Active</span></div>
-              <div class="du-row"><span class="du-name">Cowhorse</span><span class="du-earn">$543</span><span class="du-badge">Active</span></div>
-              <div class="du-row"><span class="du-name">Barrel Racing</span><span class="du-earn">$398</span><span class="du-badge">Active</span></div>
-              <div class="du-row"><span class="du-name">Reining</span><span class="du-earn">$221</span><span class="du-badge">Active</span></div>
-              <div class="du-row"><span class="du-name">Ranch Horse</span><span class="du-earn">$180</span><span class="du-badge">Active</span></div>
-              <div class="du-row"><span class="du-name">Pole Bending</span><span class="du-earn">$0</span><span class="du-badge locked">Locked</span></div>
-              <div class="du-row"><span class="du-name">Breakaway</span><span class="du-earn">$0</span><span class="du-badge locked">Locked</span></div>
-            </div>
-            <div class="slabel" style="margin-top:10px;">Royalty breakdown</div>
-            <div class="royalty-card">
-              <div class="royalty-row"><span style="color:#999;">This month</span><span style="color:#B07A18;font-weight:500;">$350</span></div>
-              <div class="royalty-row"><span style="color:#999;">2026 YTD</span><span style="color:#B07A18;font-weight:500;">$2,105</span></div>
-              <div class="royalty-row"><span style="color:#999;">All time</span><span style="color:#B07A18;font-weight:500;">$4,380</span></div>
-            </div>
+          <div class="hp-meta">
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">Stallion Dashboard</div>
+            <div class="hp-horse-name">SDP Best of Friends</div>
+            <div class="hp-badges"><span class="status-badge sb-sire">Legendary Stallion</span><span class="status-badge sb-verified"><i class="ti ti-circle-check" style="font-size:9px;"></i> Verified</span></div>
           </div>
         </div>
-        
+      </div>
+      <!-- Sire tab bar -->
+      <div class="hp-tabs" id="sd-tabs">
+        <div class="hp-tab active" onclick="hpSdTab('overview')">Overview</div>
+        <div class="hp-tab" onclick="hpSdTab('offlog')">Offspring Log</div>
+        <div class="hp-tab" onclick="hpSdTab('offelig')">Offspring Eligibility</div>
+        <div class="hp-tab" onclick="hpSdTab('offstats')">Offspring Stats</div>
+        <div class="hp-tab" onclick="hpSdTab('standings')">Sire Standings</div>
+        <div class="hp-tab" onclick="hpSdTab('owner')">Sire Owner</div>
+      </div>
+      <!-- OVERVIEW panel — existing content -->
+      <div class="hp-panel active" id="sd-panel-overview">
+        <div class="hp-panel-scroll">
+          <div class="stat-grid3">
+            <div class="stat-card"><div class="stat-val">781</div><div class="stat-lbl">Enrolled offspring</div></div>
+            <div class="stat-card"><div class="stat-val gold">$2,105</div><div class="stat-lbl">Royalties collected</div></div>
+            <div class="stat-card"><div class="stat-val">47</div><div class="stat-lbl">Offspring event entries</div></div>
+          </div>
+          <div class="sire-dash-grid">
+            <div>
+              <div class="offspring-table">
+                <div class="ot-hdr"><span class="ot-hdr-t">Offspring <span style="color:#aaa;font-weight:400;">(781)</span></span><select style="border:0.5px solid #D0C8B0;border-radius:5px;padding:3px 6px;font-size:10px;color:#666;background:#fff;outline:none;"><option>2026 season</option><option>2025 season</option><option>All time</option></select></div>
+                <div class="ot-cols"><div class="ot-col-lbl">Horse</div><div class="ot-col-lbl">Owner</div><div class="ot-col-lbl">Events</div><div class="ot-col-lbl">Royalties</div></div>
+                <div class="ot-row"><div><div class="ot-horse">SDP Best of Friends</div><div style="font-size:10px;color:#aaa;">Gelding · 2018</div></div><div class="ot-owner">Dale Smith</div><div class="ot-events">14</div><div class="ot-royalty">$350</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Nelliebell</div><div style="font-size:10px;color:#aaa;">Mare · 2019</div></div><div class="ot-owner">Dale Smith</div><div class="ot-events">8</div><div class="ot-royalty">$200</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Smoky Gold Dust</div><div style="font-size:10px;color:#aaa;">Gelding · 2020</div></div><div class="ot-owner">Kelli Marsh</div><div class="ot-events">11</div><div class="ot-royalty">$275</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Red River Roan</div><div style="font-size:10px;color:#aaa;">Mare · 2021</div></div><div class="ot-owner">Travis Boyd</div><div class="ot-events">6</div><div class="ot-royalty">$150</div></div>
+                <div class="ot-row"><div><div class="ot-horse">Twisted Pine</div><div style="font-size:10px;color:#aaa;">Gelding · 2019</div></div><div class="ot-owner">Donna Reeves</div><div class="ot-events">8</div><div class="ot-royalty">$200</div></div>
+                <div style="padding:7px 13px;border-top:0.5px solid #E0D9C8;background:#FDFBF6;text-align:center;font-size:11px;color:#B07A18;cursor:pointer;">View all 781 offspring →</div>
+              </div>
+            </div>
+            <div>
+              <div class="slabel">Disciplines unlocked</div>
+              <div class="disc-unlock-card">
+                <div class="du-hdr"><span>5 of 14 unlocked</span><span style="font-size:10px;color:#B07A18;cursor:pointer;" onclick="hpSdTab('offelig')">Manage →</span></div>
+                <div class="du-row"><span class="du-name">Cutting</span><span class="du-earn">$612</span><span class="du-badge">Active</span></div>
+                <div class="du-row"><span class="du-name">Reined Cow Horse</span><span class="du-earn">$543</span><span class="du-badge">Active</span></div>
+                <div class="du-row"><span class="du-name">Barrel Racing</span><span class="du-earn">$398</span><span class="du-badge">Active</span></div>
+                <div class="du-row"><span class="du-name">Reining</span><span class="du-earn">$221</span><span class="du-badge">Active</span></div>
+                <div class="du-row"><span class="du-name">Ranch Horse</span><span class="du-earn">$131</span><span class="du-badge">Active</span></div>
+                <div class="disc-locked-rows" id="sd-overview-locked">
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Pole Bending</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Breakaway Roping</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Heading</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Heeling</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Ranch Rodeo</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Steer Wrestling</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Tie-Down Roping</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Western Pleasure</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                  <div class="du-row" style="opacity:.5;"><span class="du-name">Sorting</span><span class="du-earn">—</span><span class="du-badge locked">Locked</span></div>
+                </div>
+                <div class="disc-show-all" style="border-radius:0;" onclick="showAllDisc('sd-overview-locked', this)">Show all 14 disciplines →</div>
+              </div>
+              <div class="slabel" style="margin-top:10px;">Royalty breakdown</div>
+              <div class="royalty-card">
+                <div class="royalty-row"><span style="color:#999;">This month</span><span style="color:#B07A18;font-weight:500;">$350</span></div>
+                <div class="royalty-row"><span style="color:#999;">2026 YTD</span><span style="color:#B07A18;font-weight:500;">$2,105</span></div>
+                <div class="royalty-row"><span style="color:#999;">All time</span><span style="color:#B07A18;font-weight:500;">$4,380</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Sire placeholder panels -->
+      <div class="hp-panel" id="sd-panel-offlog">
+        <div class="hp-panel-scroll">
+          <div class="slabel">Recent offspring events — LS</div>
+          <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Offspring</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Event</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Place</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalty</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">SDP Best of Friends</div>
+              <div><div style="font-size:11px;color:#555;">Mid South Memorial Cutting</div><div style="font-size:10px;color:#aaa;">Cutting · May 10</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">1st</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">Nelliebell</div>
+              <div><div style="font-size:11px;color:#555;">Rio Grande Spring Cutting</div><div style="font-size:10px;color:#aaa;">Barrel Racing · May 3</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">2nd</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">Smoky Gold Dust</div>
+              <div><div style="font-size:11px;color:#555;">Lone Star Cowhorse Classic</div><div style="font-size:10px;color:#aaa;">Reined Cow Horse · Apr 26</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">3rd</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+            <div style="display:grid;grid-template-columns:110px 1fr 60px 70px;padding:9px 12px;align-items:center;">
+              <div style="font-size:11px;font-weight:500;color:#2C2A20;">Twisted Pine</div>
+              <div><div style="font-size:11px;color:#555;">West Texas Ranch Horse</div><div style="font-size:10px;color:#aaa;">Ranch Horse · Apr 12</div></div>
+              <div style="font-size:12px;font-weight:600;color:#2C2A20;text-align:center;">5th</div>
+              <div style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</div>
+            </div>
+          </div>
+          <div style="text-align:center;font-size:11px;color:#B07A18;cursor:pointer;padding:4px 0 8px;">View all 47 offspring entries →</div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sd-panel-offelig">
+        <div class="hp-panel-scroll">
+          <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:10px;padding:11px 13px;margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:600;color:#6B4E10;margin-bottom:3px;"><i class="ti ti-info-circle" style="font-size:11px;"></i> Sannman offspring eligibility</div>
+            <div style="font-size:11px;color:#8A6820;line-height:1.6;">Every horse sired by Sannman is eligible to enter LS-compatible events in disciplines marked Eligible below. Unlocking a new discipline grants all 781 enrolled offspring access — forever.</div>
+          </div>
+          <div class="slabel">Discipline eligibility — all offspring</div>
+          <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Status</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Earnings</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Cutting</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$612</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Reined Cow Horse</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$543</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Barrel Racing</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$398</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Reining</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$221</span></div>
+            <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;align-items:center;"><span style="font-size:12px;font-weight:500;color:#2C2A20;">Ranch Horse</span><span style="font-size:10px;font-weight:600;color:#166534;background:#DCFCE7;padding:2px 8px;border-radius:10px;text-align:center;">Eligible</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$131</span></div>
+            <div class="disc-locked-rows" id="sd-sire-locked-discs">
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Pole Bending</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Breakaway Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heading</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Heeling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Ranch Rodeo</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Steer Wrestling</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Tie-Down Roping</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Western Pleasure</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+              <div style="display:grid;grid-template-columns:1fr 70px 70px;padding:9px 12px;border-top:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:12px;color:#aaa;">Sorting</span><span style="font-size:10px;color:#aaa;background:#F0EBE0;padding:2px 8px;border-radius:10px;text-align:center;">Locked</span><span style="font-size:12px;color:#aaa;text-align:right;">—</span></div>
+            </div>
+            <div class="disc-show-all" onclick="showAllDisc('sd-sire-locked-discs', this)">Show all 14 disciplines →</div>
+          </div>
+          <button class="gold-btn" style="width:100%;font-size:11px;padding:9px;">+ Unlock a discipline — $15,000</button>
+        </div>
+      </div>
+      <div class="hp-panel" id="sd-panel-offstats">
+        <div class="hp-panel-scroll">
+          <div class="slabel">LS offspring stats by discipline</div>
+          <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Discipline</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Entries</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Best</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Avg</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Points</div>
+              <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalties</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:11px;font-weight:500;color:#2C2A20;">Cutting</span><span style="font-size:11px;color:#555;text-align:center;">18</span><span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">1st</span><span style="font-size:11px;color:#555;text-align:center;">4.2</span><span style="font-size:11px;color:#555;text-align:center;">72</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$612</span></div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:11px;font-weight:500;color:#2C2A20;">Reined Cow Horse</span><span style="font-size:11px;color:#555;text-align:center;">14</span><span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">2nd</span><span style="font-size:11px;color:#555;text-align:center;">5.8</span><span style="font-size:11px;color:#555;text-align:center;">56</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$543</span></div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:11px;font-weight:500;color:#2C2A20;">Barrel Racing</span><span style="font-size:11px;color:#555;text-align:center;">10</span><span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">1st</span><span style="font-size:11px;color:#555;text-align:center;">3.9</span><span style="font-size:11px;color:#555;text-align:center;">40</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$398</span></div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><span style="font-size:11px;font-weight:500;color:#2C2A20;">Reining</span><span style="font-size:11px;color:#555;text-align:center;">5</span><span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">3rd</span><span style="font-size:11px;color:#555;text-align:center;">6.4</span><span style="font-size:11px;color:#555;text-align:center;">20</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$221</span></div>
+            <div style="display:grid;grid-template-columns:1fr 44px 44px 44px 60px 60px;padding:8px 12px;align-items:center;"><span style="font-size:11px;font-weight:500;color:#2C2A20;">Ranch Horse</span><span style="font-size:11px;color:#555;text-align:center;">4</span><span style="font-size:11px;font-weight:600;color:#2C2A20;text-align:center;">3rd</span><span style="font-size:11px;color:#555;text-align:center;">5.5</span><span style="font-size:11px;color:#555;text-align:center;">16</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$131</span></div>
+          </div>
+          <div class="slabel">All-time sire career summary</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;">
+            <div class="stat-card"><div class="stat-val">781</div><div class="stat-lbl">Enrolled offspring</div></div>
+            <div class="stat-card"><div class="stat-val">51</div><div class="stat-lbl">Total LS entries</div></div>
+            <div class="stat-card"><div class="stat-val gold">$4,380</div><div class="stat-lbl">All-time royalties</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sd-panel-standings">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div class="slabel">RPI — Sire rankings</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px;">
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">88.4</div><div class="stat-lbl">Normalized Performance</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.22</div><div class="stat-lbl">Field Strength Index</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.08</div><div class="stat-lbl">Age Class Multiplier</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">+2.8</div><div class="stat-lbl">Rider Skill Adjustment</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">0.94</div><div class="stat-lbl">Event Prestige Coefficient</div></div>
+                <div class="stat-card"><div class="stat-val" style="font-size:16px;">1.00</div><div class="stat-lbl">Decay Weight</div></div>
+              </div>
+              <div class="slabel">Sire leaderboard — 2026</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;">
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">#</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Sire</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Entries</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalties</div>
+                </div>
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;background:#FFFBF0;">
+                  <span style="font-size:13px;font-weight:700;color:#C49020;">1</span>
+                  <div><div style="font-size:12px;font-weight:600;color:#2C2A20;">Sannman</div><div style="font-size:10px;color:#B07A18;">Your stallion</div></div>
+                  <span style="font-size:12px;color:#555;text-align:center;">47</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$2,105</span>
+                </div>
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;">
+                  <span style="font-size:13px;font-weight:700;color:#888;">2</span>
+                  <div><div style="font-size:12px;color:#2C2A20;">Cats Royal Boon</div></div>
+                  <span style="font-size:12px;color:#555;text-align:center;">36</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$1,842</span>
+                </div>
+                <div style="display:grid;grid-template-columns:32px 1fr 50px 70px;padding:9px 12px;align-items:center;">
+                  <span style="font-size:13px;font-weight:700;color:#888;">3</span>
+                  <div><div style="font-size:12px;color:#2C2A20;">TR Illuminator Cash</div></div>
+                  <span style="font-size:12px;color:#555;text-align:center;">28</span>
+                  <span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$1,340</span>
+                </div>
+              </div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Your sire standing</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:14px;margin-bottom:10px;text-align:center;">
+                <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Current Sire Rank</div>
+                <div style="font-size:36px;font-weight:700;color:#C49020;line-height:1;">#1</div>
+                <div style="font-size:11px;color:#888;margin-top:4px;">out of 88 enrolled sires</div>
+              </div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;padding:12px 14px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">781</div><div style="font-size:10px;color:#aaa;">Offspring</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#B07A18;">$2,105</div><div style="font-size:10px;color:#aaa;">2026 royalties</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">47</div><div style="font-size:10px;color:#aaa;">Entries</div></div>
+                  <div><div style="font-size:16px;font-weight:700;color:#2C2A20;">93.1</div><div style="font-size:10px;color:#aaa;">Sire RPI</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-panel" id="sd-panel-owner">
+        <div class="hp-panel-scroll">
+          <div class="detail-body" style="padding:0;">
+            <div class="dl">
+              <div style="background:#DCFCE7;border:0.5px solid #86EFAC;border-radius:10px;padding:11px 13px;margin-bottom:14px;">
+                <div style="font-size:11px;font-weight:600;color:#166534;margin-bottom:2px;"><i class="ti ti-user-check" style="font-size:11px;"></i> Verified sire owner</div>
+                <div style="font-size:11px;color:#166534;opacity:.85;">Dale Smith · Ownership confirmed. Royalties calculated in real time, paid at season end.</div>
+              </div>
+              <div class="slabel">Royalty detail — 2026</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:10px;overflow:hidden;margin-bottom:6px;">
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:7px 12px;background:#F7F4EE;border-bottom:0.5px solid #E0D9C8;">
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">Event</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:center;">Date</div>
+                  <div style="font-size:9px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;text-align:right;">Royalty</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Mid South Memorial Cutting</div><div style="font-size:10px;color:#aaa;">SDP Best of Friends · 1st</div></div><span style="font-size:10px;color:#aaa;text-align:center;">May 10</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</span></div>
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;border-bottom:0.5px solid #F0EBE0;align-items:center;"><div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Rio Grande Spring Cutting</div><div style="font-size:10px;color:#aaa;">Nelliebell · 2nd</div></div><span style="font-size:10px;color:#aaa;text-align:center;">May 3</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</span></div>
+                <div style="display:grid;grid-template-columns:1fr 60px 70px;padding:9px 12px;align-items:center;"><div><div style="font-size:11px;font-weight:500;color:#2C2A20;">Lone Star Cowhorse Classic</div><div style="font-size:10px;color:#aaa;">Smoky Gold Dust · 3rd</div></div><span style="font-size:10px;color:#aaa;text-align:center;">Apr 26</span><span style="font-size:12px;font-weight:600;color:#B07A18;text-align:right;">$25</span></div>
+              </div>
+              <div style="text-align:center;font-size:11px;color:#B07A18;cursor:pointer;padding:4px 0 8px;">View all 47 royalty transactions →</div>
+            </div>
+            <div class="dr">
+              <div class="slabel">Payout summary</div>
+              <div class="royalty-card" style="margin-bottom:10px;">
+                <div class="royalty-row"><span style="color:#999;">This month</span><span style="color:#B07A18;font-weight:500;">$350</span></div>
+                <div class="royalty-row"><span style="color:#999;">2026 YTD</span><span style="color:#B07A18;font-weight:500;">$2,105</span></div>
+                <div class="royalty-row"><span style="color:#999;">All time</span><span style="color:#B07A18;font-weight:500;">$4,380</span></div>
+              </div>
+              <div class="slabel">Payout schedule</div>
+              <div style="background:#fff;border:0.5px solid #E0D9C8;border-radius:8px;padding:11px 13px;margin-bottom:10px;">
+                <div style="font-size:11px;color:#888;line-height:1.7;">
+                  <div>📅 <strong style="color:#2C2A20;">Dec 31, 2026</strong> — Season close</div>
+                  <div>📋 <strong style="color:#2C2A20;">Jan 1–31, 2027</strong> — Audit period</div>
+                  <div>💰 <strong style="color:#2C2A20;">Feb 2027</strong> — Payout issued</div>
+                </div>
+              </div>
+              <div style="background:#FEF3C7;border:0.5px solid #E5C060;border-radius:8px;padding:10px 12px;">
+                <div style="font-size:11px;font-weight:500;color:#6B4E10;margin-bottom:2px;">Projected 2026 payout</div>
+                <div style="font-size:20px;font-weight:700;color:#C49020;">$8,400</div>
+                <div style="font-size:10px;color:#8A6820;margin-top:1px;">Based on current pace · 47 entries so far</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2359,11 +3516,112 @@ select.inp{appearance:none;}
     </div>
 
 
+
+  <!-- ── AI PANEL — app-frame level, overlays all screens ── -->
+  <div class="ai-panel" id="ai-panel">
+    <div class="ai-hdr"><div class="ai-dot"></div><span class="ai-title-text">Legendary Assistant</span><button class="ai-close" onclick="closeAI()">✕</button></div>
+    <div class="ai-msgs" id="ai-msgs">
+      <div class="msg-ai">Hey Dale, what can we do for you today? Need any help with event entry or locating performance results?</div>
+      <div class="msg-user" id="ai-q" style="display:none;">How does the purse grow with more entries?</div>
+      <div class="msg-ai2" id="ai-a" style="display:none;">Every $250 entry grows the annual purse pool. Your share is based on your year-end rank — so more entries means more points AND a bigger pool. Two more Nelliebell entries could push you past Donna R. — roughly $1,300 more.</div>
+    </div>
+    <div class="ai-sugs" id="ai-sugs">
+      <button class="sug" onclick="aiReply()">How does the purse grow with more entries?</button>
+      <button class="sug">What events is Nelliebell eligible for?</button>
+      <button class="sug">How are year-end payouts calculated?</button>
+    </div>
+    <div class="ai-inp-row"><input class="ai-inp" placeholder="Ask anything..." /><button class="ai-send" onclick="aiReply()"><i class="ti ti-arrow-up" style="font-size:12px;"></i></button></div>
+  </div>
+  </div><!-- /app-content -->
   <div id="ai-overlay" onclick="closeAI()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:299;"></div>
   <div class="mobile-help-bar" id="mobile-help">Need help? Call <a href="tel:8172210778">817-221-0778</a></div>
   </div><!-- /app-frame -->
 </div><!-- /browser-chrome -->
 <script>
+// Chip-triggered AI: open panel and simulate asking a question
+function aiAsk(el) {
+  var question = el.getAttribute('data-q') || '';
+  openAI();
+  var sugs = document.getElementById('ai-sugs');
+  if (sugs) sugs.style.display = 'none';
+  var qEl = document.getElementById('ai-q');
+  var aEl = document.getElementById('ai-a');
+  if (qEl && aEl) {
+    qEl.textContent = question;
+    qEl.style.display = 'block';
+    aEl.textContent = "Great question — tap Ask me anything in the Assistant panel to get a full answer.";
+    aEl.style.display = 'block';
+  }
+}
+// Toggle locked discipline rows in eligibility tables
+function showAllDisc(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var open = el.classList.toggle('open');
+  btn.textContent = open ? 'Hide locked disciplines ↑' : 'Show all 14 disciplines →';
+}
+// Toggle extra event log rows
+function showAllEntries(id, btn, total) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var open = el.classList.toggle('open');
+  btn.textContent = open ? 'Collapse ↑' : 'View all ' + total + ' entries →';
+}
+// ── HORSE PROFILE TAB FUNCTIONS ──
+// Generic individual tab switcher — prefix is 'hd' or 'sdp'
+function hpTab(prefix, tab) {
+  // Update tab bar active state
+  var tabs = document.querySelectorAll('#' + prefix + '-tabs .hp-tab');
+  var panels = ['overview','eventlog','eligibility','rankings','stats','pedigree'];
+  tabs.forEach(function(t, i){ t.classList.toggle('active', panels[i] === tab); });
+  // Show correct panel, hide others
+  panels.forEach(function(p){
+    var el = document.getElementById(prefix + '-panel-' + p);
+    if(el) el.classList.toggle('active', p === tab);
+  });
+}
+// Sire tab switcher on sc-sire-dash
+function hpSdTab(tab) {
+  var allTabs = ['overview','offlog','offelig','offstats','standings','owner'];
+  document.querySelectorAll('#sd-tabs .hp-tab').forEach(function(t, i){
+    t.classList.toggle('active', allTabs[i] === tab);
+  });
+  allTabs.forEach(function(p){
+    var el = document.getElementById('sd-panel-' + p);
+    if(el) el.classList.toggle('active', p === tab);
+  });
+}
+// As Sire tab switcher on sc-horse-detail-sdp
+function hpSireTab(tab) {
+  var allTabs = ['sire-overview','sire-offlog','sire-offelig','sire-offstats','sire-standings','sire-owner'];
+  document.querySelectorAll('#sdp-tabs-sire .hp-tab').forEach(function(t, i){
+    t.classList.toggle('active', allTabs[i] === tab);
+  });
+  allTabs.forEach(function(p){
+    var el = document.getElementById('sdp-panel-' + p);
+    if(el) el.classList.toggle('active', p === tab);
+  });
+}
+// Individual / As Sire toggle on sc-horse-detail-sdp
+function sdpToggle(mode) {
+  var isIndividual = (mode === 'individual');
+  document.getElementById('sdp-tog-individual').classList.toggle('active', isIndividual);
+  document.getElementById('sdp-tog-sire').classList.toggle('active', !isIndividual);
+  document.getElementById('sdp-tabs').style.display = isIndividual ? 'flex' : 'none';
+  document.getElementById('sdp-tabs-sire').style.display = isIndividual ? 'none' : 'flex';
+  // Hide all panels, then show the right default
+  var allPanels = ['overview','eventlog','eligibility','rankings','stats','pedigree',
+                   'sire-overview','sire-offlog','sire-offelig','sire-offstats','sire-standings','sire-owner'];
+  allPanels.forEach(function(p){
+    var el = document.getElementById('sdp-panel-' + p);
+    if(el) el.classList.remove('active');
+  });
+  var defaultPanel = isIndividual ? 'sdp-panel-overview' : 'sdp-panel-sire-overview';
+  var el = document.getElementById(defaultPanel);
+  if(el) el.classList.add('active');
+  // Reset tab active states
+  if(isIndividual) hpTab('sdp','overview'); else hpSireTab('sire-overview');
+}
 function nav(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   var t=document.getElementById(id);
@@ -2371,9 +3629,40 @@ function nav(id){
   var urlMap={'sc-login':'app.legendarystakes.com/login','sc-signup1':'app.legendarystakes.com/signup','sc-signup2':'app.legendarystakes.com/signup/profile','sc-signup3':'app.legendarystakes.com/signup/horse','sc-horse-match':'app.legendarystakes.com/signup/horse/match','sc-barn-sweep':'app.legendarystakes.com/signup/barn','sc-barn-success':'app.legendarystakes.com/signup/complete','sc-dashboard':'app.legendarystakes.com/dashboard','sc-events':'app.legendarystakes.com/events','sc-event-detail':'app.legendarystakes.com/events/mid-south-cutting','sc-cart':'app.legendarystakes.com/events/mid-south-cutting/enter','sc-review':'app.legendarystakes.com/events/mid-south-cutting/review','sc-confirm':'app.legendarystakes.com/entries/LS-2026-04821','sc-entries':'app.legendarystakes.com/entries','sc-barn':'app.legendarystakes.com/barn','sc-horse-detail':'app.legendarystakes.com/barn/nelliebell','sc-horse-detail-sdp':'app.legendarystakes.com/barn/sdp-best-of-friends','sc-sire-dash':'app.legendarystakes.com/barn/sdp-best-of-friends/sire','sc-leaderboard':'app.legendarystakes.com/leaderboard','sc-profile':'app.legendarystakes.com/profile','sc-breeder-barn':'app.legendarystakes.com/breeder','sc-forgot':'app.legendarystakes.com/forgot-password','sc-forgot-sent':'app.legendarystakes.com/forgot-password/sent','sc-success':'app.legendarystakes.com/signup/welcome','sc-horse-claim':'app.legendarystakes.com/signup/horse/claim'};
   var urlEl=document.getElementById('url-bar');
   if(urlEl&&urlMap[id])urlEl.innerHTML='<i class="ti ti-lock"></i> '+urlMap[id];
+  // Reset horse profile tabs to Overview on nav
+  if(id==='sc-horse-detail') hpTab('hd','overview');
+  if(id==='sc-horse-detail-sdp'){ hpTab('sdp','overview'); sdpToggle('individual'); }
+  if(id==='sc-sire-dash') hpSdTab('overview');
+  // AI panel: auto-open on dashboard (desktop only), close on auth/onboarding screens
+  var noAI=['sc-login','sc-signup1','sc-signup2','sc-signup3','sc-horse-match','sc-barn-sweep',
+            'sc-barn-success','sc-horse-claim','sc-forgot','sc-forgot-sent','sc-onboard-1',
+            'sc-onboard-2','sc-onboard-3'];
+  if(noAI.indexOf(id)!==-1){
+    closeAI();
+  } else if(id==='sc-dashboard' && window.innerWidth>768){
+    openAI();
+  }
 }
-function openAI(){var p=document.getElementById('ai-panel');if(p){p.classList.add('open');p.classList.remove('closed');}var o=document.getElementById('ai-overlay');if(o&&window.innerWidth<=768)o.style.display='block';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='0.35';b.style.cursor='default';b.onclick=null;}}
-function closeAI(){var p=document.getElementById('ai-panel');if(p){p.classList.remove('open');p.classList.add('closed');}var o=document.getElementById('ai-overlay');if(o)o.style.display='none';var b=document.getElementById('ask-ai-btn');if(b){b.style.opacity='1';b.style.cursor='pointer';b.style.border='0.5px solid #C8A040';b.onclick=function(){openAI();};}}
+function openAI(){
+  var p=document.getElementById('ai-panel');
+  if(p){p.classList.add('open');p.classList.remove('closed');}
+  var o=document.getElementById('ai-overlay');
+  if(o&&window.innerWidth<=768)o.style.display='block';
+  // Dim ask-ai-btn on dashboard only
+  var b=document.getElementById('ask-ai-btn');
+  if(b&&document.getElementById('sc-dashboard')&&document.getElementById('sc-dashboard').classList.contains('active')){
+    b.style.opacity='0.35';b.style.cursor='default';b.onclick=null;
+  }
+}
+function closeAI(){
+  var p=document.getElementById('ai-panel');
+  if(p){p.classList.remove('open');p.classList.add('closed');}
+  var o=document.getElementById('ai-overlay');
+  if(o)o.style.display='none';
+  // Restore ask-ai-btn
+  var b=document.getElementById('ask-ai-btn');
+  if(b){b.style.opacity='1';b.style.cursor='pointer';b.style.border='0.5px solid #C8A040';b.onclick=function(){openAI();};}
+}
 function aiReply(){
   var q=document.getElementById('ai-q');var a=document.getElementById('ai-a');var s=document.getElementById('ai-sugs');
   if(q)q.style.display='block';if(a)a.style.display='block';if(s)s.style.display='none';
