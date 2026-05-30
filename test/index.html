@@ -430,10 +430,6 @@ select.inp{appearance:none;}
    - Bigger text across the board
    - Single-column everything
 ═══════════════════════════════════════════════════ */
-/* ── TOPBAR AI BUTTON — hidden on desktop, shown on mobile ── */
-.topbar-ai-btn{background:none;border:none;color:#EDD98A;cursor:pointer;padding:6px 8px;display:none;align-items:center;gap:5px;font-size:11px;font-weight:600;font-family:inherit;opacity:0.85;transition:opacity .15s;min-height:44px;min-width:44px;justify-content:center;}
-.topbar-ai-btn:hover{opacity:1;}
-.topbar-ai-btn i{font-size:17px;}
 @media (max-width: 768px) {
 
   /* ── CHROME & FRAME ── */
@@ -802,8 +798,6 @@ select.inp{appearance:none;}
   .hp-subhdr-inner { flex-wrap: wrap; }
   .hp-toggle { margin-top: 4px; }
   .hp-tab { padding: 9px 12px; font-size: 10px; }
-  /* ── TOPBAR AI BUTTON — mobile only ── */
-  .topbar-ai-btn { display: flex; }
   /* ── STICKY HELP FOOTER on mobile ── */
   .note {
     position: static;
@@ -867,11 +861,13 @@ select.inp{appearance:none;}
 .desktop-help a{color:#B07A18;text-decoration:none;}
 @media(min-width:769px){.desktop-help{display:block;}}
 
-/* ── AI FLOAT BUTTON (horse profile screens) ── */
-.ai-float{position:absolute;bottom:72px;right:16px;z-index:50;display:none;}
-.screen.active .ai-float{display:block;}
-.ai-float-btn{background:#C49020;color:#fff;border:none;border-radius:24px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 3px 12px rgba(0,0,0,0.25);font-family:inherit;white-space:nowrap;}
-.ai-float-btn i{font-size:14px;}
+/* ── GLOBAL AI FLOAT BUTTON — mobile only, app-frame level ── */
+.ai-global-float{position:fixed;bottom:60px;right:20px;z-index:200;display:none;}
+.ai-global-float.visible{display:block;}
+.ai-float-btn{background:#C49020;color:#fff;border:none;border-radius:24px;padding:10px 18px 10px 14px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(0,0,0,0.28);font-family:inherit;white-space:nowrap;}
+.ai-float-btn i{font-size:15px;}
+/* desktop: hide global float since panel is always visible as sidebar */
+@media(min-width:769px){.ai-global-float{display:none !important;}}
 /* Contextual AI chips inside tabs */
 .ai-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;padding-top:12px;border-top:0.5px solid #E0D9C8;}
 .ai-chip{background:#FEF3C7;border:0.5px solid #E5C060;border-radius:20px;padding:5px 11px;font-size:11px;color:#6B4E10;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;}
@@ -901,14 +897,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.8.6</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.8.7</div>
         </div>
         <div class="split-right">
           <div class="topbar" style="border-bottom:none;">
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.6</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.7</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1084,7 +1080,7 @@ select.inp{appearance:none;}
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.6</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.7</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1414,7 +1410,7 @@ select.inp{appearance:none;}
         </div>
         <div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-horse-claim')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-horse-claim"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-horse-claim')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-horse-claim')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-horse-claim');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-horse-claim')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-horse-claim')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
     <div id="sc-dashboard" class="screen">
-      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-dashboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-dashboard"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-dashboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-dashboard')"><i class="ti ti-horse"></i> My Barn</div><div class="ddi" onclick="nav('sc-events');toggleDD('dd-dashboard')"><i class="ti ti-list-search"></i> Browse Events</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-dashboard');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-dashboard')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-dashboard')"><i class="ti ti-logout"></i> Sign out</div></div></div><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-dashboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-dashboard"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-dashboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-dashboard')"><i class="ti ti-horse"></i> My Barn</div><div class="ddi" onclick="nav('sc-events');toggleDD('dd-dashboard')"><i class="ti ti-list-search"></i> Browse Events</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-dashboard');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-dashboard')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-dashboard')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="body-row">
         <div class="screen-scroll" style="flex:1;padding:20px 22px 88px;background:#F5F2EA;">
           <div class="greeting">Good morning, Dale</div>
@@ -1537,7 +1533,7 @@ select.inp{appearance:none;}
     </div><!-- /sc-dashboard -->
 
     <div id="sc-events" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" onclick="nav('sc-profile')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" onclick="nav('sc-profile')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <!-- Header + search -->
         <div style="background:#fff;padding:16px 20px 0;border-bottom:0.5px solid #E0D9C8;">
@@ -1582,7 +1578,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-event-detail" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-events')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button></div></div>
       <div class="event-hero" style="align-items:center;">
         <div class="eh-logo"><i class="ti ti-horse"></i></div>
         <div style="flex:1;">
@@ -1619,7 +1615,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-cart" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-event-detail')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button></div></div>
       <div class="event-strip">
         <div>
           <div class="es-name">Mid South Memorial Day Cutting</div>
@@ -1652,7 +1648,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-review" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-cart')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="menu-btn" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button></div></div>
       <div class="event-strip"><div><div class="es-name">Mid South Memorial Day Cutting</div><div class="es-meta"><i class="ti ti-calendar" style="font-size:11px;"></i> May 20 · Memphis, TN</div></div></div>
       <div class="detail-body">
         <div class="dl">
@@ -1675,7 +1671,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-confirm" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
       <div class="success-wrap" style="padding-top:16px;">
         <div class="sico" style="background:#D4EDDA;"><i class="ti ti-circle-check" style="color:#1a6b30;"></i></div>
         <div class="st">You're entered, Dale.</div>
@@ -1694,7 +1690,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-entries" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div><div style="display:none"><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-entries')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-entries"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-entries')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-entries')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-entries')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-entries');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-entries')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div><div style="display:none"><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-entries')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-entries"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-entries')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-entries')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-entries')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-entries');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-entries')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <div style="background:#fff;padding:16px 20px 0;border-bottom:0.5px solid #E0D9C8;">
           <div style="font-size:17px;font-weight:600;color:#2C2A20;margin-bottom:12px;">My Entries</div>
@@ -1800,7 +1796,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-barn" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-barn');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-barn')" style="padding:8px 10px;"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-barn"><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="toggleDD('dd-barn')"><i class="ti ti-home"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-barn');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-barn')"><i class="ti ti-user"></i> Profile &amp; settings</div><div class="dddiv"></div><div class="ddanger" onclick="nav('sc-login');toggleDD('dd-barn')"><i class="ti ti-logout"></i> Sign out</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:18px 20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:16px;font-weight:500;color:#2C2A20;">My Barn</div><button class="gold-btn" style="padding:8px 16px;font-size:12px;" onclick="nav('sc-signup3')">+ Add a horse</button></div>
         <div class="alert-banner"><div class="alert-ico"><i class="ti ti-alert-triangle" style="font-size:9px;"></i></div><div><div class="alert-t">1 horse needs ownership verification before payout</div><div class="alert-s">You can still enter events, but winnings are held until ownership is confirmed. Verification takes 1–3 business days.</div></div></div>
@@ -1861,7 +1857,7 @@ select.inp{appearance:none;}
     </div>
 
     <div id="sc-horse-detail" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
       <!-- Horse sub-header -->
       <div class="hp-subhdr">
         <div class="hp-subhdr-inner">
@@ -2187,14 +2183,11 @@ select.inp{appearance:none;}
           </div>
         </div>
       </div>
-
-      <!-- AI float button -->
-      <div class="ai-float"><button class="ai-float-btn" onclick="openAI()"><i class="ti ti-sparkles"></i> Ask Legendary AI</button></div>
     </div>
 
     <!-- HORSE DETAIL: SDP Best of Friends (verified, sire enrolled) -->
     <div id="sc-horse-detail-sdp" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-barn')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
       <!-- Horse sub-header with Individual/As Sire toggle -->
       <div class="hp-subhdr">
         <div class="hp-subhdr-inner">
@@ -2827,14 +2820,11 @@ select.inp{appearance:none;}
           </div>
         </div>
       </div>
-
-      <!-- AI float button -->
-      <div class="ai-float"><button class="ai-float-btn" onclick="openAI()"><i class="ti ti-sparkles"></i> Ask Legendary AI</button></div>
     </div>
 
 
     <div id="sc-sire-dash" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-horse-detail-sdp')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-horse-detail-sdp')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"></div></div>
       <!-- Sire sub-header -->
       <div class="hp-subhdr">
         <div class="hp-subhdr-inner">
@@ -3114,9 +3104,6 @@ select.inp{appearance:none;}
           </div>
         </div>
       </div>
-
-      <!-- AI float button -->
-      <div class="ai-float"><button class="ai-float-btn" onclick="openAI()"><i class="ti ti-sparkles"></i> Ask Legendary AI</button></div>
     </div>
 
     <!-- FORGOT PASSWORD — step 1: enter email -->
@@ -3157,7 +3144,7 @@ select.inp{appearance:none;}
 
     <!-- PROFILE / SETTINGS -->
     <div id="sc-profile" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-profile')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-profile"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-profile')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-profile')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-profile')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-profile');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-profile')"><i class="ti ti-user"></i> Profile</div></div></div><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-profile')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-profile"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-profile')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-profile')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-profile')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-profile');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-profile')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <!-- Profile header -->
         <div style="background:#111008;padding:24px 20px;display:flex;align-items:center;gap:14px;">
@@ -3254,7 +3241,7 @@ select.inp{appearance:none;}
 
     <!-- LEADERBOARD — full view -->
     <div id="sc-leaderboard" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-leaderboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-leaderboard"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-leaderboard')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-leaderboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-leaderboard')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-leaderboard');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-leaderboard')"><i class="ti ti-user"></i> Profile</div></div></div><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-leaderboard')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-leaderboard"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-leaderboard')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-leaderboard')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-leaderboard')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-leaderboard');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-leaderboard')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <div style="background:#fff;padding:16px 20px 0;border-bottom:0.5px solid #E0D9C8;">
           <div style="font-size:17px;font-weight:600;color:#2C2A20;margin-bottom:12px;">Leaderboard</div>
@@ -3329,7 +3316,7 @@ select.inp{appearance:none;}
 
     <!-- BREEDER BARN -->
     <div id="sc-breeder-barn" class="screen">
-      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-breeder-barn')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-breeder-barn"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-breeder-barn')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-breeder-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-breeder-barn')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-breeder-barn');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-breeder-barn')"><i class="ti ti-user"></i> Profile</div></div></div><button class="topbar-ai-btn" onclick="openAI()" title="Ask Legendary AI"><i class="ti ti-sparkles"></i></button></div></div>
+      <div class="topbar"><div class="topbar-left"><button class="back-btn" onclick="nav('sc-dashboard')"><i class="ti ti-arrow-left"></i> Back</button></div><div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div><div class="topbar-right"><div class="ddwrap"><button class="menu-btn" onclick="toggleDD('dd-breeder-barn')"><i class="ti ti-menu-2" style="font-size:18px;"></i><span class="nav-badge" style="position:absolute;top:6px;right:6px;width:9px;height:9px;background:#E03030;border-radius:50%;display:block;pointer-events:none;"></span></button><div class="dd" id="dd-breeder-barn"><div class="ddi" onclick="nav('sc-dashboard');toggleDD('dd-breeder-barn')"><i class="ti ti-home"></i> Dashboard</div><div class="ddi" onclick="nav('sc-entries');toggleDD('dd-breeder-barn')"><i class="ti ti-calendar-event"></i> My Entries</div><div class="ddi" onclick="nav('sc-barn');toggleDD('dd-breeder-barn')"><i class="ti ti-horse"></i> My Barn</div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-message-center');toggleDD('dd-breeder-barn');markMessagesRead()"><i class="ti ti-mail"></i> Message Center <span style="display:inline-block;width:8px;height:8px;background:#E03030;border-radius:50%;margin-left:4px;vertical-align:middle;"></span></div><div class="dddiv"></div><div class="ddi" onclick="nav('sc-profile');toggleDD('dd-breeder-barn')"><i class="ti ti-user"></i> Profile</div></div></div></div></div>
       <div class="screen-scroll" style="background:#F5F2EA;padding:0;">
         <!-- Hero earnings banner -->
         <div style="background:linear-gradient(135deg,#1A1200,#2C1E00);padding:20px;border-bottom:0.5px solid #3A2A00;">
@@ -3549,6 +3536,10 @@ select.inp{appearance:none;}
     <div class="ai-inp-row"><input class="ai-inp" placeholder="Ask anything..." /><button class="ai-send" onclick="aiReply()"><i class="ti ti-arrow-up" style="font-size:12px;"></i></button></div>
   </div>
   </div><!-- /app-content -->
+  <!-- ── GLOBAL AI FLOAT BUTTON — mobile, all post-login screens ── -->
+  <div class="ai-global-float" id="ai-global-float">
+    <button class="ai-float-btn" onclick="openAI()"><i class="ti ti-sparkles"></i> Ask Legendary AI</button>
+  </div>
   <div id="ai-overlay" onclick="closeAI()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:299;"></div>
   <div class="mobile-help-bar" id="mobile-help">Need help? Call <a href="tel:8172210778">817-221-0778</a></div>
   </div><!-- /app-frame -->
@@ -3653,10 +3644,21 @@ function nav(id){
   var noAI=['sc-login','sc-signup1','sc-signup2','sc-signup3','sc-horse-match','sc-barn-sweep',
             'sc-barn-success','sc-horse-claim','sc-forgot','sc-forgot-sent','sc-onboard-1',
             'sc-onboard-2','sc-onboard-3'];
+  var gf=document.getElementById('ai-global-float');
   if(noAI.indexOf(id)!==-1){
     closeAI();
+    if(gf){gf.classList.remove('visible');gf.dataset.show='false';}
   } else if(id==='sc-dashboard' && window.innerWidth>768){
     openAI();
+    if(gf){gf.dataset.show='false';gf.classList.remove('visible');}
+  } else {
+    // Show float button on all authenticated screens (panel not auto-open)
+    if(gf){
+      gf.dataset.show='true';
+      // Only show if panel is not already open
+      var panel=document.getElementById('ai-panel');
+      if(!panel||!panel.classList.contains('open'))gf.classList.add('visible');
+    }
   }
 }
 function openAI(){
@@ -3664,6 +3666,9 @@ function openAI(){
   if(p){p.classList.add('open');p.classList.remove('closed');}
   var o=document.getElementById('ai-overlay');
   if(o&&window.innerWidth<=768)o.style.display='block';
+  // Hide global float button when panel is open
+  var gf=document.getElementById('ai-global-float');
+  if(gf)gf.classList.remove('visible');
   // Dim ask-ai-btn on dashboard only
   var b=document.getElementById('ask-ai-btn');
   if(b&&document.getElementById('sc-dashboard')&&document.getElementById('sc-dashboard').classList.contains('active')){
@@ -3675,6 +3680,9 @@ function closeAI(){
   if(p){p.classList.remove('open');p.classList.add('closed');}
   var o=document.getElementById('ai-overlay');
   if(o)o.style.display='none';
+  // Restore global float button
+  var gf=document.getElementById('ai-global-float');
+  if(gf&&gf.dataset.show==='true')gf.classList.add('visible');
   // Restore ask-ai-btn
   var b=document.getElementById('ask-ai-btn');
   if(b){b.style.opacity='1';b.style.cursor='pointer';b.style.border='0.5px solid #C8A040';b.onclick=function(){openAI();};}
