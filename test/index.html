@@ -430,6 +430,10 @@ select.inp{appearance:none;}
    - Bigger text across the board
    - Single-column everything
 ═══════════════════════════════════════════════════ */
+/* ── TOPBAR AI BUTTON — hidden on desktop, shown on mobile ── */
+.topbar-ai-btn{background:none;border:none;color:#EDD98A;cursor:pointer;padding:6px 8px;display:none;align-items:center;gap:5px;font-size:11px;font-weight:600;font-family:inherit;opacity:0.85;transition:opacity .15s;min-height:44px;min-width:44px;justify-content:center;}
+.topbar-ai-btn:hover{opacity:1;}
+.topbar-ai-btn i{font-size:17px;}
 @media (max-width: 768px) {
 
   /* ── CHROME & FRAME ── */
@@ -868,10 +872,6 @@ select.inp{appearance:none;}
 .screen.active .ai-float{display:block;}
 .ai-float-btn{background:#C49020;color:#fff;border:none;border-radius:24px;padding:8px 14px 8px 11px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 3px 12px rgba(0,0,0,0.25);font-family:inherit;white-space:nowrap;}
 .ai-float-btn i{font-size:14px;}
-/* ── TOPBAR AI BUTTON ── */
-.topbar-ai-btn{background:none;border:none;color:#EDD98A;cursor:pointer;padding:6px 8px;display:none;align-items:center;gap:5px;font-size:11px;font-weight:600;font-family:inherit;opacity:0.85;transition:opacity .15s;min-height:44px;min-width:44px;justify-content:center;}
-.topbar-ai-btn:hover{opacity:1;}
-.topbar-ai-btn i{font-size:17px;}
 /* Contextual AI chips inside tabs */
 .ai-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;padding-top:12px;border-top:0.5px solid #E0D9C8;}
 .ai-chip{background:#FEF3C7;border:0.5px solid #E5C060;border-radius:20px;padding:5px 11px;font-size:11px;color:#6B4E10;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;}
@@ -901,14 +901,14 @@ select.inp{appearance:none;}
           <div style="position:absolute;top:20px;left:0;right:0;display:flex;justify-content:center;z-index:2;">
             <img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" style="width:270px;max-width:85%;" />
           </div>
-          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.8.5</div>
+          <div style="position:relative;z-index:2;font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;" class="desktop-version">v0.8.6</div>
         </div>
         <div class="split-right">
           <div class="topbar" style="border-bottom:none;">
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.5</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.6</span>
             </div>
           </div>
           <div class="split-right-form">
@@ -1084,7 +1084,7 @@ select.inp{appearance:none;}
             <div class="topbar-left"></div>
             <div class="topbar-center"><img src="https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.png" onerror="this.src='https://thejsasse.github.io/legendary-stakes-chat/test/LEGENDARY-STAKES-LOGO-WHITE-GOLD.webp'" alt="Legendary Stakes" onclick="resetDemo()" title="Reset to start" style="cursor:pointer;" /></div>
             <div class="topbar-right">
-              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.5</span>
+              <span style="font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.5px;">v0.8.6</span>
             </div>
           </div>
           <div class="split-right-form">
